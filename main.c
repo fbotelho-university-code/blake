@@ -13,18 +13,18 @@
 #include <stdint.h>
 
 // Include local libraries
-#include "defs.h"
+
 #include "blake.h"
 
 int main (int argc, const char * argv[])
 {
-	unsigned char *message[1024];
+	unsigned char *message;
+	int i; 
+	//strncpy(message,argv[1], );
 	
-	strncpy(message,argv[1],strlen(argv[1]));
+	unsigned char *h = blake256(message, 11);
 	
-	unsigned char *h = blake256(message, strlen(message));
-	
-	for(int i=0; i<32; i++){
+	for( i=0; i<32; i++){
 		printf("%02X", h[i]);
 	}
 	
