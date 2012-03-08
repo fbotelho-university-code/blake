@@ -9,6 +9,6 @@
 #ifndef BLAKE_defs_h
 #define BLAKE_defs_h
 
-#define MESSAGE_SIZE_MAX 2048
+#define MESSAGE_SIZE_MAX 5242880
 
 #endif

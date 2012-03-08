@@ -13,64 +13,72 @@
 #include <stdint.h>
 
 // Include local libraries
-
-#include "blake.h"
+#include "defs.h"
+#include "blake.h"	
 
 int main (int argc, const char * argv[])
 {
-	unsigned char *message;
-	int i; 
-	//strncpy(message,argv[1], );
-	
-	unsigned char *h = blake256(message, 11);
-	
-	for( i=0; i<32; i++){
-		printf("%02X", h[i]);
-	}
-	
-	/*
-
 	FILE *fp=NULL;
-	char message[MESSAGE_SIZE_MAX];
+	unsigned char message[MESSAGE_SIZE_MAX];
 	size_t i=0;
 	
+	unsigned char m[8];
+	for (i=0; i<8; i++) {
+		m[i]=0x00;
+	}
+	
+	unsigned char *h = blake256(m, 8);
+	
+	puts("\nHash:");
+	for( i=0; i<64; i++){
+		(void)printf("%02X", h[i]);
+		if(!((i+1)%4)) printf(" ");
+	}
+	puts("\n");
+	
+	return 0;
 	
     if (argc != 2)
 	{
-		(void)printf(stderr, "\nUSAGE: blake $(MESSAGE)\n");
+		(void)printf("\nUSAGE: blake $(MESSAGE)\n");
 		return(-1);
 	}
 	else
 	{
 		if (strlen(argv[1])>FILENAME_MAX)
 		{
+			(void)printf("\nFilename invalid!\n");
 			return(-1);
 		}
 		else
 		{
 			fp = fopen(argv[1], "r");
 			i = fread(message, 1, MESSAGE_SIZE_MAX, fp);
-			
 			if (i == MESSAGE_SIZE_MAX)
 			{
-				(void)printf(stderr, "\nYour message was truncated\n");
+				printf("\nYour message was truncated\n");
+			}
+			
+			i = feof(fp);
+			
+			if (i!=1)
+			{
+				printf("\nCritical error reading the file: ABORT!\n");
+				exit(-99);
 			}
 			else
 			{
-				i = feof(fp);
+				unsigned char *h = blake256(message, i);
 				
-				if (i!=1)
-				{
-					(void)printf(stderr, "\nCritical error reading the file: ABORT!\n");
+				puts("\nHash:");
+				for( i=0; i<32; i++){
+					(void)printf("%02X", h[i]);
+					if(!((i+1)%4)) printf(" ");
 				}
-				else
-				{
-					(void)printf("%s",blake256(message));
-				}
+				puts("\n");
 			}
 		}
 	}
-	*/
 	
     return 0;
 }
