@@ -11,7 +11,7 @@
 
 #include <stdint.h>
 
-unsigned char *blake256(unsigned char *, unsigned long long);
+unsigned char *blake256(unsigned char *message, unsigned long len); 
 unsigned char *blake512(unsigned char *, unsigned long long);
 void g(uint32_t *, uint32_t *, uint32_t *, uint32_t *, uint32_t, uint32_t, uint32_t *);
 void rounds(uint32_t *);

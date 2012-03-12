@@ -25,8 +25,21 @@
 #define ADD64(x,y) ((uint64_t)((x) + (y)))
 #define XOR64(x,y) ((uint64_t)((x) ^ (y)))
 
+void convert_bytes(unsigned char *start, int len); 
+void dumpLen(void * ptr, uint64_t len); 
+int  pad256(unsigned char *message, uint64_t len, uint32_t **t); 
 uint32_t state32[4][4];
-uint64_t state64[4][4];
+
+void initH256(uint32_t *h){
+	h[0] = IV256[0];
+	h[1] = IV256[1];
+	h[2] = IV256[2];
+	h[3] = IV256[3];
+	h[4] = IV256[4];
+	h[5] = IV256[5];
+	h[6] = IV256[6];
+	h[7] = IV256[7];
+}
 
 void init256(uint32_t h[8], uint32_t s[4], uint32_t t[2])
 {	
@@ -48,27 +61,7 @@ void init256(uint32_t h[8], uint32_t s[4], uint32_t t[2])
 	state32[3][3] = t[1] ^ c256[7];
 }
 
-void init512(uint64_t h[8], uint64_t s[4], uint64_t t[2])
-{	
-	state64[0][0] = h[0];
-	state64[0][1] = h[1];
-	state64[0][2] = h[2];
-	state64[0][3] = h[3];
-	state64[1][0] = h[4];
-	state64[1][1] = h[5];
-	state64[1][2] = h[6];
-	state64[1][3] = h[7];
-	state64[2][0] = s[0] ^ c512[0];
-	state64[2][1] = s[1] ^ c512[1];
-	state64[2][2] = s[2] ^ c512[2];
-	state64[2][3] = s[3] ^ c512[3];
-	state64[3][0] = t[0] ^ c512[4];
-	state64[3][1] = t[0] ^ c512[5];
-	state64[3][2] = t[1] ^ c512[6];
-	state64[3][3] = t[1] ^ c512[7];
-}
-
-void g32(uint32_t *a, uint32_t *b, uint32_t *c, uint32_t *d, uint32_t round, uint32_t i, uint32_t m[16])
+void g32(uint32_t *a, uint32_t *b, uint32_t *c, uint32_t *d, uint32_t round, uint32_t i, uint32_t *m)
 {
 
   *a = ADD32((*a),(*b))+XOR32(m[sigma[round%10][2*i]], c256[sigma[round%10][2*i+1]]);
@@ -79,41 +72,17 @@ void g32(uint32_t *a, uint32_t *b, uint32_t *c, uint32_t *d, uint32_t round, uin
   *d = ROT32(XOR32((*d),(*a)), 8);
   *c = ADD32((*c),(*d));
   *b = ROT32(XOR32((*b),(*c)), 7);
-  
-/*
-	// ROT32(x,n) (((x)<<(32-n))|( (x)>>(n)))
-  *a = ((uint32_t)((*a) + (*b))) + ((uint32_t)(m[sigma[round][2*i]] ^ c256[sigma[round][2*i+1]]));
-  *d = (16 << ((uint32_t)((*d) ^ (*a))) | ((uint32_t)((*d) ^ (*a))) >> 16);
-  *c = ((uint32_t)((*c) + (*d)));
-  *b = (20 << ((uint32_t)((*b) ^ (*c))) | ((uint32_t)((*b) ^ (*c))) >> 12);
-  *a = ((uint32_t)((*a) + (*b))) + ((uint32_t)(m[sigma[round][2*i+1]] ^ c256[sigma[round][2*i]]));
-  *d = (24 << ((uint32_t)((*d) ^ (*a))) | ((uint32_t)((*d) ^ (*a))) >> 8);
-  *c = (uint32_t)((*c) + (*d));
-  *b = (25 << ((uint32_t)((*b) ^ (*c))) | ((uint32_t)((*b) ^ (*c))) >> 7);
-*/
 	
 }
 
-void g64(uint64_t *a, uint64_t *b, uint64_t *c, uint64_t *d, uint32_t round, uint32_t i, uint64_t m[16])
+void rounds256(uint32_t *m)
 {
-	
-	*a = ADD64((*a),(*b))+XOR64(m[sigma[round%10][2*i]], c512[sigma[round%10][2*i+1]]);
-    *d = ROT64(XOR64((*d),(*a)),32);
-    *c = ADD64((*c),(*d));
-    *b = ROT64(XOR64((*b),(*c)),25);
-    *a = ADD64((*a),(*b))+XOR64(m[sigma[round%10][2*i+1]], c512[sigma[round%10][2*i]]);
-    *d = ROT64(XOR64((*d),(*a)),16);
-    *c = ADD64((*c),(*d));
-    *b = ROT64(XOR64((*b),(*c)),11);
-
-}
-
-void rounds256(uint32_t m[16])
-{
+  int z; 
+  for (z = 0 ; z< 16 ; z++){
+    convert_bytes(&m[z], sizeof(uint32_t)); 
+  }
 	uint32_t round;
-		
 	for(round=0;round<14;++round){
-		
 		// column steps
 		g32(&state32[0][0], &state32[1][0], &state32[2][0], &state32[3][0], round, 0, m);
 		g32(&state32[0][1], &state32[1][1], &state32[2][1], &state32[3][1], round, 1, m);
@@ -130,28 +99,6 @@ void rounds256(uint32_t m[16])
 	
 }
 
-void rounds512(uint64_t m[16])
-{
-	uint32_t round;
-	
-	for(round=0;round<16;++round){
-		
-		// column steps
-		g64(&state64[0][0], &state64[1][0], &state64[2][0], &state64[3][0], round, 0, m);
-		g64(&state64[0][1], &state64[1][1], &state64[2][1], &state64[3][1], round, 1, m);
-		g64(&state64[0][2], &state64[1][2], &state64[2][2], &state64[3][2], round, 2, m);
-		g64(&state64[0][3], &state64[1][3], &state64[2][3], &state64[3][3], round, 3, m);
-		
-		// diagonal steps
-		g64(&state64[0][0], &state64[1][1], &state64[2][2], &state64[3][3], round, 4, m);
-		g64(&state64[0][1], &state64[1][2], &state64[2][3], &state64[3][0], round, 5, m);
-		g64(&state64[0][2], &state64[1][3], &state64[2][0], &state64[3][1], round, 6, m);
-		g64(&state64[0][3], &state64[1][0], &state64[2][1], &state64[3][2], round, 7, m);
-		
-	}
-	
-}
-
 void finit256(uint32_t h[8], uint32_t s[4])
 {
 	h[0] = h[0] ^ s[0] ^ state32[0][0] ^ state32[2][0];
@@ -163,153 +110,140 @@ void finit256(uint32_t h[8], uint32_t s[4])
 	h[6] = h[6] ^ s[2] ^ state32[1][2] ^ state32[3][2];
 	h[7] = h[7] ^ s[3] ^ state32[1][3] ^ state32[3][3];	
 }
+/*
+ *h[8]
+ *m[16] 
+ */
 
-void finit512(uint64_t h[8], uint64_t s[4])
-{
-	h[0] = h[0] ^ s[0] ^ state64[0][0] ^ state64[2][0];
-	h[1] = h[1] ^ s[1] ^ state64[0][1] ^ state64[2][1];
-	h[2] = h[2] ^ s[2] ^ state64[0][2] ^ state64[2][2];
-	h[3] = h[3] ^ s[3] ^ state64[0][3] ^ state64[2][3];
-	h[4] = h[4] ^ s[0] ^ state64[1][0] ^ state64[3][0];
-	h[5] = h[5] ^ s[1] ^ state64[1][1] ^ state64[3][1];
-	h[6] = h[6] ^ s[2] ^ state64[1][2] ^ state64[3][2];
-	h[7] = h[7] ^ s[3] ^ state64[1][3] ^ state64[3][3];	
-}
-
-unsigned char *blake256(unsigned char *message, unsigned long long len)
-{
-	uint32_t i;
-	uint32_t *h = malloc(sizeof(uint32_t) * 8); 
-	unsigned char *hh = h;
-	
-	uint32_t s[4] = { 0x61616161, 0x61616161, 0x61616161, 0x61616161 };
-	uint32_t t[2] = { 0x00000000, 0x00000000 };
-	uint32_t m[16]; 
-	
-	unsigned char *lenChar = len;
-	uint64_t newLen = len;
-	uint64_t nBlocks;
-	
-	
-	unsigned char  *mp_len; // onde fica o len 
-	unsigned char  *mp_one; // onde começa o padding;  
-	unsigned long long padLen;  //quanto de padding;
-
-	unsigned char *msg;
-		
-	unsigned long long resto = len % 512;
-	
-	if(resto > 447){
-		padLen = 447 + (512 - resto);
-	}
-	else{
-	 	padLen = 447 - resto;
-	}
-	
-	if(padLen > 0){
-		newLen++;
-		newLen+=padLen-1;
-	}
-	newLen+=65;
-	
-	msg = (unsigned char *)malloc(newLen);
-	if(!msg) exit(-99);
-	
-	memcpy(msg, message, len);
-	
-	mp_one = msg + len;
-	mp_len = mp_one + padLen;		
-	
-	if(padLen>0){
-		*mp_one = 0x01;
-		memset(mp_one+1, 0x00, padLen-1); 
-	}
-	
-	mp_len = 0x01;
-	
-	for(i=1;i<9;i++)
-		mp_len[i]=lenChar[i-1];
-	
-	//memcpy(mp_len+1, &len, 8);
-	
-	if((newLen % 512) == 0){
-	   nBlocks = newLen / 512;
-	}else{
-		fprintf(stderr, "Fuck shit deu merda da grossa!");
-		exit(-99);
-	}
-	
-	h[0] = IV256[0];
-	h[1] = IV256[1];
-	h[2] = IV256[2];
-	h[3] = IV256[3];
-	h[4] = IV256[4];
-	h[5] = IV256[5];
-	h[6] = IV256[6];
-	h[7] = IV256[7];
-	
-	for (i=0; i<nBlocks; i++) {
+void compress(uint32_t *h, uint32_t *m, uint32_t *s, uint32_t * t){
 		init256(h, s, t);
 		rounds256(m);
 		finit256(h,s);
-		t[0]+=512;
-		if (t[0]==0) t[1]++;
-	}
-	
-	return(hh);
 }
 
-unsigned char *blake512(unsigned char *message, unsigned long long len)
-{
-	uint32_t i;
-	uint64_t *h = malloc(sizeof(uint64_t) * 8); 
-	unsigned char *hh = h;
-	
-	uint64_t s[4] = { 0x0000000000000000, 0x0000000000000000, 0x0000000000000000, 0x0000000000000000 };
-	uint64_t t[2] = { 0x0000000000000008, 0x0000000000000000 };
-	uint64_t m[16]; 
-	
-	uint64_t len64 = (uint64_t) len;
-	uint64_t newLen = len64;
-	uint64_t nBlocks;
-	
-	unsigned char  *mp_len; // onde fica o len 
-	unsigned char  *mp_one; // onde começa o padding;  
-	unsigned padLen;  //quanto de padding;
+unsigned char *blake256(unsigned char *message, unsigned long len){
+  //Reference data from the algorithm/paper
+  int i; 
+  uint32_t *h = malloc(sizeof(uint32_t) * 8);  // hashed value. Final, is updated by compress function;
+  uint32_t s[4] = { 0x00000000, 0x00000000, 0x00000000, 0x00000000};  // No salt considered yet. 
+  uint32_t *t; // Counter/Size. 
+    
+  
+  uint64_t nBlocks; //Number of blocks to be hashed
 
-	// Bloco 1
-	m[ 0] = 0x0080000000000000;
-	m[ 1] = 0x0000000000000000; 
-	m[ 2] = 0x0000000000000000;
-	m[ 3] = 0x0000000000000000; 
-	m[ 4] = 0x0000000000000000; 
-	m[ 5] = 0x0000000000000000; 
-	m[ 6] = 0x0000000000000000; 
-	m[ 7] = 0x0000000000000000; 
-	m[ 8] = 0x0000000000000000;
-	m[ 9] = 0x0000000000000000; 
-	m[10] = 0x0000000000000000; 
-	m[11] = 0x0000000000000000; 
-	m[12] = 0x0000000000000000; 
-	m[13] = 0x0000000000000001; 
-	m[14] = 0x0000000000000000; 
-	m[15] = 0x0000000800000008;
-	
-	h[0] = IV512[0];
-	h[1] = IV512[1];
-	h[2] = IV512[2];
-	h[3] = IV512[3];
-	h[4] = IV512[4];
-	h[5] = IV512[5];
-	h[6] = IV512[6];
-	h[7] = IV512[7];
-	
-	for (i=0; i<1; i++) {
-		init512(h, s, t);
-		rounds512(m);
-		finit512(h,s);
-		t[0]+=1024;
-	}
-	
-	return(hh);
+  //TODO - does casting len works ok? 
+  nBlocks = pad256(message, (uint64_t ) len,  &t); 
+  
+  //debug
+  unsigned char * hh = message; 
+  puts("message:"); 
+  for( i=0; i<64; i++){
+    (void)printf("%02X",hh[i]);
+    if(!((i+1)%4)) printf(" ");
+  }
+  //undebug
+  initH256(h); // Initialize h with IV 
+  for (i=0; i<nBlocks; i++) {
+    compress(h, message + i*64, s, t + (i*2)); 
+  }
+
+  return (unsigned char *) h;
+}
+
+//Pad the message and determine the sizes of each h block. 
+//Creates the array of t's (Counter) with the message number of blocks. 
+//Returns the number of blocks in the message; 
+int  pad256(unsigned char *message, uint64_t len, uint32_t **t){
+
+  //TODO - create t. 
+  int i; 
+  uint64_t nBlocks ;   //Number of blocks in message. TODO - why 64 bits in nblocks . 
+  uint64_t resto = len % 512;  // what is left from message to fill. 
+  
+  nBlocks = ((len % 512) == 0)  ? (len / 512) : (len/512 ) +1 ; // assuming there will be no new block with no message bits. 
+  unsigned char *begin_of_last_block = message + (len -resto);  
+  
+  // Create array with upper bound of t's (considering case where we create a new block) 
+  *t = malloc(sizeof(uint32_t) * 2 * (nBlocks +1)); 
+  if (!t){
+    perror("malloc: "); 
+    exit(-1); 
+  }
+
+  char *test = malloc(1000); 
+  //TODO - can nBlocks be 0? 
+  uint64_t *myT =  (uint64_t *) (*t); 
+  *myT = 0; 
+  for (i = 0 ; i < (nBlocks -1); i++){
+    *myT++ +=  512; 
+  }
+  *myT++ +=  resto*8; 
+
+  if ( resto == 55 ){
+    // The case where no new block is needed and we only have to dump the perfect fit padding info.
+    *(begin_of_last_block + len ) = 0x81; 
+    dumpLen(begin_of_last_block + len +1, len * 8 ); 
+  }
+  else{
+    unsigned num_zeros; // Numeros of 0x00 bytes to pad message with. 
+    unsigned char * ptr_begin_pad = (resto == 0) ?  begin_of_last_block +  64 : begin_of_last_block + resto; 
+    if (resto == 0){
+      num_zeros = 54; 
+      nBlocks++;
+      *myT = 0; 
+    }
+    else {
+      if (resto < 55){
+	num_zeros = 54 - resto; 
+      }
+      else{
+	nBlocks++; 
+	*myT = 0; 
+	resto = 118 - resto; 
+      }
+    }
+    
+    *ptr_begin_pad =  0x80; 
+    memset(ptr_begin_pad +1 , 0x00, num_zeros); 
+    //TODO - autoincrement ptrs on the way... 
+    *( ptr_begin_pad + 1 + num_zeros )  = (unsigned char) 0x01; 
+    dumpLen(ptr_begin_pad  + 2 + num_zeros , len*8); 
+  }
+  return nBlocks; 
+}
+
+void dumpLen(void * ptr, uint64_t len){
+  convert_bytes( (unsigned char *) &len, sizeof(uint64_t)); 
+  memcpy(ptr, &len, sizeof(uint64_t)); 
+}
+
+void convert_bytes(unsigned char *start, int len){
+  int i,j; 
+  unsigned char tmp; 
+  //TODO - len not par 
+  for (i=0, j =len-1  ; i < len/2 ; i++, j--) {
+    tmp = start[i]; 
+    start[i] = start[j]; 
+    start[j] = tmp; 
+  }  
+}
+
+int main(int argc, char **argv){
+  unsigned char m[64]; 
+  uint32_t *t[2]; 
+
+  m[0] = 0;
+  uint32_t *h = m; 
+  uint32_t len = 1;
+
+  unsigned char *hh = blake256(m, len);
+
+  int i,j; 
+  puts("hash");
+  for( i=0; i<32; i++){
+    (void)printf("%02X",hh[i]);
+    if(!((i+1)%4)) printf(" ");
+  }
+
+  return 0; 
 }
