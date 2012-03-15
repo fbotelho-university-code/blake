@@ -9,6 +9,9 @@
 #ifndef BLAKE_defs_h
 #define BLAKE_defs_h
 
-#define MESSAGE_SIZE_MAX 5242880
 
+void convert_bytes(unsigned char *start, int len);
+void convertNinja (unsigned char *s , int len);
+
+void prettyPrinter(unsigned char * hh, int len, char *message); 
 #endif

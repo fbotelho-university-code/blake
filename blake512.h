@@ -1,25 +1,6 @@
-//
-//  blake.h
-//  BLAKE
-//
-//  Created by José Manuel Sá Lopes on 2/14/12.
-//  Copyright (c) 2012 MSI@FCUL. All rights reserved.
-//
-
-#ifndef BLAKE_blake_h
-#define BLAKE_blake_h
-
-#include <stdint.h>
-
-unsigned char *blake256(unsigned char *message, unsigned long len); 
-unsigned char *blake512(unsigned char *, unsigned long long);
-void g(uint32_t *, uint32_t *, uint32_t *, uint32_t *, uint32_t, uint32_t, uint32_t *);
-void rounds(uint32_t *);
-void finit(uint32_t *, uint32_t *);
-void init(uint32_t *, uint32_t *, uint32_t *);
 
 /*
-	the 10 permutations of {0,...15}
+ the 10 permutations of {0,...15}
  */
 static const unsigned char sigma[][16] = {
     {  0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15 } ,
@@ -34,36 +15,8 @@ static const unsigned char sigma[][16] = {
     { 10,  2,  8,  4,  7,  6,  1,  5, 15, 11,  9, 14,  3, 12, 13 , 0 } , 
 };
 
-// BLAKE-256
 /*
-	initialization vectors 
- */
-
-static const uint32_t IV256[8]={
-	0x6A09E667, 0xBB67AE85,
-	0x3C6EF372, 0xA54FF53A,
-	0x510E527F, 0x9B05688C,
-	0x1F83D9AB, 0x5BE0CD19
-};
-
-/*
-	16 constants
- */
-static const uint32_t c256[16] = {
-    0x243F6A88, 0x85A308D3,
-    0x13198A2E, 0x03707344,
-    0xA4093822, 0x299F31D0,
-    0x082EFA98, 0xEC4E6C89,
-    0x452821E6, 0x38D01377,
-    0xBE5466CF, 0x34E90C6C,
-    0xC0AC29B7, 0xC97C50DD,
-    0x3F84D5B5, 0xB5470917 
-};
-
-
-// BLAKE-512
-/*
-	initialization vectors 
+ initialization vectors 
  */
 static const uint64_t IV512[8]={
 	0x6A09E667F3BCC908ULL, 0xBB67AE8584CAA73BULL,
@@ -73,7 +26,7 @@ static const uint64_t IV512[8]={
 };
 
 /*
-	16 constants
+ 16 constants
  */
 static const uint64_t c512[16] = {
 	0x243F6A8885A308D3ULL,0x13198A2E03707344ULL,
@@ -85,5 +38,3 @@ static const uint64_t c512[16] = {
 	0xBA7C9045F12C7F99ULL,0x24A19947B3916CF7ULL,
 	0x0801F2E2858EFC16ULL,0x636920D871574E69ULL
 };
-
-#endif

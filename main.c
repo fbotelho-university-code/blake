@@ -14,7 +14,7 @@
 
 // Include local libraries
 #include "defs.h"
-#include "blake.h"	
+#include "blake256.h"	
 
 int main (int argc, const char * argv[])
 {
@@ -30,7 +30,7 @@ int main (int argc, const char * argv[])
 	unsigned char *h = blake256(m, 8);
 	
 	puts("\nHash:");
-	for( i=0; i<64; i++){
+	for( i=0; i<32; i++){
 		(void)printf("%02X", h[i]);
 		if(!((i+1)%4)) printf(" ");
 	}
@@ -82,4 +82,6 @@ int main (int argc, const char * argv[])
 	
     return 0;
 }
+
+
 
