@@ -1,15 +1,6 @@
-//
-//  defs.c
-//  blake
-//
-//  Created by José Manuel Sá Lopes on 3/12/12.
-//  Copyright (c) 2012 MSI@FCUL. All rights reserved.
-//
-
-#include <stdio.h>
 #include "defs.h"
 
-void convert_bytes(unsigned char *start, int len){
+void convert_bytes(unsigned char *start, uint32_t len){
 	int i,j; 
 	unsigned char tmp; 
 	//TODO - len not par 
@@ -20,14 +11,14 @@ void convert_bytes(unsigned char *start, int len){
 	}  
 }
 
-void convertNinja (unsigned char *s , int len){
+void convertNinja(unsigned char *s , uint32_t len){
 	int i; 
-	for (i = 0 ; i < len ; i+=4){
-		convert_bytes(&s[i], 4); 
+	for (i = 0 ; i < len ; i+=8){
+		convert_bytes(&s[i], 8); 
 	}
 }
 
-void prettyPrinter(unsigned char * hh, int len, char *message){
+void prettyPrinter(unsigned char * hh, uint32_t len, char *message){
 	puts("");
 	printf("%s \n", message); 
 	int j; 

@@ -1,11 +1,3 @@
-//
-//  main.c
-//  BLAKE
-//
-//  Created by José Manuel Sá Lopes on 2/14/12.
-//  Copyright (c) 2012 MSI@FCUL. All rights reserved.
-//
-
 // Include standard libraries
 #include <stdio.h>
 #include <stdlib.h>
@@ -16,27 +8,14 @@
 #include "defs.h"
 #include "blake256.h"	
 
+#define MESSAGE_SIZE_MAX 5242880
+
+
 int main (int argc, const char * argv[])
 {
 	FILE *fp=NULL;
 	unsigned char message[MESSAGE_SIZE_MAX];
-	size_t i=0;
-	
-	unsigned char m[8];
-	for (i=0; i<8; i++) {
-		m[i]=0x00;
-	}
-	
-	unsigned char *h = blake256(m, 8);
-	
-	puts("\nHash:");
-	for( i=0; i<32; i++){
-		(void)printf("%02X", h[i]);
-		if(!((i+1)%4)) printf(" ");
-	}
-	puts("\n");
-	
-	return 0;
+	unsigned i=0;
 	
     if (argc != 2)
 	{
@@ -70,12 +49,7 @@ int main (int argc, const char * argv[])
 			{
 				unsigned char *h = blake256(message, i);
 				
-				puts("\nHash:");
-				for( i=0; i<32; i++){
-					(void)printf("%02X", h[i]);
-					if(!((i+1)%4)) printf(" ");
-				}
-				puts("\n");
+				prettyPrinter(h, 64, "\nHash:\n");
 			}
 		}
 	}

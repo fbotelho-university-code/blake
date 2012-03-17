@@ -1,11 +1,3 @@
-//
-//  blake512.c
-//  blake
-//
-//  Created by José Manuel Sá Lopes on 3/12/12.
-//  Copyright (c) 2012 MSI@FCUL. All rights reserved.
-//
-
 // Include standard libraries
 #include <stdio.h>
 #include <stdlib.h>
@@ -14,14 +6,12 @@
 
 // Include local libraries
 #include "blake512.h"
+#include "defs.h"
 
 // Bit-wise operations for 64bits
 #define ROT64(x,n) (((x)<<(64-n))|( (x)>>(n)))
 #define ADD64(x,y) ((uint64_t)((x) + (y)))
 #define XOR64(x,y) ((uint64_t)((x) ^ (y)))
-
-uint32_t state64[4][4];
-
 
 void initH512(uint64_t *h){
 	h[0] = IV512[0];
@@ -70,12 +60,9 @@ void g64(uint64_t *a, uint64_t *b, uint64_t *c, uint64_t *d, uint32_t round, uin
 
 void rounds512(uint64_t *m)
 {
-	uint32_t round;
-	
-	int z; 
-	for (z = 0 ; z< 16 ; z++){
-		convert_bytes(&m[z], sizeof(uint32_t)); 
-	}
+	uint32_t round; 
+	for (round = 0 ; round<16 ; round++)
+		convert_bytes(&m[round], sizeof(uint64_t)); 
 	
 	for(round=0;round<16;++round){
 		
@@ -107,86 +94,91 @@ void finit512(uint64_t h[8], uint64_t s[4])
 	h[7] = h[7] ^ s[3] ^ state64[1][3] ^ state64[3][3];	
 }
 
-void compress(uint64_t *h, uint64_t *m, uint64_t *s, uint64_t * t){
+void compress64(uint64_t *h, uint64_t *m, uint64_t *s, uint64_t * t){
 	init512(h, s, t);
 	rounds512(m);
 	finit512(h,s);
 }
 
-unsigned char *blake512(unsigned char *message, unsigned long len)
+unsigned char *blake512(unsigned char *message, unsigned len)
 {
-	uint32_t i;	
-	uint64_t s[4] = { 0x0000000000000000, 0x0000000000000000, 0x0000000000000000, 0x0000000000000000 };
-	uint64_t t[2] = { 0x0000000000000008, 0x0000000000000000 };
-	uint64_t m[16]; 
-	
 	//Reference data from the algorithm/paper
+	uint32_t i; 
 	uint32_t *h = malloc(sizeof(uint64_t) * 8);  // hashed value. Final, is updated by compress function;
-    
+	uint64_t s[4] = { 0x0000000000000000, 0x0000000000000000, 0x0000000000000000, 0x0000000000000000};  // No salt considered yet. 
+	uint64_t resto = (len*8) % 1024 ;    
+	uint64_t var[2] = { 0, 0 };  	
+	uint64_t blocksSemPadding;
+	uint32_t blocksComPadding=0; 
 	
-	uint64_t nBlocks; //Number of blocks to be hashed
+	blocksSemPadding = pad512(message, (uint64_t ) len, &blocksComPadding);
 	
-	//TODO - does casting len works ok? 
-	nBlocks = 1;//pad256(message, (uint64_t ) len,  &t); 
+	printf("blocks: %d\n",blocksComPadding + blocksSemPadding+1);
+	convertNinja(message, (blocksComPadding + blocksSemPadding + 1)  * 128); 
+	prettyPrinter(message, (blocksComPadding + blocksSemPadding + 1) * 128, "message@pad:"); 
+	convertNinja(message, (blocksComPadding + blocksSemPadding +1 ) * 128); 
 	
-	// Bloco 1
-	m[ 0] = 0x0080000000000000;
-	m[ 1] = 0x0000000000000000; 
-	m[ 2] = 0x0000000000000000;
-	m[ 3] = 0x0000000000000000; 
-	m[ 4] = 0x0000000000000000; 
-	m[ 5] = 0x0000000000000000; 
-	m[ 6] = 0x0000000000000000; 
-	m[ 7] = 0x0000000000000000; 
-	m[ 8] = 0x0000000000000000;
-	m[ 9] = 0x0000000000000000; 
-	m[10] = 0x0000000000000000; 
-	m[11] = 0x0000000000000000; 
-	m[12] = 0x0000000000000000; 
-	m[13] = 0x0000000000000001; 
-	m[14] = 0x0000000000000000; 
-	m[15] = 0x0000000800000008;
+	// Initialize h with IV 
+	initH512(h);
 	
-	initH512(h); // Initialize h with IV
-	for (i=0; i<nBlocks; i++) {
-		compress(h,message + i*128, s, t + (i*2));
+	for (i=0; i<blocksSemPadding; i++) {
+		var[0] += 1024; 
+		compress64(h, message + i*128, s, &var); 
+	}
+	
+	// Last message block
+	if(resto){
+		var[0] += resto; 
+		compress64(h, message + i++*128, s, &var);
+	}
+	
+	// Add block only with padding, if needed
+	if (blocksComPadding == 1){
+		var[0]=0;
+		compress64(h, message + i*128, s, &var); 
 	}
 	
 	return (unsigned char *) h;
 }
 
-void convert_bytes(unsigned char *start, int len){
-	int i,j; 
-	unsigned char tmp; 
-	//TODO - len not par 
-	for (i=0, j =len-1  ; i < len/2 ; i++, j--) {
-		tmp = start[i]; 
-		start[i] = start[j]; 
-		start[j] = tmp; 
-	}  
-}
-
-void dumpLen(void * ptr, uint64_t len){
-	convert_bytes( (unsigned char *) &len, sizeof(uint64_t)); 
-	memcpy(ptr, &len, sizeof(uint64_t)); 
-}
-
-int main(int argc, char **argv){
-	unsigned char m[64]; 
-	uint64_t *t[2]; 
+uint64_t pad512(unsigned char *message, uint64_t len, uint32_t *comPadding){
 	
-	m[0] = 0;
-	uint64_t *h = m; 
-	uint64_t len = 1;
+	uint64_t nBlocks = (len/128);   // Number of blocks in message.
+	uint64_t resto = len % 128;  // What is left from message to fill. 
+	uint64_t num_zeros; // Number of 0x00 bytes to pad message with. 
+	unsigned char *begin_of_last_block = message+(len-resto);  // Begin of last block with message
+	unsigned char * ptr_begin_pad = begin_of_last_block + resto; // Begin of padding
 	
-	unsigned char *hh = blake512(m, len);
 	
-	int i,j; 
-	puts("hash");
-	for( i=0; i<64; i++){
-		(void)printf("%02X",hh[i]);
-		if(!((i+1)%4)) printf(" ");
+	if (resto==111){
+		*(begin_of_last_block + resto) = 0x81; 
+		dumpLen128(begin_of_last_block + resto + 1, len * 8);
+	}
+	else{
+		if (resto==0){
+			num_zeros = 110;
+			*comPadding=1; 
+		}
+		else {
+			if (resto<111){
+				num_zeros = 110 - resto; 				
+			}
+			else{
+				*comPadding = 1; 
+				num_zeros = 238 - resto; 
+			}
+		}
+		
+		*ptr_begin_pad++ =  0x80; 
+		memset(ptr_begin_pad, 0x00, num_zeros); 
+		*(ptr_begin_pad++ + num_zeros) = (unsigned char) 0x01; 
+		dumpLen128(ptr_begin_pad + num_zeros , len*8); 
 	}
 	
-	return 0; 
+	return nBlocks;
+}
+
+void dumpLen128(void * ptr, uint64_t len){
+	convert_bytes((unsigned char *) &len, sizeof(uint64_t)); 
+	memcpy(ptr, &len, 2*sizeof(uint64_t)); 
 }
