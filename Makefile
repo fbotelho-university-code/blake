@@ -5,7 +5,7 @@ CFILES = libblake/blake256.c libblake/defs.c libblake/blake512.c libblake/blake.
 
 OBJS = libblake/blake256.o libblake/defs.o libblake/blake512.o libblake/blake.o
 
-all: $(OBJS)
+all: $(OBJS) # falta main 
 	$(CC) -o blake $(CFLAGS) $(OBJS)
 
 $(OBJS): libblake/blake256.h libblake/blake512.h libblake/defs.h libblake/blake.h
@@ -19,9 +19,11 @@ clean: $(OBJS)
 clean-test: $(OBJS)
 	     rm -f $(OBJS) test correctnesstests/test.o
 
-remake: clean all
+remake: 
+	clean all
 
-remake-test: clean-test test
+remake-test: 
+	clean-test test
 
 compress: blake.tar.bz2
 
