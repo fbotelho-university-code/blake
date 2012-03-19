@@ -13,6 +13,18 @@
 #define ADD64(x,y) ((uint64_t)((x) + (y)))
 #define XOR64(x,y) ((uint64_t)((x) ^ (y)))
 
+#define __MAX(type) ((type)~__MIN(type))
+#define assign(dest,src) ({ \
+typeof(src) __x=(src); \
+typeof(dest) __y=__x; \
+(__x==__y && ((__x<1) == (__y<1))?(void)((dest)=__y),0:1); \
+})
+#define __add_of(c,a,b) ({ \
+typeof(a) __a=a; \
+typeof(b) __b=b; \
+((__MAX(typeof(c))-(__b) >= (__a))?assign(c,__a+__b):1); \
+})
+
 void initH512(uint64_t *h){
 	h[0] = IV512[0];
 	h[1] = IV512[1];
@@ -115,12 +127,18 @@ unsigned char *blake512(unsigned char *message, unsigned len, unsigned char *s){
 	initH512(h);
 	
 	for (i=0; i<blocksSemPadding; i++) {
-		var[0] += 1024; 
+		if(var[0] + 1024 < 1024){
+			var[1]++;
+		}
+		var[0] += 1024;
 		compress64(h, message + i*128, s, &var); 
 	}
 	
 	// Last message block
 	if(resto){
+		if(var[0] + resto < resto){
+			var[1]++;
+		}
 		var[0] += resto; 
 		compress64(h, message + i++*128, s, &var);
 	}
@@ -128,6 +146,7 @@ unsigned char *blake512(unsigned char *message, unsigned len, unsigned char *s){
 	// Add block only with padding, if needed
 	if (blocksComPadding == 1){
 		var[0]=0;
+		var[1]=0;
 		compress64(h, message + i*128, s, &var); 
 	}
 	
