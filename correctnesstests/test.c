@@ -5,9 +5,6 @@
 #include "../libblake/defs.h"
 #include "../libblake/blake.h"
 
-#include "../libblake/blake256.h"
-#include "../libblake/blake512.h"
-
 int main(int argc, char **argv){
 	
 	int i;
@@ -24,7 +21,12 @@ int main(int argc, char **argv){
 	
 	// Open BLAKE-256 test file
 	fp = fopen("correctnesstests/test_file256", "r");
-
+	hh = malloc(64);
+	if(!hh){
+		puts("MALLOC ERROR ABORT");
+		exit(-1);
+	}
+	
 	// Tests for BLAKE-256
 	for(i=0; i<600; i++){
 		
@@ -38,7 +40,7 @@ int main(int argc, char **argv){
 		
 		// Hash
 		//BLAKE(in, i+1, s32, 32, hh);
-		hh = blake256(in, i+1, s32);
+		BLAKE(in, i+1, s32, 32, hh);
 		
 		// Test
 		convertNinja32(hh, 32); 
@@ -50,6 +52,12 @@ int main(int argc, char **argv){
 	
 	// Open BLAKE-512 test file
 	fp = fopen("correctnesstests/test_file512", "r");
+	
+	hh = malloc(64);
+	if(!hh){
+		puts("MALLOC ERROR ABORT");
+		exit(-1);
+	}
 	
 	// Tests for BLAKE-512
 	for(i=0; i<600; i++){
@@ -64,7 +72,7 @@ int main(int argc, char **argv){
 				
 		// Hash
 		//BLAKE(in, i+1, s64, 64, hh);
-		hh = blake512(in, i+1, s64);
+		BLAKE(in, i+1, s64, 64, hh);
 		
 		// Test
 		convertNinja64(hh, 64);

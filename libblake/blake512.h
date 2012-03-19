@@ -1,6 +1,6 @@
 #include <stdint.h>
 
-unsigned char *blake512(unsigned char *, unsigned, unsigned char *);
+unsigned char *blake512(unsigned char *, unsigned, unsigned char *, unsigned char *);
 uint64_t pad512(unsigned char *, uint64_t, uint32_t *); 
 void initH512(uint64_t *);
 void init512(uint64_t *, uint64_t *, uint64_t *);

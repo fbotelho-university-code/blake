@@ -19,9 +19,11 @@ clean: $(OBJS)
 clean-test: $(OBJS)
 	     rm -f $(OBJS) test correctnesstests/test.o
 
-remake: clean all
+remake: 
+		clean all
 
-remake-test: clean-test test
+remake-test: 
+			clean-test test
 
 compress: blake.tar.bz2
 

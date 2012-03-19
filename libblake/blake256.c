@@ -97,11 +97,11 @@ void compress(uint32_t *h, uint32_t *m, uint32_t *s, uint32_t * t){
 	finit256(h,s);
 }
 
-unsigned char *blake256(unsigned char *message, unsigned len, unsigned char *s){
+unsigned char *blake256(unsigned char *message, unsigned len, unsigned char *s, unsigned char *h){
 	
 	//Reference data from the algorithm/paper
 	uint32_t i; 
-	uint32_t *h = malloc(sizeof(uint32_t) * 8);  // hashed value. Final, is updated by compress function;
+	//uint32_t *h = malloc(sizeof(uint32_t) * 8);  // hashed value. Final, is updated by compress function;
 	uint64_t resto = (len*8) % 512 ;    
 	uint64_t var = 0;  	
 	uint64_t blocksSemPadding;
