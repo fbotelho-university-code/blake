@@ -3,10 +3,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdint.h>
-
+#include "blake.h" 
 // Include local libraries
 #include "blake512.h"
-#include "defs.h"
+
 
 // Bit-wise operations for 64bits
 #define ROT64(x,n) (((x)<<(64-n))|( (x)>>(n)))

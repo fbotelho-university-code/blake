@@ -6,7 +6,8 @@
 
 // Include local libraries
 #include "blake256.h"
-#include "defs.h"
+#include "blake.h"
+
 
 // Bit-wise operations for 32bits
 #define ROT32(x,n) (((x)<<(32-n))|( (x)>>(n)))

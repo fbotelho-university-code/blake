@@ -1,11 +1,15 @@
+*/*.o
 imgs
+test
 .o
+blake.dSYM
 .out 
 .*~
 *.o
 test
 *.png 
 imgs/*
+blake
 test.*/*
 test.dSYM
 correctnesstests/test_file256
