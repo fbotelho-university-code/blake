@@ -1,4 +1,5 @@
 .o
 .out 
 .*~
-
+correctnesstests/test_file256
+correctnesstests/test_file512

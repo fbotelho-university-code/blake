@@ -9,8 +9,7 @@ all: $(OBJS)
 	$(CC) -o blake $(CFLAGS) $(OBJS)
 
 $(OBJS): libblake/blake256.h libblake/blake512.h libblake/defs.h libblake/blake.h
-
-test: $(OBJS) correctnesstests/test_file256 correctnesstests/test_file512
+test: $(OBJS) correctnesstests/test_file256 correctnesstests/test_file512 correctnesstests/test.c
 	$(CC) -o test $(CFLAGS) correctnesstests/test.c $(OBJS)
 
 clean: $(OBJS)
