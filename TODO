@@ -1,0 +1,22 @@
+optimizações
+	matriz -> vector
+	consts 
+	initilizations vectors directamente
+	multiplicações amigaveis com shifts
+	2.5 
+	Optimitizations flags -01,02,03, inline functions, loop unrolling
+	mensagem de padding
+	padroes de accesso à matriz
+	ver os tipos. evitar casts.
+	padding com shifts
+	usar mensagem de padding directamente	
+
+TODO
+-> ver porque trocamos ordem. Ver como imprimir
+-> ver historia do prof de imprimir resultado para ficheiro. Satisfazer requisitos do programa. 
+-> Relatorio e programa de benchmark. 
+-> Resolver historia do padding para não ir para não enviar mensagem já com espaço para padding. 
+ 
+
+
+
