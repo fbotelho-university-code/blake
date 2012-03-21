@@ -8,10 +8,10 @@ void BLAKE(unsigned char *data, unsigned len, unsigned char *salt, unsigned lenD
 	
 	switch (lenDigest) {
 		case 32:
-			digest = blake256(data, len, salt);
+			blake256(data, len, salt, digest);
 			break;
 		case 64	:
-			digest = blake512(data, len, salt);
+			blake512(data, len, salt, digest);
 			break;
 		default:
 			digest = NULL;

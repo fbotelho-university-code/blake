@@ -1,6 +1,6 @@
 #include <stdint.h>
 
-unsigned char *blake256(unsigned char *, unsigned, unsigned char *);
+unsigned char *blake256(unsigned char *, unsigned, unsigned char *, unsigned char *);
 uint64_t pad256(unsigned char *, uint64_t, uint32_t *); 
 void initH256(uint32_t *);
 void init256(uint32_t *, uint32_t *, uint32_t *);

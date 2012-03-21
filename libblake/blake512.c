@@ -110,11 +110,11 @@ void compress64(uint64_t *h, uint64_t *m, uint64_t *s, uint64_t * t){
 	finit512(h,s);
 }
 
-unsigned char *blake512(unsigned char *message, unsigned len, unsigned char *s){
+unsigned char *blake512(unsigned char *message, unsigned len, unsigned char *s, unsigned char *h){
 	//message[0]=0x00;
 	//Reference data from the algorithm/paper
 	uint32_t i; 
-	uint64_t *h = malloc(sizeof(uint64_t) * 8);  // hashed value. Final, is updated by compress function;
+	//uint64_t *h = malloc(sizeof(uint64_t) * 8);  // hashed value. Final, is updated by compress function;
 	uint64_t resto = (len*8) % 1024 ;    
 	uint64_t var[2] = { 0, 0 };  	
 	uint64_t blocksSemPadding;
@@ -127,19 +127,19 @@ unsigned char *blake512(unsigned char *message, unsigned len, unsigned char *s){
 	initH512(h);
 	
 	for (i=0; i<blocksSemPadding; i++) {
-		if(var[0] + 1024 < 1024){
+		var[0] += 1024;
+		if(var[0]==0){
 			var[1]++;
 		}
-		var[0] += 1024;
 		compress64(h, message + i*128, s, &var); 
 	}
 	
 	// Last message block
 	if(resto){
-		if(var[0] + resto < resto){
+		var[0] += resto; 
+		if(var[0]==0){
 			var[1]++;
 		}
-		var[0] += resto; 
 		compress64(h, message + i++*128, s, &var);
 	}
 	
