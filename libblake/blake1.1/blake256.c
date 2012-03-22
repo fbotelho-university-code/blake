@@ -14,7 +14,7 @@
 #define ADD32(x,y) ((uint32_t)((x) + (y)))
 #define XOR32(x,y) ((uint32_t)((x) ^ (y)))
 
-static inline void initH256(uint32_t *h) {
+void initH256(uint32_t *h){
   h[0] = 0x6A09E667UL; 
   h[1] = 0xBB67AE85UL; 
   h[2] = 0x3C6EF372UL; 
@@ -25,7 +25,7 @@ static inline void initH256(uint32_t *h) {
   h[7] = 0x5BE0CD19UL; 
 }
 
-static inline void init256(uint32_t h[8], uint32_t s[4], uint32_t t[2]){
+void init256(uint32_t h[8], uint32_t s[4], uint32_t t[2]){
   state32[0] = h[0]; 
   state32[1] = h[1]; 
   state32[2] = h[2];
@@ -45,7 +45,7 @@ static inline void init256(uint32_t h[8], uint32_t s[4], uint32_t t[2]){
 
 }
 
-static inline void g32(uint32_t *a, uint32_t *b, uint32_t *c, uint32_t *d, uint32_t round, uint32_t i, uint32_t *m){
+void g32(uint32_t *a, uint32_t *b, uint32_t *c, uint32_t *d, uint32_t round, uint32_t i, uint32_t *m){
 	
 	*a = ADD32((*a),(*b))+XOR32(m[sigma[round%10][2*i]], c256[sigma[round%10][2*i+1]]);
 	*d = ROT32(XOR32((*d),(*a)),16);
@@ -57,7 +57,7 @@ static inline void g32(uint32_t *a, uint32_t *b, uint32_t *c, uint32_t *d, uint3
 	*b = ROT32(XOR32((*b),(*c)), 7);
 }
 
-static inline void rounds256(uint32_t *m){
+void rounds256(uint32_t *m){
 	uint32_t round; 
 	for (round = 0 ; round<16 ; round++)
 		convert_bytes(&m[round], sizeof(uint32_t)); 
@@ -77,7 +77,7 @@ static inline void rounds256(uint32_t *m){
 	}
 }
 
-static inline void finit256(uint32_t h[8], uint32_t s[4]){
+void finit256(uint32_t h[8], uint32_t s[4]){
 	
 	h[0] = h[0] ^ s[0] ^ state32[0] ^ state32[8];
 	h[1] = h[1] ^ s[1] ^ state32[1] ^ state32[9];
@@ -89,13 +89,12 @@ static inline void finit256(uint32_t h[8], uint32_t s[4]){
 	h[7] = h[7] ^ s[3] ^ state32[7] ^ state32[15];	
 }
 
-static inline void compress(uint32_t *h, uint32_t *m, uint32_t *s, uint32_t * t){
+void compress(uint32_t *h, uint32_t *m, uint32_t *s, uint32_t * t){
 	init256(h, s, t);
 	rounds256(m);
 	finit256(h,s);
 }
 
-uint64_t pad256(unsigned char *message, uint64_t len, uint32_t *comPadding); 
 unsigned char *blake256(unsigned char *message, unsigned len, unsigned char *s, unsigned char *h){
 	
 	//Reference data from the algorithm/paper

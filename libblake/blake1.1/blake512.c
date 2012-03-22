@@ -26,7 +26,7 @@ typeof(b) __b=b; \
 ((__MAX(typeof(c))-(__b) >= (__a))?assign(c,__a+__b):1); \
 })
 
-static inline void initH512(uint64_t *h){
+void initH512(uint64_t *h){
   h[0] = 0x6A09E667F3BCC908ULL; 
   h[1] =  0xBB67AE8584CAA73BULL; 
 	h[2] = 0x3C6EF372FE94F82BULL;
@@ -37,7 +37,7 @@ static inline void initH512(uint64_t *h){
 	h[7] = 0x5BE0CD19137E2179ULL;
 }
 
-static inline void init512(uint64_t h[8], uint64_t s[4], uint64_t t[2]){
+void init512(uint64_t h[8], uint64_t s[4], uint64_t t[2]){
 	state64[0] = h[0];
 	state64[1] = h[1];
 	state64[2] = h[2];
@@ -56,7 +56,7 @@ static inline void init512(uint64_t h[8], uint64_t s[4], uint64_t t[2]){
 	state64[15] = t[1] ^ 0x3F84D5B5B5470917ULL; 
 }
 
-static inline void g64(uint64_t *a, uint64_t *b, uint64_t *c, uint64_t *d, uint32_t round, uint32_t i, uint64_t m[16]){
+void g64(uint64_t *a, uint64_t *b, uint64_t *c, uint64_t *d, uint32_t round, uint32_t i, uint64_t m[16]){
 	
 	*a = ADD64((*a),(*b))+XOR64(m[sigma[round%10][2*i]], c512[sigma[round%10][2*i+1]]);
     *d = ROT64(XOR64((*d),(*a)),32);
@@ -69,7 +69,7 @@ static inline void g64(uint64_t *a, uint64_t *b, uint64_t *c, uint64_t *d, uint3
 	
 }
 
-static inline void rounds512(uint64_t *m){
+void rounds512(uint64_t *m){
 	
 	uint32_t round; 
 	for (round = 0 ; round<16 ; round++)
@@ -91,7 +91,7 @@ static inline void rounds512(uint64_t *m){
 	
 }
 
-static inline void finit512(uint64_t h[8], uint64_t s[4]){
+void finit512(uint64_t h[8], uint64_t s[4]){
 	h[0] = h[0] ^ s[0] ^ state64[0] ^ state64[8];
 	h[1] = h[1] ^ s[1] ^ state64[1] ^ state64[9];
 	h[2] = h[2] ^ s[2] ^ state64[2] ^ state64[10];
@@ -102,7 +102,7 @@ static inline void finit512(uint64_t h[8], uint64_t s[4]){
 	h[7] = h[7] ^ s[3] ^ state64[7] ^ state64[15];	
 }
 
-static inline void compress64(uint64_t *h, uint64_t *m, uint64_t *s, uint64_t * t){
+void compress64(uint64_t *h, uint64_t *m, uint64_t *s, uint64_t * t){
 	init512(h, s, t);
 	rounds512(m);
 	finit512(h,s);

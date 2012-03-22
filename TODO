@@ -1,7 +1,8 @@
 
 optimizações
 	consts 
-	multiplicações amigaveis com shifts
+	multiplicações no sigma e acessos ao sigma ( avoid de multiplicações prologando a tabela). Fazer pré computação. podes perder cache. 
+	assembly do g. 
 	2.5 
 	Optimitizations flags -01,02,03, inline functions, loop unrolling
 	mensagem de padding
