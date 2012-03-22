@@ -3,8 +3,25 @@
 #include <sys/time.h>
 #include <string.h>
 #include <sys/stat.h>
-
 #include "libblake/blake.h"
+
+
+/*
+* Get the elapsed time in microseconds.
+* Usage:
+* 1) declare two timeval structures - struct timeval begin, end;
+* 2) To get the time at the beginning - getTime(begin);
+* 3) To get the time at the end - getTime(end);
+* 4) To print the results - printTime(stdout, "", begin, end);
+*/
+#define getTime(BEGIN) gettimeofday(&(BEGIN),(struct timezone*)0)
+#define elapTime(BEGIN, END) \
+	(1e+6*((END).tv_sec - (BEGIN).tv_sec) + \
+	((END).tv_usec - (BEGIN).tv_usec))
+#define printTime(FILE, MESG, BEGIN, END) \
+	fprintf(FILE, "Elapsed time(usec) %s :%.2f\n", \
+	MESG, elapTime(BEGIN, END))
+struct timeval begin, end;
 
 /*
 * data      - input buffer that we want to calculate the digest
@@ -72,10 +89,12 @@ void main(int argc , char **argv){
 	msg2 = readFile(argv[1], size); 
 
 	//BLAKE2(msg,size, salt, atoi(argv[2]), digest);     
-
+	getTime(begin); 
         BLAKE(msg, size, salt, atoi(argv[2]), digest);
+	getTime(end); 
+	elapTime(begin,end); 
+	printTime(stdout, "", begin,end); 
 	int result =  atoi(argv[2]); 
-
 	if (result == 32){
 	  convertNinja32(digest, 32); 
 	  prettyPrinter32(digest, result , "Result: "); 

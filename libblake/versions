@@ -1,0 +1,7 @@
+1.0 -> Implementação correcta.  
+1.1 : matriz -> vector 		
+          256 -> done (not significant performance) 
+          512 -> done (not significant performance)
+      constantes
+	  256 -> done 
+	  512 -> done 

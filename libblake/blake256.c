@@ -15,34 +15,34 @@
 #define XOR32(x,y) ((uint32_t)((x) ^ (y)))
 
 void initH256(uint32_t *h){
-	h[0] = IV256[0];
-	h[1] = IV256[1];
-	h[2] = IV256[2];
-	h[3] = IV256[3];
-	h[4] = IV256[4];
-	h[5] = IV256[5];
-	h[6] = IV256[6];
-	h[7] = IV256[7];
+  h[0] = 0x6A09E667UL; 
+  h[1] = 0xBB67AE85UL; 
+  h[2] = 0x3C6EF372UL; 
+  h[3] = 0xA54FF53AUL; 
+  h[4] = 0x510E527FUL; 
+  h[5] = 0x9B05688CUL; 
+  h[6] = 0x1F83D9ABUL; 
+  h[7] = 0x5BE0CD19UL; 
 }
 
 void init256(uint32_t h[8], uint32_t s[4], uint32_t t[2]){
-	
-	state32[0][0] = h[0];
-	state32[0][1] = h[1];
-	state32[0][2] = h[2];
-	state32[0][3] = h[3];
-	state32[1][0] = h[4];
-	state32[1][1] = h[5];
-	state32[1][2] = h[6];
-	state32[1][3] = h[7];
-	state32[2][0] = s[0] ^ c256[0];
-	state32[2][1] = s[1] ^ c256[1];
-	state32[2][2] = s[2] ^ c256[2];
-	state32[2][3] = s[3] ^ c256[3];
-	state32[3][0] = t[0] ^ c256[4];
-	state32[3][1] = t[0] ^ c256[5];
-	state32[3][2] = t[1] ^ c256[6];
-	state32[3][3] = t[1] ^ c256[7];
+  state32[0] = h[0]; 
+  state32[1] = h[1]; 
+  state32[2] = h[2];
+  state32[3] = h[3]; 
+  state32[4] = h[4];
+  state32[5] = h[5]; 
+  state32[6] = h[6];
+  state32[7] = h[7]; 
+  state32[8] = s[0] ^       0x243F6A88; 
+  state32[9] = s[1] ^  0x85A308D3; 
+  state32[10] = s[2] ^      0x13198A2E; 
+  state32[11] = s[3] ^ 0x03707344; 
+  state32[12] = t[0] ^ 0xA4093822; 
+  state32[13] = t[0] ^ 0x299F31D0; 
+  state32[14] = t[1] ^     0x082EFA98; 
+  state32[15] = t[1] ^ 0xEC4E6C89; 
+
 }
 
 void g32(uint32_t *a, uint32_t *b, uint32_t *c, uint32_t *d, uint32_t round, uint32_t i, uint32_t *m){
@@ -58,38 +58,35 @@ void g32(uint32_t *a, uint32_t *b, uint32_t *c, uint32_t *d, uint32_t round, uin
 }
 
 void rounds256(uint32_t *m){
-	
 	uint32_t round; 
 	for (round = 0 ; round<16 ; round++)
 		convert_bytes(&m[round], sizeof(uint32_t)); 
 	
 	for(round=0;round<14;++round){
 		// column steps
-		g32(&state32[0][0], &state32[1][0], &state32[2][0], &state32[3][0], round, 0, m);
-		g32(&state32[0][1], &state32[1][1], &state32[2][1], &state32[3][1], round, 1, m);
-		g32(&state32[0][2], &state32[1][2], &state32[2][2], &state32[3][2], round, 2, m);
-		g32(&state32[0][3], &state32[1][3], &state32[2][3], &state32[3][3], round, 3, m);
+		g32(&state32[0], &state32[4], &state32[8], &state32[12], round, 0, m);
+		g32(&state32[1], &state32[5], &state32[9], &state32[13], round, 1, m);
+		g32(&state32[2], &state32[6], &state32[10], &state32[14], round, 2, m);
+		g32(&state32[3], &state32[7], &state32[11], &state32[15], round, 3, m);
 		
 		// diagonal steps
-		g32(&state32[0][0], &state32[1][1], &state32[2][2], &state32[3][3], round, 4, m);
-		g32(&state32[0][1], &state32[1][2], &state32[2][3], &state32[3][0], round, 5, m);
-		g32(&state32[0][2], &state32[1][3], &state32[2][0], &state32[3][1], round, 6, m);
-		g32(&state32[0][3], &state32[1][0], &state32[2][1], &state32[3][2], round, 7, m);
-		
+		g32(&state32[0], &state32[5], &state32[10], &state32[15], round, 4, m);
+		g32(&state32[1], &state32[6], &state32[11], &state32[12], round, 5, m);
+		g32(&state32[2], &state32[7], &state32[8], &state32[13], round, 6, m);
+		g32(&state32[3], &state32[4], &state32[9], &state32[14], round, 7, m);
 	}
-	
 }
 
 void finit256(uint32_t h[8], uint32_t s[4]){
 	
-	h[0] = h[0] ^ s[0] ^ state32[0][0] ^ state32[2][0];
-	h[1] = h[1] ^ s[1] ^ state32[0][1] ^ state32[2][1];
-	h[2] = h[2] ^ s[2] ^ state32[0][2] ^ state32[2][2];
-	h[3] = h[3] ^ s[3] ^ state32[0][3] ^ state32[2][3];
-	h[4] = h[4] ^ s[0] ^ state32[1][0] ^ state32[3][0];
-	h[5] = h[5] ^ s[1] ^ state32[1][1] ^ state32[3][1];
-	h[6] = h[6] ^ s[2] ^ state32[1][2] ^ state32[3][2];
-	h[7] = h[7] ^ s[3] ^ state32[1][3] ^ state32[3][3];	
+	h[0] = h[0] ^ s[0] ^ state32[0] ^ state32[8];
+	h[1] = h[1] ^ s[1] ^ state32[1] ^ state32[9];
+	h[2] = h[2] ^ s[2] ^ state32[2] ^ state32[10];
+	h[3] = h[3] ^ s[3] ^ state32[3] ^ state32[11];
+	h[4] = h[4] ^ s[0] ^ state32[4] ^ state32[12];
+	h[5] = h[5] ^ s[1] ^ state32[5] ^ state32[13];
+	h[6] = h[6] ^ s[2] ^ state32[6] ^ state32[14];
+	h[7] = h[7] ^ s[3] ^ state32[7] ^ state32[15];	
 }
 
 void compress(uint32_t *h, uint32_t *m, uint32_t *s, uint32_t * t){
@@ -124,7 +121,7 @@ unsigned char *blake256(unsigned char *message, unsigned len, unsigned char *s, 
 		var += resto; 
 		compress(h, message + i++*64, s, &var);
 	}
-	
+
 	// Add block only with padding, if needed
 	if (blocksComPadding == 1){
 		var=0;

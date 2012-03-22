@@ -9,17 +9,7 @@ void rounds512(uint64_t *);
 void finit512(uint64_t *, uint64_t *);
 void compress64(uint64_t *, uint64_t *, uint64_t *, uint64_t *);
 
-uint64_t state64[4][4];
-
-/*
- initialization vectors 
- */
-static const uint64_t IV512[8]={
-	0x6A09E667F3BCC908ULL, 0xBB67AE8584CAA73BULL,
-	0x3C6EF372FE94F82BULL, 0xA54FF53A5F1D36F1ULL,
-	0x510E527FADE682D1ULL, 0x9B05688C2B3E6C1FULL,
-	0x1F83D9ABFB41BD6BULL, 0x5BE0CD19137E2179ULL
-};
+uint64_t state64[16];
 
 /*
  16 constants

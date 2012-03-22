@@ -14,6 +14,7 @@
 #define XOR64(x,y) ((uint64_t)((x) ^ (y)))
 
 #define __MAX(type) ((type)~__MIN(type))
+
 #define assign(dest,src) ({ \
 typeof(src) __x=(src); \
 typeof(dest) __y=__x; \
@@ -26,34 +27,33 @@ typeof(b) __b=b; \
 })
 
 void initH512(uint64_t *h){
-	h[0] = IV512[0];
-	h[1] = IV512[1];
-	h[2] = IV512[2];
-	h[3] = IV512[3];
-	h[4] = IV512[4];
-	h[5] = IV512[5];
-	h[6] = IV512[6];
-	h[7] = IV512[7];
+  h[0] = 0x6A09E667F3BCC908ULL; 
+  h[1] =  0xBB67AE8584CAA73BULL; 
+	h[2] = 0x3C6EF372FE94F82BULL;
+	h[3] = 0xA54FF53A5F1D36F1ULL;
+	h[4] = 0x510E527FADE682D1ULL;
+	h[5] =  0x9B05688C2B3E6C1FULL;
+	h[6] = 0x1F83D9ABFB41BD6BULL;
+	h[7] = 0x5BE0CD19137E2179ULL;
 }
 
 void init512(uint64_t h[8], uint64_t s[4], uint64_t t[2]){
-	
-	state64[0][0] = h[0];
-	state64[0][1] = h[1];
-	state64[0][2] = h[2];
-	state64[0][3] = h[3];
-	state64[1][0] = h[4];
-	state64[1][1] = h[5];
-	state64[1][2] = h[6];
-	state64[1][3] = h[7];
-	state64[2][0] = s[0] ^ c512[0];
-	state64[2][1] = s[1] ^ c512[1];
-	state64[2][2] = s[2] ^ c512[2];
-	state64[2][3] = s[3] ^ c512[3];
-	state64[3][0] = t[0] ^ c512[4];
-	state64[3][1] = t[0] ^ c512[5];
-	state64[3][2] = t[1] ^ c512[6];
-	state64[3][3] = t[1] ^ c512[7];
+	state64[0] = h[0];
+	state64[1] = h[1];
+	state64[2] = h[2];
+	state64[3] = h[3];
+	state64[4] = h[4];
+	state64[5] = h[5];
+	state64[6] = h[6];
+	state64[7] = h[7];
+	state64[8] = s[0] ^ 0x243F6A8885A308D3ULL; 
+	state64[9] = s[1] ^ 0x13198A2E03707344ULL;
+	state64[10] = s[2] ^ 0xA4093822299F31D0ULL; 
+	state64[11] = s[3] ^ 0x082EFA98EC4E6C89ULL; 
+	state64[12] = t[0] ^ 0x452821E638D01377ULL;
+	state64[13] = t[0] ^ 0xBE5466CF34E90C6CULL; 
+	state64[14] = t[1] ^ 0xC0AC29B7C97C50DDULL; 
+	state64[15] = t[1] ^ 0x3F84D5B5B5470917ULL; 
 }
 
 void g64(uint64_t *a, uint64_t *b, uint64_t *c, uint64_t *d, uint32_t round, uint32_t i, uint64_t m[16]){
@@ -76,32 +76,30 @@ void rounds512(uint64_t *m){
 		convert_bytes(&m[round], sizeof(uint64_t)); 
 	
 	for(round=0;round<16;++round){
-		
 		// column steps
-		g64(&state64[0][0], &state64[1][0], &state64[2][0], &state64[3][0], round, 0, m);
-		g64(&state64[0][1], &state64[1][1], &state64[2][1], &state64[3][1], round, 1, m);
-		g64(&state64[0][2], &state64[1][2], &state64[2][2], &state64[3][2], round, 2, m);
-		g64(&state64[0][3], &state64[1][3], &state64[2][3], &state64[3][3], round, 3, m);
+		g64(&state64[0], &state64[4], &state64[8], &state64[12], round, 0, m);
+		g64(&state64[1], &state64[5], &state64[9], &state64[13], round, 1, m);
+		g64(&state64[2], &state64[6], &state64[10], &state64[14], round, 2, m);
+		g64(&state64[3], &state64[7], &state64[11], &state64[15], round, 3, m);
 		
 		// diagonal steps
-		g64(&state64[0][0], &state64[1][1], &state64[2][2], &state64[3][3], round, 4, m);
-		g64(&state64[0][1], &state64[1][2], &state64[2][3], &state64[3][0], round, 5, m);
-		g64(&state64[0][2], &state64[1][3], &state64[2][0], &state64[3][1], round, 6, m);
-		g64(&state64[0][3], &state64[1][0], &state64[2][1], &state64[3][2], round, 7, m);
-		
+		g64(&state64[0], &state64[5], &state64[10], &state64[15], round, 4, m);
+		g64(&state64[1], &state64[6], &state64[11], &state64[12], round, 5, m);
+		g64(&state64[2], &state64[7], &state64[8], &state64[13], round, 6, m);
+		g64(&state64[3], &state64[4], &state64[9], &state64[14], round, 7, m);
 	}
 	
 }
 
 void finit512(uint64_t h[8], uint64_t s[4]){
-	h[0] = h[0] ^ s[0] ^ state64[0][0] ^ state64[2][0];
-	h[1] = h[1] ^ s[1] ^ state64[0][1] ^ state64[2][1];
-	h[2] = h[2] ^ s[2] ^ state64[0][2] ^ state64[2][2];
-	h[3] = h[3] ^ s[3] ^ state64[0][3] ^ state64[2][3];
-	h[4] = h[4] ^ s[0] ^ state64[1][0] ^ state64[3][0];
-	h[5] = h[5] ^ s[1] ^ state64[1][1] ^ state64[3][1];
-	h[6] = h[6] ^ s[2] ^ state64[1][2] ^ state64[3][2];
-	h[7] = h[7] ^ s[3] ^ state64[1][3] ^ state64[3][3];	
+	h[0] = h[0] ^ s[0] ^ state64[0] ^ state64[8];
+	h[1] = h[1] ^ s[1] ^ state64[1] ^ state64[9];
+	h[2] = h[2] ^ s[2] ^ state64[2] ^ state64[10];
+	h[3] = h[3] ^ s[3] ^ state64[3] ^ state64[11];
+	h[4] = h[4] ^ s[0] ^ state64[4] ^ state64[12];
+	h[5] = h[5] ^ s[1] ^ state64[5] ^ state64[13];
+	h[6] = h[6] ^ s[2] ^ state64[6] ^ state64[14];
+	h[7] = h[7] ^ s[3] ^ state64[7] ^ state64[15];	
 }
 
 void compress64(uint64_t *h, uint64_t *m, uint64_t *s, uint64_t * t){
