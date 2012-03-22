@@ -1,4 +1,4 @@
-CFLAGS = -Wall -g
+CFLAGS = -Wall
 
 HEADERFILES = libblake/blake256.h libblake/blake512.h libblake/defs.h libblake/blake.h
 CFILES = libblake/blake256.c libblake/defs.c libblake/blake512.c libblake/blake.c
@@ -9,6 +9,7 @@ all: $(OBJS)
 	$(CC) -o blake $(CFLAGS) $(OBJS)
 
 $(OBJS): libblake/blake256.h libblake/blake512.h libblake/defs.h libblake/blake.h
+
 test: $(OBJS) correctnesstests/test_file256 correctnesstests/test_file512 correctnesstests/test.c
 	$(CC) -o test $(CFLAGS) correctnesstests/test.c $(OBJS)
 
@@ -17,12 +18,9 @@ clean: $(OBJS)
 
 clean-test: $(OBJS)
 	     rm -f $(OBJS) test correctnesstests/test.o
-
-remake: 
-		clean all
-
-remake-test: 
-			clean-test test
+		 
+bench: $(OBJS) benchmark/bench.c
+		$(CC) -o bench $(CFLAGS) benchmark/bench.c $(OBJS)
 
 compress: blake.tar.bz2
 
