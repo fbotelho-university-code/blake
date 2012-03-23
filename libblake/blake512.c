@@ -57,7 +57,8 @@ static inline void init512(uint64_t h[8], uint64_t s[4], uint64_t t[2]){
 }
 
 static inline void g64(uint64_t *a, uint64_t *b, uint64_t *c, uint64_t *d, uint32_t round, uint32_t i, uint64_t m[16]){
-  	*a = ADD64((*a),(*b))+XOR64(m[sigma[round%10][i]], c512[sigma[round%10][i+1]]);
+	
+	*a = ADD64((*a),(*b))+XOR64(m[sigma[round%10][i]], c512[sigma[round%10][i+1]]);
     *d = ROT64(XOR64((*d),(*a)),32);
     *c = ADD64((*c),(*d));
     *b = ROT64(XOR64((*b),(*c)),25);
@@ -65,21 +66,14 @@ static inline void g64(uint64_t *a, uint64_t *b, uint64_t *c, uint64_t *d, uint3
     *d = ROT64(XOR64((*d),(*a)),16);
     *c = ADD64((*c),(*d));
     *b = ROT64(XOR64((*b),(*c)),11);
-  /*	*a = ADD64((*a),(*b))+XOR64(m[sigma[round%10][2*i]], c512[sigma[round%10][2*i+1]]);
-    *d = ROT64(XOR64((*d),(*a)),32);
-    *c = ADD64((*c),(*d));
-    *b = ROT64(XOR64((*b),(*c)),25);
-    *a = ADD64((*a),(*b))+XOR64(m[sigma[round%10][2*i+1]], c512[sigma[round%10][2*i]]);
-    *d = ROT64(XOR64((*d),(*a)),16);
-    *c = ADD64((*c),(*d));
-    *b = ROT64(XOR64((*b),(*c)),11);
-    */
+	
 }
 
 static inline void rounds512(uint64_t *m){
+	
 	uint32_t round; 
 	for (round = 0 ; round<16 ; round++)
-		convert_bytes(&m[round], sizeof(uint64_t)); 
+	       convert_bytes(&m[round], sizeof(uint64_t)); 
 	
 	for(round=0;round<16;++round){
 		// column steps
@@ -94,6 +88,7 @@ static inline void rounds512(uint64_t *m){
 		g64(&state64[2], &state64[7], &state64[8], &state64[13], round, 12, m);
 		g64(&state64[3], &state64[4], &state64[9], &state64[14], round, 14, m);
 	}
+	
 }
 
 static inline void finit512(uint64_t h[8], uint64_t s[4]){
