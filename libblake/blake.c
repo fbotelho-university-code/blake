@@ -8,6 +8,12 @@ void convert_bytes(unsigned char *start, uint32_t len){
 	int i,j; 
 	unsigned char tmp; 
 	//TODO - len not par 
+#define U8TO32_BE(p) \
+  (((u32)((p)[0]) << 24) | \
+   ((u32)((p)[1]) << 16) | \
+   ((u32)((p)[2]) <<  8) | \
+   ((u32)((p)[3])      ))
+
 	for (i=0, j =len-1  ; i < len/2 ; i++, j--) {
 		tmp = start[i]; 
 		start[i] = start[j]; 

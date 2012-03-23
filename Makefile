@@ -1,6 +1,10 @@
+<<<<<<< HEAD
 CFLAGS = -Wall -finline-functions   # -O3 -ffast-math   -fprefetch-loop-arrays 
 
 
+=======
+CFLAGS = -Wall -Winline -O3 -ffast-math   -fprefetch-loop-arrays  -g
+>>>>>>> f573cc5e08f92ec82518423961970a05edd2475c
 
 HEADERFILES = libblake/blake256.h libblake/blake512.h  libblake/blake.h
 CFILES = libblake/blake256.c  libblake/blake512.c libblake/blake.c
