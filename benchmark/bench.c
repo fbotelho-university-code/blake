@@ -3,7 +3,6 @@
 #include <sys/time.h>
 #include <string.h>
 #include <sys/stat.h>
-#include "../libblake/defs.h"
 #include "../libblake/blake.h"	
 #include <math.h>
 
@@ -25,16 +24,6 @@
 
 
 struct timeval begin, end;
-
-
-/*
-* data      - input buffer that we want to calculate the digest
-* len       - number of bytes of the input buffer
-* salt      - input buffer with the optional salt value
-* lenDigest - desired number of bytes of the digest (either 32 or 64)
-* digest    - (pre-allocated) buffer where the digest should be returned
-*/
-void BLAKE(unsigned char *data, unsigned len, unsigned char *salt, unsigned lenDigest, char *digest);
 
 //vai ler a informacao do ficheiro
 unsigned char* readFile(char *name, int size){
@@ -96,8 +85,8 @@ int main(int argc , char **argv){
 	
 	// 10K
 	puts("10K.png");
-	size = filesize("/Users/sa/Documents/M.S.I./TS/blake/10K.png"); 
-    msg = readFile("/Users/sa/Documents/M.S.I./TS/blake/10K.png", size); 
+	size = filesize("/Users/sa/Documents/M.S.I./TS/blake/imgs/10K.png"); 
+    msg = readFile("/Users/sa/Documents/M.S.I./TS/blake/imgs/10K.png", size); 
 
 	// BLAKE-256
 	puts("--BLAKE-256");
@@ -146,8 +135,8 @@ int main(int argc , char **argv){
 	}
 	// 1MB
 	puts("\n1MB.bmp");
-	size = filesize("/Users/sa/Documents/M.S.I./TS/blake/1MB.bmp"); 
-    msg = readFile("/Users/sa/Documents/M.S.I./TS/blake/1MB.bmp", size); 
+	size = filesize("/Users/sa/Documents/M.S.I./TS/blake/imgs/1MB.bmp"); 
+    msg = readFile("/Users/sa/Documents/M.S.I./TS/blake/imgs/1MB.bmp", size); 
 	
 	// BLAKE-256
 	puts("--BLAKE-256");
@@ -196,8 +185,8 @@ int main(int argc , char **argv){
 	}
 	// 10MB
 	puts("\n10MB.bmp");
-	size = filesize("/Users/sa/Documents/M.S.I./TS/blake/10MB.bmp"); 
-    msg = readFile("/Users/sa/Documents/M.S.I./TS/blake/10MB.bmp", size); 
+	size = filesize("/Users/sa/Documents/M.S.I./TS/blake/imgs/10MB.bmp"); 
+    msg = readFile("/Users/sa/Documents/M.S.I./TS/blake/imgs/10MB.bmp", size); 
 	
 	// BLAKE-256
 	puts("--BLAKE-256");

@@ -1,4 +1,4 @@
-CFLAGS = -Wall -Winline -O3 -ffast-math   -fprefetch-loop-arrays 
+CFLAGS = -Wall -finline-functions   # -O3 -ffast-math   -fprefetch-loop-arrays 
 
 
 
@@ -21,10 +21,11 @@ clean: $(OBJS)
 
 clean-test: $(OBJS)
 	     rm -f $(OBJS) test correctnesstests/test.o
-remake: 
-	clean all
-remake-test: 
-	clean-test test
+
+bench: $(OBJS) benchmark/bench.c
+	$(CC) -o bench $(CFLAGS) benchmark/bench.c $(OBJS)
+ 	
+
 
 compress: blake.tar.bz2
 
