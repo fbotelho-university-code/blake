@@ -78,7 +78,7 @@ int main(int argc, char **argv){
 		convertNinja64(hh, 64);
 		//prettyPrinter64(hh, 64, "hash:\n");
 		if(memcmp(out64,hh,64)) printf("BLAKE-512: Error in test %d\n",i+1);
-	}
+	}	
 	
 	fclose(fp);
 	return 0;
