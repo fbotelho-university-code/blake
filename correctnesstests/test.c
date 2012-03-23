@@ -2,9 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../libblake/defs.h"
+
 #include "../libblake/blake.h"
-#include "../libblake/defs.h"
+
 
 int main(int argc, char **argv){
 	
