@@ -47,11 +47,11 @@ static inline void init256(uint32_t h[8], uint32_t s[4], uint32_t t[2]){
 
 static inline void g32(uint32_t *a, uint32_t *b, uint32_t *c, uint32_t *d, uint32_t round, uint32_t i, uint32_t *m){
 	
-	*a = ADD32((*a),(*b))+XOR32(m[sigma[round%10][2*i]], c256[sigma[round%10][2*i+1]]);
+	*a = ADD32((*a),(*b))+XOR32(m[sigma[round%10][i]], c256[sigma[round%10][i+1]]);
 	*d = ROT32(XOR32((*d),(*a)),16);
 	*c = ADD32((*c),(*d));
 	*b = ROT32(XOR32((*b),(*c)),12);
-	*a = ADD32((*a),(*b))+XOR32(m[sigma[round%10][2*i+1]], c256[sigma[round%10][2*i]]);
+	*a = ADD32((*a),(*b))+XOR32(m[sigma[round%10][i+1]], c256[sigma[round%10][i]]);
 	*d = ROT32(XOR32((*d),(*a)), 8);
 	*c = ADD32((*c),(*d));
 	*b = ROT32(XOR32((*b),(*c)), 7);
@@ -65,15 +65,15 @@ static inline void rounds256(uint32_t *m){
 	for(round=0;round<14;++round){
 		// column steps
 		g32(&state32[0], &state32[4], &state32[8], &state32[12], round, 0, m);
-		g32(&state32[1], &state32[5], &state32[9], &state32[13], round, 1, m);
-		g32(&state32[2], &state32[6], &state32[10], &state32[14], round, 2, m);
-		g32(&state32[3], &state32[7], &state32[11], &state32[15], round, 3, m);
+		g32(&state32[1], &state32[5], &state32[9], &state32[13], round, 2, m);
+		g32(&state32[2], &state32[6], &state32[10], &state32[14], round, 4, m);
+		g32(&state32[3], &state32[7], &state32[11], &state32[15], round, 6, m);
 		
 		// diagonal steps
-		g32(&state32[0], &state32[5], &state32[10], &state32[15], round, 4, m);
-		g32(&state32[1], &state32[6], &state32[11], &state32[12], round, 5, m);
-		g32(&state32[2], &state32[7], &state32[8], &state32[13], round, 6, m);
-		g32(&state32[3], &state32[4], &state32[9], &state32[14], round, 7, m);
+		g32(&state32[0], &state32[5], &state32[10], &state32[15], round, 8, m);
+		g32(&state32[1], &state32[6], &state32[11], &state32[12], round, 10, m);
+		g32(&state32[2], &state32[7], &state32[8], &state32[13], round, 12, m);
+		g32(&state32[3], &state32[4], &state32[9], &state32[14], round, 14, m);
 	}
 }
 

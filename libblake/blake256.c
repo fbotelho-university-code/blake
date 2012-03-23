@@ -8,6 +8,7 @@
 #include "blake256.h"
 #include "blake.h"
 
+
 // Bit-wise operations for 32bits
 #define ROT32(x,n) (((x)<<(32-n))|( (x)>>(n)))
 #define ADD32(x,y) ((uint32_t)((x) + (y)))
@@ -33,40 +34,35 @@ static inline void init256(uint32_t h[8], uint32_t s[4], uint32_t t[2]){
   state32[5] = h[5]; 
   state32[6] = h[6];
   state32[7] = h[7]; 
-  state32[8] = s[0] ^  0x243F6A88; 
+  state32[8] = s[0] ^       0x243F6A88; 
   state32[9] = s[1] ^  0x85A308D3; 
-  state32[10] = s[2] ^ 0x13198A2E; 
+  state32[10] = s[2] ^      0x13198A2E; 
   state32[11] = s[3] ^ 0x03707344; 
   state32[12] = t[0] ^ 0xA4093822; 
   state32[13] = t[0] ^ 0x299F31D0; 
-  state32[14] = t[1] ^ 0x082EFA98; 
+  state32[14] = t[1] ^     0x082EFA98; 
   state32[15] = t[1] ^ 0xEC4E6C89; 
+
 }
 
 static inline void g32(uint32_t *a, uint32_t *b, uint32_t *c, uint32_t *d, uint32_t round, uint32_t i, uint32_t *m){
-*a = ADD32((*a),(*b)) +  XOR32(m[sigma[round%10][i]], c256[sigma[round%10][i+1]]);
-*d = ROT32(XOR32((*d),(*a)),16);
-*c = ADD32((*c),(*d));
-*b = ROT32(XOR32((*b),(*c)),12);
-*a = ADD32((*a),(*b))+XOR32(m[sigma[round%10][i+1]], c256[sigma[round%10][i]]);
-*d = ROT32(XOR32((*d),(*a)), 8);
-*c = ADD32((*c),(*d));
-*b = ROT32(XOR32((*b),(*c)), 7);
+	
+	*a = ADD32((*a),(*b))+XOR32(m[sigma[round%10][i]], c256[sigma[round%10][i+1]]);
+	*d = ROT32(XOR32((*d),(*a)),16);
+	*c = ADD32((*c),(*d));
+	*b = ROT32(XOR32((*b),(*c)),12);
+	*a = ADD32((*a),(*b))+XOR32(m[sigma[round%10][i+1]], c256[sigma[round%10][i]]);
+	*d = ROT32(XOR32((*d),(*a)), 8);
+	*c = ADD32((*c),(*d));
+	*b = ROT32(XOR32((*b),(*c)), 7);
 }
-#define U8TO32_BE(p) \
-  (((uint32_t)((p)[0]) << 24) | \
-   ((uint32_t)((p)[1]) << 16) | \
-   ((uint32_t)((p)[2]) <<  8) | \
-   ((uint32_t)((p)[3])      ))
 
 static inline void rounds256(uint32_t *m){
 	uint32_t round; 
-	for (round = 0 ; round<16 ; round++){
-	   U8TO32_BE(&m[round]); 
-	}
-	  
-  //		convert_bytes(&m[round], sizeof(uint32_t)); 
-       	for(round=0;round<14;++round){
+	for (round = 0 ; round<16 ; round++)
+		convert_bytes(&m[round], sizeof(uint32_t)); 
+	
+	for(round=0;round<14;++round){
 		// column steps
 		g32(&state32[0], &state32[4], &state32[8], &state32[12], round, 0, m);
 		g32(&state32[1], &state32[5], &state32[9], &state32[13], round, 2, m);
