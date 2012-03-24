@@ -7,23 +7,13 @@
 // Include local libraries
 #include "blake512.h"
 
+static uint64_t state64[4][4];
 
 // Bit-wise operations for 64bits
 #define ROT64(x,n) (((x)<<(64-n))|( (x)>>(n)))
 #define ADD64(x,y) ((uint64_t)((x) + (y)))
 #define XOR64(x,y) ((uint64_t)((x) ^ (y)))
 
-#define __MAX(type) ((type)~__MIN(type))
-#define assign(dest,src) ({ \
-typeof(src) __x=(src); \
-typeof(dest) __y=__x; \
-(__x==__y && ((__x<1) == (__y<1))?(void)((dest)=__y),0:1); \
-})
-#define __add_of(c,a,b) ({ \
-typeof(a) __a=a; \
-typeof(b) __b=b; \
-((__MAX(typeof(c))-(__b) >= (__a))?assign(c,__a+__b):1); \
-})
 
 void initH512(uint64_t *h){
 	h[0] = IV512[0];
@@ -37,7 +27,7 @@ void initH512(uint64_t *h){
 }
 
 void init512(uint64_t h[8], uint64_t s[4], uint64_t t[2]){
-	
+    
 	state64[0][0] = h[0];
 	state64[0][1] = h[1];
 	state64[0][2] = h[2];
@@ -110,8 +100,11 @@ void compress64(uint64_t *h, uint64_t *m, uint64_t *s, uint64_t * t){
 	finit512(h,s);
 }
 
+uint64_t pad512(unsigned char *message, uint64_t len, uint32_t *comPadding, unsigned char *padded); 
 unsigned char *blake512(unsigned char *message, unsigned len, unsigned char *s, unsigned char *h){
 	//message[0]=0x00;
+    unsigned char padded[256]; 
+	unsigned char *paddptr = padded; 
 	//Reference data from the algorithm/paper
 	uint32_t i; 
 	//uint64_t *h = malloc(sizeof(uint64_t) * 8);  // hashed value. Final, is updated by compress function;
@@ -120,7 +113,7 @@ unsigned char *blake512(unsigned char *message, unsigned len, unsigned char *s, 
 	uint64_t blocksSemPadding;
 	uint32_t blocksComPadding=0; 
 	
-	blocksSemPadding = pad512(message, (uint64_t ) len, &blocksComPadding);
+	blocksSemPadding = pad512(message, (uint64_t ) len, &blocksComPadding, padded);
 	//prettyPrinter64(message, (blocksComPadding+blocksSemPadding+1)*128, "msg@pad:\n");
 	
 	// Initialize h with IV 
@@ -135,33 +128,36 @@ unsigned char *blake512(unsigned char *message, unsigned len, unsigned char *s, 
 	}
 	
 	// Last message block
+	i =0; 
 	if(resto){
 		var[0] += resto; 
 		if(var[0]==0){
 			var[1]++;
 		}
-		compress64(h, message + i++*128, s, &var);
+		compress64(h, paddptr + i++*128, s, &var);
 	}
 	
 	// Add block only with padding, if needed
 	if (blocksComPadding == 1){
 		var[0]=0;
 		var[1]=0;
-		compress64(h, message + i*128, s, &var); 
+		compress64(h, paddptr + i*128, s, &var); 
 	}
 	
 	return (unsigned char *) h;
 }
 
-uint64_t pad512(unsigned char *message, uint64_t len, uint32_t *comPadding){
+uint64_t pad512(unsigned char *message, uint64_t len, uint32_t *comPadding, unsigned char *padded){
 	
 	uint64_t nBlocks = (len/128);   // Number of blocks in message.
 	uint64_t resto = len % 128;  // What is left from message to fill. 
 	uint64_t num_zeros; // Number of 0x00 bytes to pad message with. 
+	
 	unsigned char *begin_of_last_block = message+(len-resto);  // Begin of last block with message
+	memcpy(padded, begin_of_last_block, resto); 
+	begin_of_last_block = padded; 
 	unsigned char * ptr_begin_pad = begin_of_last_block + resto; // Begin of padding
-	
-	
+    
 	if (resto==111){
 		*(begin_of_last_block++ + resto) = 0x81;
 		memset(begin_of_last_block + resto, 0x00, 8); // 64bit t[1

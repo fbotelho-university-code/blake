@@ -1,16 +1,6 @@
 #include <stdint.h>
 
 unsigned char *blake512(unsigned char *, unsigned, unsigned char *, unsigned char *);
-uint64_t pad512(unsigned char *, uint64_t, uint32_t *); 
-void initH512(uint64_t *);
-void init512(uint64_t *, uint64_t *, uint64_t *);
-void g64(uint64_t *, uint64_t *, uint64_t *, uint64_t *, uint32_t, uint32_t, uint64_t *);
-void rounds512(uint64_t *);
-void finit512(uint64_t *, uint64_t *);
-void compress64(uint64_t *, uint64_t *, uint64_t *, uint64_t *);
-void dumpLen128(void *, uint64_t);
-
-uint64_t state64[4][4];
 
 /*
  initialization vectors 

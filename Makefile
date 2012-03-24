@@ -14,15 +14,14 @@ $(OBJS): libblake/blake256.h libblake/blake512.h  libblake/blake.h
 test: $(OBJS) correctnesstests/test_file256 correctnesstests/test_file512 correctnesstests/test.c
 	$(CC) -o test $(CFLAGS) correctnesstests/test.c $(OBJS)
 
-clean: $(OBJS)
-	rm -f $(OBJS) blake
+clean: $(OBJS) 
+	rm -f  libblake/*.o  blake *.o  test 
 
 clean-test: $(OBJS)
 	     rm -f $(OBJS) test correctnesstests/test.o
 
 bench: $(OBJS) benchmark/bench.c
 	$(CC) -o bench $(CFLAGS) benchmark/bench.c $(OBJS)
- 	
 
 
 compress: blake.tar.bz2

@@ -8,6 +8,7 @@
 #include "blake256.h"
 #include "blake.h"
 
+static uint32_t state32[4][4];
 
 // Bit-wise operations for 32bits
 #define ROT32(x,n) (((x)<<(32-n))|( (x)>>(n)))
@@ -97,9 +98,10 @@ void compress(uint32_t *h, uint32_t *m, uint32_t *s, uint32_t * t){
 	rounds256(m);
 	finit256(h,s);
 }
-
+uint64_t pad256(unsigned char *message, uint64_t len, uint32_t *comPadding, unsigned char * padded); 
 unsigned char *blake256(unsigned char *message, unsigned len, unsigned char *s, unsigned char *h){
-	
+    unsigned char   padded[128]; 
+    
 	//Reference data from the algorithm/paper
 	uint32_t i; 
 	//uint32_t *h = malloc(sizeof(uint32_t) * 8);  // hashed value. Final, is updated by compress function;
@@ -107,13 +109,13 @@ unsigned char *blake256(unsigned char *message, unsigned len, unsigned char *s, 
 	uint64_t var = 0;  	
 	uint64_t blocksSemPadding;
 	uint32_t blocksComPadding=0; 
-
-	blocksSemPadding = pad256(message, (uint64_t ) len, &blocksComPadding);
+    
+	blocksSemPadding = pad256(message, (uint64_t ) len, &blocksComPadding, padded);
 	//prettyPrinter32(message, (blocksComPadding+blocksSemPadding+1)*64, "msg@pad:\n");
 	
 	// Initialize h with IV 
 	initH256(h);
-	
+    
 	for (i=0; i<blocksSemPadding; i++) {
 		var += 512; 
 		compress(h, message + i*64, s, &var); 
@@ -122,28 +124,37 @@ unsigned char *blake256(unsigned char *message, unsigned len, unsigned char *s, 
 	// Last message block
 	if(resto){
 		var += resto; 
-		compress(h, message + i++*64, s, &var);
+		compress(h, padded, s, &var);
 	}
-	
+    
 	// Add block only with padding, if needed
 	if (blocksComPadding == 1){
 		var=0;
-		compress(h, message + i*64, s, &var); 
+		if (resto == 0 ){ 
+            compress(h, padded , s, &var); 
+		}
+		else{
+            compress(h, &padded[64] , s, &var); 
+		}
 	}
-
+    
 	return (unsigned char *) h;
 }
 
 // Pad the message and determine the sizes of each h block. 
 // Returns the number of blocks without padding.
-uint64_t pad256(unsigned char *message, uint64_t len, uint32_t *comPadding){
+uint64_t pad256(unsigned char *message, uint64_t len, uint32_t *comPadding, unsigned char *padded){
 	
 	uint64_t nBlocks = (len/64);   // Number of blocks in message.
 	uint64_t resto = len % 64;  // What is left from message to fill. 
+    
 	uint64_t num_zeros; // Number of 0x00 bytes to pad message with. 
+    
 	unsigned char *begin_of_last_block = message+(len-resto);  // Begin of last block with message
+	memcpy(padded, begin_of_last_block, resto); 
+	begin_of_last_block = padded; 
 	unsigned char * ptr_begin_pad = begin_of_last_block + resto; // Begin of padding
-
+	
 	
 	if (resto==55){
 		*(begin_of_last_block + resto) = 0x81; 

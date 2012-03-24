@@ -1,16 +1,7 @@
 #include <stdint.h>
 
 unsigned char *blake256(unsigned char *, unsigned, unsigned char *, unsigned char *);
-uint64_t pad256(unsigned char *, uint64_t, uint32_t *); 
-void initH256(uint32_t *);
-void init256(uint32_t *, uint32_t *, uint32_t *);
-void g32(uint32_t *, uint32_t *, uint32_t *, uint32_t *, uint32_t, uint32_t, uint32_t *);
-void rounds256(uint32_t *);
-void finit256(uint32_t *, uint32_t *);
-void compress(uint32_t *, uint32_t *, uint32_t *, uint32_t *);
-void dumpLen64(void *, uint64_t);
 
-uint32_t state32[4][4];
 
 /*
 	initialization vectors 
