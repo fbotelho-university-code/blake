@@ -1,0 +1,1246 @@
+//ROUND :::::::::::: 0
+//round : 0 , i: 0
+ state32[0]  = ADD32(( state32[0] ),( state32[4] ))+XOR32(m[s[0%10][0]], c256[s[0%10][0+1]]);
+ state32[12]  = ROT32(XOR32(( state32[12] ),( state32[0] )),16);
+ state32[8]  = ADD32(( state32[8] ),( state32[12] ));
+ state32[4]  = ROT32(XOR32(( state32[4] ),( state32[8] )),12);
+ state32[0]  = ADD32(( state32[0] ),( state32[4] ))+XOR32(m[s[0ound%10][0+1]], c256[s[0%10][0]]);
+ state32[12]  = ROT32(XOR32(( state32[12] ),( state32[0] )), 8);
+ state32[8]  = ADD32(( state32[8] ),( state32[12] ));
+ state32[4]  = ROT32(XOR32(( state32[4] ),( state32[8] )), 7);
+
+
+//round : 0 , i: 2
+ state32[1]  = ADD32(( state32[1] ),( state32[5] ))+XOR32(m[s[0%10][2]], c256[s[0%10][2+1]]);
+ state32[13]  = ROT32(XOR32(( state32[13] ),( state32[1] )),16);
+ state32[9]  = ADD32(( state32[9] ),( state32[13] ));
+ state32[5]  = ROT32(XOR32(( state32[5] ),( state32[9] )),12);
+ state32[1]  = ADD32(( state32[1] ),( state32[5] ))+XOR32(m[s[0ound%10][2+1]], c256[s[0%10][2]]);
+ state32[13]  = ROT32(XOR32(( state32[13] ),( state32[1] )), 8);
+ state32[9]  = ADD32(( state32[9] ),( state32[13] ));
+ state32[5]  = ROT32(XOR32(( state32[5] ),( state32[9] )), 7);
+
+
+//round : 0 , i: 4
+ state32[2]  = ADD32(( state32[2] ),( state32[6] ))+XOR32(m[s[0%10][4]], c256[s[0%10][4+1]]);
+ state32[14]  = ROT32(XOR32(( state32[14] ),( state32[2] )),16);
+ state32[10]  = ADD32(( state32[10] ),( state32[14] ));
+ state32[6]  = ROT32(XOR32(( state32[6] ),( state32[10] )),12);
+ state32[2]  = ADD32(( state32[2] ),( state32[6] ))+XOR32(m[s[0ound%10][4+1]], c256[s[0%10][4]]);
+ state32[14]  = ROT32(XOR32(( state32[14] ),( state32[2] )), 8);
+ state32[10]  = ADD32(( state32[10] ),( state32[14] ));
+ state32[6]  = ROT32(XOR32(( state32[6] ),( state32[10] )), 7);
+
+
+//round : 0 , i: 6
+ state32[3]  = ADD32(( state32[3] ),( state32[7] ))+XOR32(m[s[0%10][6]], c256[s[0%10][6+1]]);
+ state32[15]  = ROT32(XOR32(( state32[15] ),( state32[3] )),16);
+ state32[11]  = ADD32(( state32[11] ),( state32[15] ));
+ state32[7]  = ROT32(XOR32(( state32[7] ),( state32[11] )),12);
+ state32[3]  = ADD32(( state32[3] ),( state32[7] ))+XOR32(m[s[0ound%10][6+1]], c256[s[0%10][6]]);
+ state32[15]  = ROT32(XOR32(( state32[15] ),( state32[3] )), 8);
+ state32[11]  = ADD32(( state32[11] ),( state32[15] ));
+ state32[7]  = ROT32(XOR32(( state32[7] ),( state32[11] )), 7);
+
+
+//round : 0 , i: 8
+ state32[0]  = ADD32(( state32[0] ),( state32[5] ))+XOR32(m[s[0%10][8]], c256[s[0%10][8+1]]);
+ state32[15]  = ROT32(XOR32(( state32[15] ),( state32[0] )),16);
+ state32[10]  = ADD32(( state32[10] ),( state32[15] ));
+ state32[5]  = ROT32(XOR32(( state32[5] ),( state32[10] )),12);
+ state32[0]  = ADD32(( state32[0] ),( state32[5] ))+XOR32(m[s[0ound%10][8+1]], c256[s[0%10][8]]);
+ state32[15]  = ROT32(XOR32(( state32[15] ),( state32[0] )), 8);
+ state32[10]  = ADD32(( state32[10] ),( state32[15] ));
+ state32[5]  = ROT32(XOR32(( state32[5] ),( state32[10] )), 7);
+
+
+//round : 0 , i: 10
+ state32[1]  = ADD32(( state32[1] ),( state32[6] ))+XOR32(m[s[0%10][10]], c256[s[0%10][10+1]]);
+ state32[12]  = ROT32(XOR32(( state32[12] ),( state32[1] )),16);
+ state32[11]  = ADD32(( state32[11] ),( state32[12] ));
+ state32[6]  = ROT32(XOR32(( state32[6] ),( state32[11] )),12);
+ state32[1]  = ADD32(( state32[1] ),( state32[6] ))+XOR32(m[s[0ound%10][10+1]], c256[s[0%10][10]]);
+ state32[12]  = ROT32(XOR32(( state32[12] ),( state32[1] )), 8);
+ state32[11]  = ADD32(( state32[11] ),( state32[12] ));
+ state32[6]  = ROT32(XOR32(( state32[6] ),( state32[11] )), 7);
+
+
+//round : 0 , i: 12
+ state32[2]  = ADD32(( state32[2] ),( state32[7] ))+XOR32(m[s[0%10][12]], c256[s[0%10][12+1]]);
+ state32[13]  = ROT32(XOR32(( state32[13] ),( state32[2] )),16);
+ state32[8]  = ADD32(( state32[8] ),( state32[13] ));
+ state32[7]  = ROT32(XOR32(( state32[7] ),( state32[8] )),12);
+ state32[2]  = ADD32(( state32[2] ),( state32[7] ))+XOR32(m[s[0ound%10][12+1]], c256[s[0%10][12]]);
+ state32[13]  = ROT32(XOR32(( state32[13] ),( state32[2] )), 8);
+ state32[8]  = ADD32(( state32[8] ),( state32[13] ));
+ state32[7]  = ROT32(XOR32(( state32[7] ),( state32[8] )), 7);
+
+
+//round : 0 , i: 14
+ state32[3]  = ADD32(( state32[3] ),( state32[4] ))+XOR32(m[s[0%10][14]], c256[s[0%10][14+1]]);
+ state32[14]  = ROT32(XOR32(( state32[14] ),( state32[3] )),16);
+ state32[9]  = ADD32(( state32[9] ),( state32[14] ));
+ state32[4]  = ROT32(XOR32(( state32[4] ),( state32[9] )),12);
+ state32[3]  = ADD32(( state32[3] ),( state32[4] ))+XOR32(m[s[0ound%10][14+1]], c256[s[0%10][14]]);
+ state32[14]  = ROT32(XOR32(( state32[14] ),( state32[3] )), 8);
+ state32[9]  = ADD32(( state32[9] ),( state32[14] ));
+ state32[4]  = ROT32(XOR32(( state32[4] ),( state32[9] )), 7);
+
+
+//ROUND :::::::::::: 1
+//round : 1 , i: 0
+ state32[0]  = ADD32(( state32[0] ),( state32[4] ))+XOR32(m[s[1%10][0]], c256[s[1%10][0+1]]);
+ state32[12]  = ROT32(XOR32(( state32[12] ),( state32[0] )),16);
+ state32[8]  = ADD32(( state32[8] ),( state32[12] ));
+ state32[4]  = ROT32(XOR32(( state32[4] ),( state32[8] )),12);
+ state32[0]  = ADD32(( state32[0] ),( state32[4] ))+XOR32(m[s[1ound%10][0+1]], c256[s[1%10][0]]);
+ state32[12]  = ROT32(XOR32(( state32[12] ),( state32[0] )), 8);
+ state32[8]  = ADD32(( state32[8] ),( state32[12] ));
+ state32[4]  = ROT32(XOR32(( state32[4] ),( state32[8] )), 7);
+
+
+//round : 1 , i: 2
+ state32[1]  = ADD32(( state32[1] ),( state32[5] ))+XOR32(m[s[1%10][2]], c256[s[1%10][2+1]]);
+ state32[13]  = ROT32(XOR32(( state32[13] ),( state32[1] )),16);
+ state32[9]  = ADD32(( state32[9] ),( state32[13] ));
+ state32[5]  = ROT32(XOR32(( state32[5] ),( state32[9] )),12);
+ state32[1]  = ADD32(( state32[1] ),( state32[5] ))+XOR32(m[s[1ound%10][2+1]], c256[s[1%10][2]]);
+ state32[13]  = ROT32(XOR32(( state32[13] ),( state32[1] )), 8);
+ state32[9]  = ADD32(( state32[9] ),( state32[13] ));
+ state32[5]  = ROT32(XOR32(( state32[5] ),( state32[9] )), 7);
+
+
+//round : 1 , i: 4
+ state32[2]  = ADD32(( state32[2] ),( state32[6] ))+XOR32(m[s[1%10][4]], c256[s[1%10][4+1]]);
+ state32[14]  = ROT32(XOR32(( state32[14] ),( state32[2] )),16);
+ state32[10]  = ADD32(( state32[10] ),( state32[14] ));
+ state32[6]  = ROT32(XOR32(( state32[6] ),( state32[10] )),12);
+ state32[2]  = ADD32(( state32[2] ),( state32[6] ))+XOR32(m[s[1ound%10][4+1]], c256[s[1%10][4]]);
+ state32[14]  = ROT32(XOR32(( state32[14] ),( state32[2] )), 8);
+ state32[10]  = ADD32(( state32[10] ),( state32[14] ));
+ state32[6]  = ROT32(XOR32(( state32[6] ),( state32[10] )), 7);
+
+
+//round : 1 , i: 6
+ state32[3]  = ADD32(( state32[3] ),( state32[7] ))+XOR32(m[s[1%10][6]], c256[s[1%10][6+1]]);
+ state32[15]  = ROT32(XOR32(( state32[15] ),( state32[3] )),16);
+ state32[11]  = ADD32(( state32[11] ),( state32[15] ));
+ state32[7]  = ROT32(XOR32(( state32[7] ),( state32[11] )),12);
+ state32[3]  = ADD32(( state32[3] ),( state32[7] ))+XOR32(m[s[1ound%10][6+1]], c256[s[1%10][6]]);
+ state32[15]  = ROT32(XOR32(( state32[15] ),( state32[3] )), 8);
+ state32[11]  = ADD32(( state32[11] ),( state32[15] ));
+ state32[7]  = ROT32(XOR32(( state32[7] ),( state32[11] )), 7);
+
+
+//round : 1 , i: 8
+ state32[0]  = ADD32(( state32[0] ),( state32[5] ))+XOR32(m[s[1%10][8]], c256[s[1%10][8+1]]);
+ state32[15]  = ROT32(XOR32(( state32[15] ),( state32[0] )),16);
+ state32[10]  = ADD32(( state32[10] ),( state32[15] ));
+ state32[5]  = ROT32(XOR32(( state32[5] ),( state32[10] )),12);
+ state32[0]  = ADD32(( state32[0] ),( state32[5] ))+XOR32(m[s[1ound%10][8+1]], c256[s[1%10][8]]);
+ state32[15]  = ROT32(XOR32(( state32[15] ),( state32[0] )), 8);
+ state32[10]  = ADD32(( state32[10] ),( state32[15] ));
+ state32[5]  = ROT32(XOR32(( state32[5] ),( state32[10] )), 7);
+
+
+//round : 1 , i: 10
+ state32[1]  = ADD32(( state32[1] ),( state32[6] ))+XOR32(m[s[1%10][10]], c256[s[1%10][10+1]]);
+ state32[12]  = ROT32(XOR32(( state32[12] ),( state32[1] )),16);
+ state32[11]  = ADD32(( state32[11] ),( state32[12] ));
+ state32[6]  = ROT32(XOR32(( state32[6] ),( state32[11] )),12);
+ state32[1]  = ADD32(( state32[1] ),( state32[6] ))+XOR32(m[s[1ound%10][10+1]], c256[s[1%10][10]]);
+ state32[12]  = ROT32(XOR32(( state32[12] ),( state32[1] )), 8);
+ state32[11]  = ADD32(( state32[11] ),( state32[12] ));
+ state32[6]  = ROT32(XOR32(( state32[6] ),( state32[11] )), 7);
+
+
+//round : 1 , i: 12
+ state32[2]  = ADD32(( state32[2] ),( state32[7] ))+XOR32(m[s[1%10][12]], c256[s[1%10][12+1]]);
+ state32[13]  = ROT32(XOR32(( state32[13] ),( state32[2] )),16);
+ state32[8]  = ADD32(( state32[8] ),( state32[13] ));
+ state32[7]  = ROT32(XOR32(( state32[7] ),( state32[8] )),12);
+ state32[2]  = ADD32(( state32[2] ),( state32[7] ))+XOR32(m[s[1ound%10][12+1]], c256[s[1%10][12]]);
+ state32[13]  = ROT32(XOR32(( state32[13] ),( state32[2] )), 8);
+ state32[8]  = ADD32(( state32[8] ),( state32[13] ));
+ state32[7]  = ROT32(XOR32(( state32[7] ),( state32[8] )), 7);
+
+
+//round : 1 , i: 14
+ state32[3]  = ADD32(( state32[3] ),( state32[4] ))+XOR32(m[s[1%10][14]], c256[s[1%10][14+1]]);
+ state32[14]  = ROT32(XOR32(( state32[14] ),( state32[3] )),16);
+ state32[9]  = ADD32(( state32[9] ),( state32[14] ));
+ state32[4]  = ROT32(XOR32(( state32[4] ),( state32[9] )),12);
+ state32[3]  = ADD32(( state32[3] ),( state32[4] ))+XOR32(m[s[1ound%10][14+1]], c256[s[1%10][14]]);
+ state32[14]  = ROT32(XOR32(( state32[14] ),( state32[3] )), 8);
+ state32[9]  = ADD32(( state32[9] ),( state32[14] ));
+ state32[4]  = ROT32(XOR32(( state32[4] ),( state32[9] )), 7);
+
+
+//ROUND :::::::::::: 2
+//round : 2 , i: 0
+ state32[0]  = ADD32(( state32[0] ),( state32[4] ))+XOR32(m[s[2%10][0]], c256[s[2%10][0+1]]);
+ state32[12]  = ROT32(XOR32(( state32[12] ),( state32[0] )),16);
+ state32[8]  = ADD32(( state32[8] ),( state32[12] ));
+ state32[4]  = ROT32(XOR32(( state32[4] ),( state32[8] )),12);
+ state32[0]  = ADD32(( state32[0] ),( state32[4] ))+XOR32(m[s[2ound%10][0+1]], c256[s[2%10][0]]);
+ state32[12]  = ROT32(XOR32(( state32[12] ),( state32[0] )), 8);
+ state32[8]  = ADD32(( state32[8] ),( state32[12] ));
+ state32[4]  = ROT32(XOR32(( state32[4] ),( state32[8] )), 7);
+
+
+//round : 2 , i: 2
+ state32[1]  = ADD32(( state32[1] ),( state32[5] ))+XOR32(m[s[2%10][2]], c256[s[2%10][2+1]]);
+ state32[13]  = ROT32(XOR32(( state32[13] ),( state32[1] )),16);
+ state32[9]  = ADD32(( state32[9] ),( state32[13] ));
+ state32[5]  = ROT32(XOR32(( state32[5] ),( state32[9] )),12);
+ state32[1]  = ADD32(( state32[1] ),( state32[5] ))+XOR32(m[s[2ound%10][2+1]], c256[s[2%10][2]]);
+ state32[13]  = ROT32(XOR32(( state32[13] ),( state32[1] )), 8);
+ state32[9]  = ADD32(( state32[9] ),( state32[13] ));
+ state32[5]  = ROT32(XOR32(( state32[5] ),( state32[9] )), 7);
+
+
+//round : 2 , i: 4
+ state32[2]  = ADD32(( state32[2] ),( state32[6] ))+XOR32(m[s[2%10][4]], c256[s[2%10][4+1]]);
+ state32[14]  = ROT32(XOR32(( state32[14] ),( state32[2] )),16);
+ state32[10]  = ADD32(( state32[10] ),( state32[14] ));
+ state32[6]  = ROT32(XOR32(( state32[6] ),( state32[10] )),12);
+ state32[2]  = ADD32(( state32[2] ),( state32[6] ))+XOR32(m[s[2ound%10][4+1]], c256[s[2%10][4]]);
+ state32[14]  = ROT32(XOR32(( state32[14] ),( state32[2] )), 8);
+ state32[10]  = ADD32(( state32[10] ),( state32[14] ));
+ state32[6]  = ROT32(XOR32(( state32[6] ),( state32[10] )), 7);
+
+
+//round : 2 , i: 6
+ state32[3]  = ADD32(( state32[3] ),( state32[7] ))+XOR32(m[s[2%10][6]], c256[s[2%10][6+1]]);
+ state32[15]  = ROT32(XOR32(( state32[15] ),( state32[3] )),16);
+ state32[11]  = ADD32(( state32[11] ),( state32[15] ));
+ state32[7]  = ROT32(XOR32(( state32[7] ),( state32[11] )),12);
+ state32[3]  = ADD32(( state32[3] ),( state32[7] ))+XOR32(m[s[2ound%10][6+1]], c256[s[2%10][6]]);
+ state32[15]  = ROT32(XOR32(( state32[15] ),( state32[3] )), 8);
+ state32[11]  = ADD32(( state32[11] ),( state32[15] ));
+ state32[7]  = ROT32(XOR32(( state32[7] ),( state32[11] )), 7);
+
+
+//round : 2 , i: 8
+ state32[0]  = ADD32(( state32[0] ),( state32[5] ))+XOR32(m[s[2%10][8]], c256[s[2%10][8+1]]);
+ state32[15]  = ROT32(XOR32(( state32[15] ),( state32[0] )),16);
+ state32[10]  = ADD32(( state32[10] ),( state32[15] ));
+ state32[5]  = ROT32(XOR32(( state32[5] ),( state32[10] )),12);
+ state32[0]  = ADD32(( state32[0] ),( state32[5] ))+XOR32(m[s[2ound%10][8+1]], c256[s[2%10][8]]);
+ state32[15]  = ROT32(XOR32(( state32[15] ),( state32[0] )), 8);
+ state32[10]  = ADD32(( state32[10] ),( state32[15] ));
+ state32[5]  = ROT32(XOR32(( state32[5] ),( state32[10] )), 7);
+
+
+//round : 2 , i: 10
+ state32[1]  = ADD32(( state32[1] ),( state32[6] ))+XOR32(m[s[2%10][10]], c256[s[2%10][10+1]]);
+ state32[12]  = ROT32(XOR32(( state32[12] ),( state32[1] )),16);
+ state32[11]  = ADD32(( state32[11] ),( state32[12] ));
+ state32[6]  = ROT32(XOR32(( state32[6] ),( state32[11] )),12);
+ state32[1]  = ADD32(( state32[1] ),( state32[6] ))+XOR32(m[s[2ound%10][10+1]], c256[s[2%10][10]]);
+ state32[12]  = ROT32(XOR32(( state32[12] ),( state32[1] )), 8);
+ state32[11]  = ADD32(( state32[11] ),( state32[12] ));
+ state32[6]  = ROT32(XOR32(( state32[6] ),( state32[11] )), 7);
+
+
+//round : 2 , i: 12
+ state32[2]  = ADD32(( state32[2] ),( state32[7] ))+XOR32(m[s[2%10][12]], c256[s[2%10][12+1]]);
+ state32[13]  = ROT32(XOR32(( state32[13] ),( state32[2] )),16);
+ state32[8]  = ADD32(( state32[8] ),( state32[13] ));
+ state32[7]  = ROT32(XOR32(( state32[7] ),( state32[8] )),12);
+ state32[2]  = ADD32(( state32[2] ),( state32[7] ))+XOR32(m[s[2ound%10][12+1]], c256[s[2%10][12]]);
+ state32[13]  = ROT32(XOR32(( state32[13] ),( state32[2] )), 8);
+ state32[8]  = ADD32(( state32[8] ),( state32[13] ));
+ state32[7]  = ROT32(XOR32(( state32[7] ),( state32[8] )), 7);
+
+
+//round : 2 , i: 14
+ state32[3]  = ADD32(( state32[3] ),( state32[4] ))+XOR32(m[s[2%10][14]], c256[s[2%10][14+1]]);
+ state32[14]  = ROT32(XOR32(( state32[14] ),( state32[3] )),16);
+ state32[9]  = ADD32(( state32[9] ),( state32[14] ));
+ state32[4]  = ROT32(XOR32(( state32[4] ),( state32[9] )),12);
+ state32[3]  = ADD32(( state32[3] ),( state32[4] ))+XOR32(m[s[2ound%10][14+1]], c256[s[2%10][14]]);
+ state32[14]  = ROT32(XOR32(( state32[14] ),( state32[3] )), 8);
+ state32[9]  = ADD32(( state32[9] ),( state32[14] ));
+ state32[4]  = ROT32(XOR32(( state32[4] ),( state32[9] )), 7);
+
+
+//ROUND :::::::::::: 3
+//round : 3 , i: 0
+ state32[0]  = ADD32(( state32[0] ),( state32[4] ))+XOR32(m[s[3%10][0]], c256[s[3%10][0+1]]);
+ state32[12]  = ROT32(XOR32(( state32[12] ),( state32[0] )),16);
+ state32[8]  = ADD32(( state32[8] ),( state32[12] ));
+ state32[4]  = ROT32(XOR32(( state32[4] ),( state32[8] )),12);
+ state32[0]  = ADD32(( state32[0] ),( state32[4] ))+XOR32(m[s[3ound%10][0+1]], c256[s[3%10][0]]);
+ state32[12]  = ROT32(XOR32(( state32[12] ),( state32[0] )), 8);
+ state32[8]  = ADD32(( state32[8] ),( state32[12] ));
+ state32[4]  = ROT32(XOR32(( state32[4] ),( state32[8] )), 7);
+
+
+//round : 3 , i: 2
+ state32[1]  = ADD32(( state32[1] ),( state32[5] ))+XOR32(m[s[3%10][2]], c256[s[3%10][2+1]]);
+ state32[13]  = ROT32(XOR32(( state32[13] ),( state32[1] )),16);
+ state32[9]  = ADD32(( state32[9] ),( state32[13] ));
+ state32[5]  = ROT32(XOR32(( state32[5] ),( state32[9] )),12);
+ state32[1]  = ADD32(( state32[1] ),( state32[5] ))+XOR32(m[s[3ound%10][2+1]], c256[s[3%10][2]]);
+ state32[13]  = ROT32(XOR32(( state32[13] ),( state32[1] )), 8);
+ state32[9]  = ADD32(( state32[9] ),( state32[13] ));
+ state32[5]  = ROT32(XOR32(( state32[5] ),( state32[9] )), 7);
+
+
+//round : 3 , i: 4
+ state32[2]  = ADD32(( state32[2] ),( state32[6] ))+XOR32(m[s[3%10][4]], c256[s[3%10][4+1]]);
+ state32[14]  = ROT32(XOR32(( state32[14] ),( state32[2] )),16);
+ state32[10]  = ADD32(( state32[10] ),( state32[14] ));
+ state32[6]  = ROT32(XOR32(( state32[6] ),( state32[10] )),12);
+ state32[2]  = ADD32(( state32[2] ),( state32[6] ))+XOR32(m[s[3ound%10][4+1]], c256[s[3%10][4]]);
+ state32[14]  = ROT32(XOR32(( state32[14] ),( state32[2] )), 8);
+ state32[10]  = ADD32(( state32[10] ),( state32[14] ));
+ state32[6]  = ROT32(XOR32(( state32[6] ),( state32[10] )), 7);
+
+
+//round : 3 , i: 6
+ state32[3]  = ADD32(( state32[3] ),( state32[7] ))+XOR32(m[s[3%10][6]], c256[s[3%10][6+1]]);
+ state32[15]  = ROT32(XOR32(( state32[15] ),( state32[3] )),16);
+ state32[11]  = ADD32(( state32[11] ),( state32[15] ));
+ state32[7]  = ROT32(XOR32(( state32[7] ),( state32[11] )),12);
+ state32[3]  = ADD32(( state32[3] ),( state32[7] ))+XOR32(m[s[3ound%10][6+1]], c256[s[3%10][6]]);
+ state32[15]  = ROT32(XOR32(( state32[15] ),( state32[3] )), 8);
+ state32[11]  = ADD32(( state32[11] ),( state32[15] ));
+ state32[7]  = ROT32(XOR32(( state32[7] ),( state32[11] )), 7);
+
+
+//round : 3 , i: 8
+ state32[0]  = ADD32(( state32[0] ),( state32[5] ))+XOR32(m[s[3%10][8]], c256[s[3%10][8+1]]);
+ state32[15]  = ROT32(XOR32(( state32[15] ),( state32[0] )),16);
+ state32[10]  = ADD32(( state32[10] ),( state32[15] ));
+ state32[5]  = ROT32(XOR32(( state32[5] ),( state32[10] )),12);
+ state32[0]  = ADD32(( state32[0] ),( state32[5] ))+XOR32(m[s[3ound%10][8+1]], c256[s[3%10][8]]);
+ state32[15]  = ROT32(XOR32(( state32[15] ),( state32[0] )), 8);
+ state32[10]  = ADD32(( state32[10] ),( state32[15] ));
+ state32[5]  = ROT32(XOR32(( state32[5] ),( state32[10] )), 7);
+
+
+//round : 3 , i: 10
+ state32[1]  = ADD32(( state32[1] ),( state32[6] ))+XOR32(m[s[3%10][10]], c256[s[3%10][10+1]]);
+ state32[12]  = ROT32(XOR32(( state32[12] ),( state32[1] )),16);
+ state32[11]  = ADD32(( state32[11] ),( state32[12] ));
+ state32[6]  = ROT32(XOR32(( state32[6] ),( state32[11] )),12);
+ state32[1]  = ADD32(( state32[1] ),( state32[6] ))+XOR32(m[s[3ound%10][10+1]], c256[s[3%10][10]]);
+ state32[12]  = ROT32(XOR32(( state32[12] ),( state32[1] )), 8);
+ state32[11]  = ADD32(( state32[11] ),( state32[12] ));
+ state32[6]  = ROT32(XOR32(( state32[6] ),( state32[11] )), 7);
+
+
+//round : 3 , i: 12
+ state32[2]  = ADD32(( state32[2] ),( state32[7] ))+XOR32(m[s[3%10][12]], c256[s[3%10][12+1]]);
+ state32[13]  = ROT32(XOR32(( state32[13] ),( state32[2] )),16);
+ state32[8]  = ADD32(( state32[8] ),( state32[13] ));
+ state32[7]  = ROT32(XOR32(( state32[7] ),( state32[8] )),12);
+ state32[2]  = ADD32(( state32[2] ),( state32[7] ))+XOR32(m[s[3ound%10][12+1]], c256[s[3%10][12]]);
+ state32[13]  = ROT32(XOR32(( state32[13] ),( state32[2] )), 8);
+ state32[8]  = ADD32(( state32[8] ),( state32[13] ));
+ state32[7]  = ROT32(XOR32(( state32[7] ),( state32[8] )), 7);
+
+
+//round : 3 , i: 14
+ state32[3]  = ADD32(( state32[3] ),( state32[4] ))+XOR32(m[s[3%10][14]], c256[s[3%10][14+1]]);
+ state32[14]  = ROT32(XOR32(( state32[14] ),( state32[3] )),16);
+ state32[9]  = ADD32(( state32[9] ),( state32[14] ));
+ state32[4]  = ROT32(XOR32(( state32[4] ),( state32[9] )),12);
+ state32[3]  = ADD32(( state32[3] ),( state32[4] ))+XOR32(m[s[3ound%10][14+1]], c256[s[3%10][14]]);
+ state32[14]  = ROT32(XOR32(( state32[14] ),( state32[3] )), 8);
+ state32[9]  = ADD32(( state32[9] ),( state32[14] ));
+ state32[4]  = ROT32(XOR32(( state32[4] ),( state32[9] )), 7);
+
+
+//ROUND :::::::::::: 4
+//round : 4 , i: 0
+ state32[0]  = ADD32(( state32[0] ),( state32[4] ))+XOR32(m[s[4%10][0]], c256[s[4%10][0+1]]);
+ state32[12]  = ROT32(XOR32(( state32[12] ),( state32[0] )),16);
+ state32[8]  = ADD32(( state32[8] ),( state32[12] ));
+ state32[4]  = ROT32(XOR32(( state32[4] ),( state32[8] )),12);
+ state32[0]  = ADD32(( state32[0] ),( state32[4] ))+XOR32(m[s[4ound%10][0+1]], c256[s[4%10][0]]);
+ state32[12]  = ROT32(XOR32(( state32[12] ),( state32[0] )), 8);
+ state32[8]  = ADD32(( state32[8] ),( state32[12] ));
+ state32[4]  = ROT32(XOR32(( state32[4] ),( state32[8] )), 7);
+
+
+//round : 4 , i: 2
+ state32[1]  = ADD32(( state32[1] ),( state32[5] ))+XOR32(m[s[4%10][2]], c256[s[4%10][2+1]]);
+ state32[13]  = ROT32(XOR32(( state32[13] ),( state32[1] )),16);
+ state32[9]  = ADD32(( state32[9] ),( state32[13] ));
+ state32[5]  = ROT32(XOR32(( state32[5] ),( state32[9] )),12);
+ state32[1]  = ADD32(( state32[1] ),( state32[5] ))+XOR32(m[s[4ound%10][2+1]], c256[s[4%10][2]]);
+ state32[13]  = ROT32(XOR32(( state32[13] ),( state32[1] )), 8);
+ state32[9]  = ADD32(( state32[9] ),( state32[13] ));
+ state32[5]  = ROT32(XOR32(( state32[5] ),( state32[9] )), 7);
+
+
+//round : 4 , i: 4
+ state32[2]  = ADD32(( state32[2] ),( state32[6] ))+XOR32(m[s[4%10][4]], c256[s[4%10][4+1]]);
+ state32[14]  = ROT32(XOR32(( state32[14] ),( state32[2] )),16);
+ state32[10]  = ADD32(( state32[10] ),( state32[14] ));
+ state32[6]  = ROT32(XOR32(( state32[6] ),( state32[10] )),12);
+ state32[2]  = ADD32(( state32[2] ),( state32[6] ))+XOR32(m[s[4ound%10][4+1]], c256[s[4%10][4]]);
+ state32[14]  = ROT32(XOR32(( state32[14] ),( state32[2] )), 8);
+ state32[10]  = ADD32(( state32[10] ),( state32[14] ));
+ state32[6]  = ROT32(XOR32(( state32[6] ),( state32[10] )), 7);
+
+
+//round : 4 , i: 6
+ state32[3]  = ADD32(( state32[3] ),( state32[7] ))+XOR32(m[s[4%10][6]], c256[s[4%10][6+1]]);
+ state32[15]  = ROT32(XOR32(( state32[15] ),( state32[3] )),16);
+ state32[11]  = ADD32(( state32[11] ),( state32[15] ));
+ state32[7]  = ROT32(XOR32(( state32[7] ),( state32[11] )),12);
+ state32[3]  = ADD32(( state32[3] ),( state32[7] ))+XOR32(m[s[4ound%10][6+1]], c256[s[4%10][6]]);
+ state32[15]  = ROT32(XOR32(( state32[15] ),( state32[3] )), 8);
+ state32[11]  = ADD32(( state32[11] ),( state32[15] ));
+ state32[7]  = ROT32(XOR32(( state32[7] ),( state32[11] )), 7);
+
+
+//round : 4 , i: 8
+ state32[0]  = ADD32(( state32[0] ),( state32[5] ))+XOR32(m[s[4%10][8]], c256[s[4%10][8+1]]);
+ state32[15]  = ROT32(XOR32(( state32[15] ),( state32[0] )),16);
+ state32[10]  = ADD32(( state32[10] ),( state32[15] ));
+ state32[5]  = ROT32(XOR32(( state32[5] ),( state32[10] )),12);
+ state32[0]  = ADD32(( state32[0] ),( state32[5] ))+XOR32(m[s[4ound%10][8+1]], c256[s[4%10][8]]);
+ state32[15]  = ROT32(XOR32(( state32[15] ),( state32[0] )), 8);
+ state32[10]  = ADD32(( state32[10] ),( state32[15] ));
+ state32[5]  = ROT32(XOR32(( state32[5] ),( state32[10] )), 7);
+
+
+//round : 4 , i: 10
+ state32[1]  = ADD32(( state32[1] ),( state32[6] ))+XOR32(m[s[4%10][10]], c256[s[4%10][10+1]]);
+ state32[12]  = ROT32(XOR32(( state32[12] ),( state32[1] )),16);
+ state32[11]  = ADD32(( state32[11] ),( state32[12] ));
+ state32[6]  = ROT32(XOR32(( state32[6] ),( state32[11] )),12);
+ state32[1]  = ADD32(( state32[1] ),( state32[6] ))+XOR32(m[s[4ound%10][10+1]], c256[s[4%10][10]]);
+ state32[12]  = ROT32(XOR32(( state32[12] ),( state32[1] )), 8);
+ state32[11]  = ADD32(( state32[11] ),( state32[12] ));
+ state32[6]  = ROT32(XOR32(( state32[6] ),( state32[11] )), 7);
+
+
+//round : 4 , i: 12
+ state32[2]  = ADD32(( state32[2] ),( state32[7] ))+XOR32(m[s[4%10][12]], c256[s[4%10][12+1]]);
+ state32[13]  = ROT32(XOR32(( state32[13] ),( state32[2] )),16);
+ state32[8]  = ADD32(( state32[8] ),( state32[13] ));
+ state32[7]  = ROT32(XOR32(( state32[7] ),( state32[8] )),12);
+ state32[2]  = ADD32(( state32[2] ),( state32[7] ))+XOR32(m[s[4ound%10][12+1]], c256[s[4%10][12]]);
+ state32[13]  = ROT32(XOR32(( state32[13] ),( state32[2] )), 8);
+ state32[8]  = ADD32(( state32[8] ),( state32[13] ));
+ state32[7]  = ROT32(XOR32(( state32[7] ),( state32[8] )), 7);
+
+
+//round : 4 , i: 14
+ state32[3]  = ADD32(( state32[3] ),( state32[4] ))+XOR32(m[s[4%10][14]], c256[s[4%10][14+1]]);
+ state32[14]  = ROT32(XOR32(( state32[14] ),( state32[3] )),16);
+ state32[9]  = ADD32(( state32[9] ),( state32[14] ));
+ state32[4]  = ROT32(XOR32(( state32[4] ),( state32[9] )),12);
+ state32[3]  = ADD32(( state32[3] ),( state32[4] ))+XOR32(m[s[4ound%10][14+1]], c256[s[4%10][14]]);
+ state32[14]  = ROT32(XOR32(( state32[14] ),( state32[3] )), 8);
+ state32[9]  = ADD32(( state32[9] ),( state32[14] ));
+ state32[4]  = ROT32(XOR32(( state32[4] ),( state32[9] )), 7);
+
+
+//ROUND :::::::::::: 5
+//round : 5 , i: 0
+ state32[0]  = ADD32(( state32[0] ),( state32[4] ))+XOR32(m[s[5%10][0]], c256[s[5%10][0+1]]);
+ state32[12]  = ROT32(XOR32(( state32[12] ),( state32[0] )),16);
+ state32[8]  = ADD32(( state32[8] ),( state32[12] ));
+ state32[4]  = ROT32(XOR32(( state32[4] ),( state32[8] )),12);
+ state32[0]  = ADD32(( state32[0] ),( state32[4] ))+XOR32(m[s[5ound%10][0+1]], c256[s[5%10][0]]);
+ state32[12]  = ROT32(XOR32(( state32[12] ),( state32[0] )), 8);
+ state32[8]  = ADD32(( state32[8] ),( state32[12] ));
+ state32[4]  = ROT32(XOR32(( state32[4] ),( state32[8] )), 7);
+
+
+//round : 5 , i: 2
+ state32[1]  = ADD32(( state32[1] ),( state32[5] ))+XOR32(m[s[5%10][2]], c256[s[5%10][2+1]]);
+ state32[13]  = ROT32(XOR32(( state32[13] ),( state32[1] )),16);
+ state32[9]  = ADD32(( state32[9] ),( state32[13] ));
+ state32[5]  = ROT32(XOR32(( state32[5] ),( state32[9] )),12);
+ state32[1]  = ADD32(( state32[1] ),( state32[5] ))+XOR32(m[s[5ound%10][2+1]], c256[s[5%10][2]]);
+ state32[13]  = ROT32(XOR32(( state32[13] ),( state32[1] )), 8);
+ state32[9]  = ADD32(( state32[9] ),( state32[13] ));
+ state32[5]  = ROT32(XOR32(( state32[5] ),( state32[9] )), 7);
+
+
+//round : 5 , i: 4
+ state32[2]  = ADD32(( state32[2] ),( state32[6] ))+XOR32(m[s[5%10][4]], c256[s[5%10][4+1]]);
+ state32[14]  = ROT32(XOR32(( state32[14] ),( state32[2] )),16);
+ state32[10]  = ADD32(( state32[10] ),( state32[14] ));
+ state32[6]  = ROT32(XOR32(( state32[6] ),( state32[10] )),12);
+ state32[2]  = ADD32(( state32[2] ),( state32[6] ))+XOR32(m[s[5ound%10][4+1]], c256[s[5%10][4]]);
+ state32[14]  = ROT32(XOR32(( state32[14] ),( state32[2] )), 8);
+ state32[10]  = ADD32(( state32[10] ),( state32[14] ));
+ state32[6]  = ROT32(XOR32(( state32[6] ),( state32[10] )), 7);
+
+
+//round : 5 , i: 6
+ state32[3]  = ADD32(( state32[3] ),( state32[7] ))+XOR32(m[s[5%10][6]], c256[s[5%10][6+1]]);
+ state32[15]  = ROT32(XOR32(( state32[15] ),( state32[3] )),16);
+ state32[11]  = ADD32(( state32[11] ),( state32[15] ));
+ state32[7]  = ROT32(XOR32(( state32[7] ),( state32[11] )),12);
+ state32[3]  = ADD32(( state32[3] ),( state32[7] ))+XOR32(m[s[5ound%10][6+1]], c256[s[5%10][6]]);
+ state32[15]  = ROT32(XOR32(( state32[15] ),( state32[3] )), 8);
+ state32[11]  = ADD32(( state32[11] ),( state32[15] ));
+ state32[7]  = ROT32(XOR32(( state32[7] ),( state32[11] )), 7);
+
+
+//round : 5 , i: 8
+ state32[0]  = ADD32(( state32[0] ),( state32[5] ))+XOR32(m[s[5%10][8]], c256[s[5%10][8+1]]);
+ state32[15]  = ROT32(XOR32(( state32[15] ),( state32[0] )),16);
+ state32[10]  = ADD32(( state32[10] ),( state32[15] ));
+ state32[5]  = ROT32(XOR32(( state32[5] ),( state32[10] )),12);
+ state32[0]  = ADD32(( state32[0] ),( state32[5] ))+XOR32(m[s[5ound%10][8+1]], c256[s[5%10][8]]);
+ state32[15]  = ROT32(XOR32(( state32[15] ),( state32[0] )), 8);
+ state32[10]  = ADD32(( state32[10] ),( state32[15] ));
+ state32[5]  = ROT32(XOR32(( state32[5] ),( state32[10] )), 7);
+
+
+//round : 5 , i: 10
+ state32[1]  = ADD32(( state32[1] ),( state32[6] ))+XOR32(m[s[5%10][10]], c256[s[5%10][10+1]]);
+ state32[12]  = ROT32(XOR32(( state32[12] ),( state32[1] )),16);
+ state32[11]  = ADD32(( state32[11] ),( state32[12] ));
+ state32[6]  = ROT32(XOR32(( state32[6] ),( state32[11] )),12);
+ state32[1]  = ADD32(( state32[1] ),( state32[6] ))+XOR32(m[s[5ound%10][10+1]], c256[s[5%10][10]]);
+ state32[12]  = ROT32(XOR32(( state32[12] ),( state32[1] )), 8);
+ state32[11]  = ADD32(( state32[11] ),( state32[12] ));
+ state32[6]  = ROT32(XOR32(( state32[6] ),( state32[11] )), 7);
+
+
+//round : 5 , i: 12
+ state32[2]  = ADD32(( state32[2] ),( state32[7] ))+XOR32(m[s[5%10][12]], c256[s[5%10][12+1]]);
+ state32[13]  = ROT32(XOR32(( state32[13] ),( state32[2] )),16);
+ state32[8]  = ADD32(( state32[8] ),( state32[13] ));
+ state32[7]  = ROT32(XOR32(( state32[7] ),( state32[8] )),12);
+ state32[2]  = ADD32(( state32[2] ),( state32[7] ))+XOR32(m[s[5ound%10][12+1]], c256[s[5%10][12]]);
+ state32[13]  = ROT32(XOR32(( state32[13] ),( state32[2] )), 8);
+ state32[8]  = ADD32(( state32[8] ),( state32[13] ));
+ state32[7]  = ROT32(XOR32(( state32[7] ),( state32[8] )), 7);
+
+
+//round : 5 , i: 14
+ state32[3]  = ADD32(( state32[3] ),( state32[4] ))+XOR32(m[s[5%10][14]], c256[s[5%10][14+1]]);
+ state32[14]  = ROT32(XOR32(( state32[14] ),( state32[3] )),16);
+ state32[9]  = ADD32(( state32[9] ),( state32[14] ));
+ state32[4]  = ROT32(XOR32(( state32[4] ),( state32[9] )),12);
+ state32[3]  = ADD32(( state32[3] ),( state32[4] ))+XOR32(m[s[5ound%10][14+1]], c256[s[5%10][14]]);
+ state32[14]  = ROT32(XOR32(( state32[14] ),( state32[3] )), 8);
+ state32[9]  = ADD32(( state32[9] ),( state32[14] ));
+ state32[4]  = ROT32(XOR32(( state32[4] ),( state32[9] )), 7);
+
+
+//ROUND :::::::::::: 6
+//round : 6 , i: 0
+ state32[0]  = ADD32(( state32[0] ),( state32[4] ))+XOR32(m[s[6%10][0]], c256[s[6%10][0+1]]);
+ state32[12]  = ROT32(XOR32(( state32[12] ),( state32[0] )),16);
+ state32[8]  = ADD32(( state32[8] ),( state32[12] ));
+ state32[4]  = ROT32(XOR32(( state32[4] ),( state32[8] )),12);
+ state32[0]  = ADD32(( state32[0] ),( state32[4] ))+XOR32(m[s[6ound%10][0+1]], c256[s[6%10][0]]);
+ state32[12]  = ROT32(XOR32(( state32[12] ),( state32[0] )), 8);
+ state32[8]  = ADD32(( state32[8] ),( state32[12] ));
+ state32[4]  = ROT32(XOR32(( state32[4] ),( state32[8] )), 7);
+
+
+//round : 6 , i: 2
+ state32[1]  = ADD32(( state32[1] ),( state32[5] ))+XOR32(m[s[6%10][2]], c256[s[6%10][2+1]]);
+ state32[13]  = ROT32(XOR32(( state32[13] ),( state32[1] )),16);
+ state32[9]  = ADD32(( state32[9] ),( state32[13] ));
+ state32[5]  = ROT32(XOR32(( state32[5] ),( state32[9] )),12);
+ state32[1]  = ADD32(( state32[1] ),( state32[5] ))+XOR32(m[s[6ound%10][2+1]], c256[s[6%10][2]]);
+ state32[13]  = ROT32(XOR32(( state32[13] ),( state32[1] )), 8);
+ state32[9]  = ADD32(( state32[9] ),( state32[13] ));
+ state32[5]  = ROT32(XOR32(( state32[5] ),( state32[9] )), 7);
+
+
+//round : 6 , i: 4
+ state32[2]  = ADD32(( state32[2] ),( state32[6] ))+XOR32(m[s[6%10][4]], c256[s[6%10][4+1]]);
+ state32[14]  = ROT32(XOR32(( state32[14] ),( state32[2] )),16);
+ state32[10]  = ADD32(( state32[10] ),( state32[14] ));
+ state32[6]  = ROT32(XOR32(( state32[6] ),( state32[10] )),12);
+ state32[2]  = ADD32(( state32[2] ),( state32[6] ))+XOR32(m[s[6ound%10][4+1]], c256[s[6%10][4]]);
+ state32[14]  = ROT32(XOR32(( state32[14] ),( state32[2] )), 8);
+ state32[10]  = ADD32(( state32[10] ),( state32[14] ));
+ state32[6]  = ROT32(XOR32(( state32[6] ),( state32[10] )), 7);
+
+
+//round : 6 , i: 6
+ state32[3]  = ADD32(( state32[3] ),( state32[7] ))+XOR32(m[s[6%10][6]], c256[s[6%10][6+1]]);
+ state32[15]  = ROT32(XOR32(( state32[15] ),( state32[3] )),16);
+ state32[11]  = ADD32(( state32[11] ),( state32[15] ));
+ state32[7]  = ROT32(XOR32(( state32[7] ),( state32[11] )),12);
+ state32[3]  = ADD32(( state32[3] ),( state32[7] ))+XOR32(m[s[6ound%10][6+1]], c256[s[6%10][6]]);
+ state32[15]  = ROT32(XOR32(( state32[15] ),( state32[3] )), 8);
+ state32[11]  = ADD32(( state32[11] ),( state32[15] ));
+ state32[7]  = ROT32(XOR32(( state32[7] ),( state32[11] )), 7);
+
+
+//round : 6 , i: 8
+ state32[0]  = ADD32(( state32[0] ),( state32[5] ))+XOR32(m[s[6%10][8]], c256[s[6%10][8+1]]);
+ state32[15]  = ROT32(XOR32(( state32[15] ),( state32[0] )),16);
+ state32[10]  = ADD32(( state32[10] ),( state32[15] ));
+ state32[5]  = ROT32(XOR32(( state32[5] ),( state32[10] )),12);
+ state32[0]  = ADD32(( state32[0] ),( state32[5] ))+XOR32(m[s[6ound%10][8+1]], c256[s[6%10][8]]);
+ state32[15]  = ROT32(XOR32(( state32[15] ),( state32[0] )), 8);
+ state32[10]  = ADD32(( state32[10] ),( state32[15] ));
+ state32[5]  = ROT32(XOR32(( state32[5] ),( state32[10] )), 7);
+
+
+//round : 6 , i: 10
+ state32[1]  = ADD32(( state32[1] ),( state32[6] ))+XOR32(m[s[6%10][10]], c256[s[6%10][10+1]]);
+ state32[12]  = ROT32(XOR32(( state32[12] ),( state32[1] )),16);
+ state32[11]  = ADD32(( state32[11] ),( state32[12] ));
+ state32[6]  = ROT32(XOR32(( state32[6] ),( state32[11] )),12);
+ state32[1]  = ADD32(( state32[1] ),( state32[6] ))+XOR32(m[s[6ound%10][10+1]], c256[s[6%10][10]]);
+ state32[12]  = ROT32(XOR32(( state32[12] ),( state32[1] )), 8);
+ state32[11]  = ADD32(( state32[11] ),( state32[12] ));
+ state32[6]  = ROT32(XOR32(( state32[6] ),( state32[11] )), 7);
+
+
+//round : 6 , i: 12
+ state32[2]  = ADD32(( state32[2] ),( state32[7] ))+XOR32(m[s[6%10][12]], c256[s[6%10][12+1]]);
+ state32[13]  = ROT32(XOR32(( state32[13] ),( state32[2] )),16);
+ state32[8]  = ADD32(( state32[8] ),( state32[13] ));
+ state32[7]  = ROT32(XOR32(( state32[7] ),( state32[8] )),12);
+ state32[2]  = ADD32(( state32[2] ),( state32[7] ))+XOR32(m[s[6ound%10][12+1]], c256[s[6%10][12]]);
+ state32[13]  = ROT32(XOR32(( state32[13] ),( state32[2] )), 8);
+ state32[8]  = ADD32(( state32[8] ),( state32[13] ));
+ state32[7]  = ROT32(XOR32(( state32[7] ),( state32[8] )), 7);
+
+
+//round : 6 , i: 14
+ state32[3]  = ADD32(( state32[3] ),( state32[4] ))+XOR32(m[s[6%10][14]], c256[s[6%10][14+1]]);
+ state32[14]  = ROT32(XOR32(( state32[14] ),( state32[3] )),16);
+ state32[9]  = ADD32(( state32[9] ),( state32[14] ));
+ state32[4]  = ROT32(XOR32(( state32[4] ),( state32[9] )),12);
+ state32[3]  = ADD32(( state32[3] ),( state32[4] ))+XOR32(m[s[6ound%10][14+1]], c256[s[6%10][14]]);
+ state32[14]  = ROT32(XOR32(( state32[14] ),( state32[3] )), 8);
+ state32[9]  = ADD32(( state32[9] ),( state32[14] ));
+ state32[4]  = ROT32(XOR32(( state32[4] ),( state32[9] )), 7);
+
+
+//ROUND :::::::::::: 7
+//round : 7 , i: 0
+ state32[0]  = ADD32(( state32[0] ),( state32[4] ))+XOR32(m[s[7%10][0]], c256[s[7%10][0+1]]);
+ state32[12]  = ROT32(XOR32(( state32[12] ),( state32[0] )),16);
+ state32[8]  = ADD32(( state32[8] ),( state32[12] ));
+ state32[4]  = ROT32(XOR32(( state32[4] ),( state32[8] )),12);
+ state32[0]  = ADD32(( state32[0] ),( state32[4] ))+XOR32(m[s[7ound%10][0+1]], c256[s[7%10][0]]);
+ state32[12]  = ROT32(XOR32(( state32[12] ),( state32[0] )), 8);
+ state32[8]  = ADD32(( state32[8] ),( state32[12] ));
+ state32[4]  = ROT32(XOR32(( state32[4] ),( state32[8] )), 7);
+
+
+//round : 7 , i: 2
+ state32[1]  = ADD32(( state32[1] ),( state32[5] ))+XOR32(m[s[7%10][2]], c256[s[7%10][2+1]]);
+ state32[13]  = ROT32(XOR32(( state32[13] ),( state32[1] )),16);
+ state32[9]  = ADD32(( state32[9] ),( state32[13] ));
+ state32[5]  = ROT32(XOR32(( state32[5] ),( state32[9] )),12);
+ state32[1]  = ADD32(( state32[1] ),( state32[5] ))+XOR32(m[s[7ound%10][2+1]], c256[s[7%10][2]]);
+ state32[13]  = ROT32(XOR32(( state32[13] ),( state32[1] )), 8);
+ state32[9]  = ADD32(( state32[9] ),( state32[13] ));
+ state32[5]  = ROT32(XOR32(( state32[5] ),( state32[9] )), 7);
+
+
+//round : 7 , i: 4
+ state32[2]  = ADD32(( state32[2] ),( state32[6] ))+XOR32(m[s[7%10][4]], c256[s[7%10][4+1]]);
+ state32[14]  = ROT32(XOR32(( state32[14] ),( state32[2] )),16);
+ state32[10]  = ADD32(( state32[10] ),( state32[14] ));
+ state32[6]  = ROT32(XOR32(( state32[6] ),( state32[10] )),12);
+ state32[2]  = ADD32(( state32[2] ),( state32[6] ))+XOR32(m[s[7ound%10][4+1]], c256[s[7%10][4]]);
+ state32[14]  = ROT32(XOR32(( state32[14] ),( state32[2] )), 8);
+ state32[10]  = ADD32(( state32[10] ),( state32[14] ));
+ state32[6]  = ROT32(XOR32(( state32[6] ),( state32[10] )), 7);
+
+
+//round : 7 , i: 6
+ state32[3]  = ADD32(( state32[3] ),( state32[7] ))+XOR32(m[s[7%10][6]], c256[s[7%10][6+1]]);
+ state32[15]  = ROT32(XOR32(( state32[15] ),( state32[3] )),16);
+ state32[11]  = ADD32(( state32[11] ),( state32[15] ));
+ state32[7]  = ROT32(XOR32(( state32[7] ),( state32[11] )),12);
+ state32[3]  = ADD32(( state32[3] ),( state32[7] ))+XOR32(m[s[7ound%10][6+1]], c256[s[7%10][6]]);
+ state32[15]  = ROT32(XOR32(( state32[15] ),( state32[3] )), 8);
+ state32[11]  = ADD32(( state32[11] ),( state32[15] ));
+ state32[7]  = ROT32(XOR32(( state32[7] ),( state32[11] )), 7);
+
+
+//round : 7 , i: 8
+ state32[0]  = ADD32(( state32[0] ),( state32[5] ))+XOR32(m[s[7%10][8]], c256[s[7%10][8+1]]);
+ state32[15]  = ROT32(XOR32(( state32[15] ),( state32[0] )),16);
+ state32[10]  = ADD32(( state32[10] ),( state32[15] ));
+ state32[5]  = ROT32(XOR32(( state32[5] ),( state32[10] )),12);
+ state32[0]  = ADD32(( state32[0] ),( state32[5] ))+XOR32(m[s[7ound%10][8+1]], c256[s[7%10][8]]);
+ state32[15]  = ROT32(XOR32(( state32[15] ),( state32[0] )), 8);
+ state32[10]  = ADD32(( state32[10] ),( state32[15] ));
+ state32[5]  = ROT32(XOR32(( state32[5] ),( state32[10] )), 7);
+
+
+//round : 7 , i: 10
+ state32[1]  = ADD32(( state32[1] ),( state32[6] ))+XOR32(m[s[7%10][10]], c256[s[7%10][10+1]]);
+ state32[12]  = ROT32(XOR32(( state32[12] ),( state32[1] )),16);
+ state32[11]  = ADD32(( state32[11] ),( state32[12] ));
+ state32[6]  = ROT32(XOR32(( state32[6] ),( state32[11] )),12);
+ state32[1]  = ADD32(( state32[1] ),( state32[6] ))+XOR32(m[s[7ound%10][10+1]], c256[s[7%10][10]]);
+ state32[12]  = ROT32(XOR32(( state32[12] ),( state32[1] )), 8);
+ state32[11]  = ADD32(( state32[11] ),( state32[12] ));
+ state32[6]  = ROT32(XOR32(( state32[6] ),( state32[11] )), 7);
+
+
+//round : 7 , i: 12
+ state32[2]  = ADD32(( state32[2] ),( state32[7] ))+XOR32(m[s[7%10][12]], c256[s[7%10][12+1]]);
+ state32[13]  = ROT32(XOR32(( state32[13] ),( state32[2] )),16);
+ state32[8]  = ADD32(( state32[8] ),( state32[13] ));
+ state32[7]  = ROT32(XOR32(( state32[7] ),( state32[8] )),12);
+ state32[2]  = ADD32(( state32[2] ),( state32[7] ))+XOR32(m[s[7ound%10][12+1]], c256[s[7%10][12]]);
+ state32[13]  = ROT32(XOR32(( state32[13] ),( state32[2] )), 8);
+ state32[8]  = ADD32(( state32[8] ),( state32[13] ));
+ state32[7]  = ROT32(XOR32(( state32[7] ),( state32[8] )), 7);
+
+
+//round : 7 , i: 14
+ state32[3]  = ADD32(( state32[3] ),( state32[4] ))+XOR32(m[s[7%10][14]], c256[s[7%10][14+1]]);
+ state32[14]  = ROT32(XOR32(( state32[14] ),( state32[3] )),16);
+ state32[9]  = ADD32(( state32[9] ),( state32[14] ));
+ state32[4]  = ROT32(XOR32(( state32[4] ),( state32[9] )),12);
+ state32[3]  = ADD32(( state32[3] ),( state32[4] ))+XOR32(m[s[7ound%10][14+1]], c256[s[7%10][14]]);
+ state32[14]  = ROT32(XOR32(( state32[14] ),( state32[3] )), 8);
+ state32[9]  = ADD32(( state32[9] ),( state32[14] ));
+ state32[4]  = ROT32(XOR32(( state32[4] ),( state32[9] )), 7);
+
+
+//ROUND :::::::::::: 8
+//round : 8 , i: 0
+ state32[0]  = ADD32(( state32[0] ),( state32[4] ))+XOR32(m[s[8%10][0]], c256[s[8%10][0+1]]);
+ state32[12]  = ROT32(XOR32(( state32[12] ),( state32[0] )),16);
+ state32[8]  = ADD32(( state32[8] ),( state32[12] ));
+ state32[4]  = ROT32(XOR32(( state32[4] ),( state32[8] )),12);
+ state32[0]  = ADD32(( state32[0] ),( state32[4] ))+XOR32(m[s[8ound%10][0+1]], c256[s[8%10][0]]);
+ state32[12]  = ROT32(XOR32(( state32[12] ),( state32[0] )), 8);
+ state32[8]  = ADD32(( state32[8] ),( state32[12] ));
+ state32[4]  = ROT32(XOR32(( state32[4] ),( state32[8] )), 7);
+
+
+//round : 8 , i: 2
+ state32[1]  = ADD32(( state32[1] ),( state32[5] ))+XOR32(m[s[8%10][2]], c256[s[8%10][2+1]]);
+ state32[13]  = ROT32(XOR32(( state32[13] ),( state32[1] )),16);
+ state32[9]  = ADD32(( state32[9] ),( state32[13] ));
+ state32[5]  = ROT32(XOR32(( state32[5] ),( state32[9] )),12);
+ state32[1]  = ADD32(( state32[1] ),( state32[5] ))+XOR32(m[s[8ound%10][2+1]], c256[s[8%10][2]]);
+ state32[13]  = ROT32(XOR32(( state32[13] ),( state32[1] )), 8);
+ state32[9]  = ADD32(( state32[9] ),( state32[13] ));
+ state32[5]  = ROT32(XOR32(( state32[5] ),( state32[9] )), 7);
+
+
+//round : 8 , i: 4
+ state32[2]  = ADD32(( state32[2] ),( state32[6] ))+XOR32(m[s[8%10][4]], c256[s[8%10][4+1]]);
+ state32[14]  = ROT32(XOR32(( state32[14] ),( state32[2] )),16);
+ state32[10]  = ADD32(( state32[10] ),( state32[14] ));
+ state32[6]  = ROT32(XOR32(( state32[6] ),( state32[10] )),12);
+ state32[2]  = ADD32(( state32[2] ),( state32[6] ))+XOR32(m[s[8ound%10][4+1]], c256[s[8%10][4]]);
+ state32[14]  = ROT32(XOR32(( state32[14] ),( state32[2] )), 8);
+ state32[10]  = ADD32(( state32[10] ),( state32[14] ));
+ state32[6]  = ROT32(XOR32(( state32[6] ),( state32[10] )), 7);
+
+
+//round : 8 , i: 6
+ state32[3]  = ADD32(( state32[3] ),( state32[7] ))+XOR32(m[s[8%10][6]], c256[s[8%10][6+1]]);
+ state32[15]  = ROT32(XOR32(( state32[15] ),( state32[3] )),16);
+ state32[11]  = ADD32(( state32[11] ),( state32[15] ));
+ state32[7]  = ROT32(XOR32(( state32[7] ),( state32[11] )),12);
+ state32[3]  = ADD32(( state32[3] ),( state32[7] ))+XOR32(m[s[8ound%10][6+1]], c256[s[8%10][6]]);
+ state32[15]  = ROT32(XOR32(( state32[15] ),( state32[3] )), 8);
+ state32[11]  = ADD32(( state32[11] ),( state32[15] ));
+ state32[7]  = ROT32(XOR32(( state32[7] ),( state32[11] )), 7);
+
+
+//round : 8 , i: 8
+ state32[0]  = ADD32(( state32[0] ),( state32[5] ))+XOR32(m[s[8%10][8]], c256[s[8%10][8+1]]);
+ state32[15]  = ROT32(XOR32(( state32[15] ),( state32[0] )),16);
+ state32[10]  = ADD32(( state32[10] ),( state32[15] ));
+ state32[5]  = ROT32(XOR32(( state32[5] ),( state32[10] )),12);
+ state32[0]  = ADD32(( state32[0] ),( state32[5] ))+XOR32(m[s[8ound%10][8+1]], c256[s[8%10][8]]);
+ state32[15]  = ROT32(XOR32(( state32[15] ),( state32[0] )), 8);
+ state32[10]  = ADD32(( state32[10] ),( state32[15] ));
+ state32[5]  = ROT32(XOR32(( state32[5] ),( state32[10] )), 7);
+
+
+//round : 8 , i: 10
+ state32[1]  = ADD32(( state32[1] ),( state32[6] ))+XOR32(m[s[8%10][10]], c256[s[8%10][10+1]]);
+ state32[12]  = ROT32(XOR32(( state32[12] ),( state32[1] )),16);
+ state32[11]  = ADD32(( state32[11] ),( state32[12] ));
+ state32[6]  = ROT32(XOR32(( state32[6] ),( state32[11] )),12);
+ state32[1]  = ADD32(( state32[1] ),( state32[6] ))+XOR32(m[s[8ound%10][10+1]], c256[s[8%10][10]]);
+ state32[12]  = ROT32(XOR32(( state32[12] ),( state32[1] )), 8);
+ state32[11]  = ADD32(( state32[11] ),( state32[12] ));
+ state32[6]  = ROT32(XOR32(( state32[6] ),( state32[11] )), 7);
+
+
+//round : 8 , i: 12
+ state32[2]  = ADD32(( state32[2] ),( state32[7] ))+XOR32(m[s[8%10][12]], c256[s[8%10][12+1]]);
+ state32[13]  = ROT32(XOR32(( state32[13] ),( state32[2] )),16);
+ state32[8]  = ADD32(( state32[8] ),( state32[13] ));
+ state32[7]  = ROT32(XOR32(( state32[7] ),( state32[8] )),12);
+ state32[2]  = ADD32(( state32[2] ),( state32[7] ))+XOR32(m[s[8ound%10][12+1]], c256[s[8%10][12]]);
+ state32[13]  = ROT32(XOR32(( state32[13] ),( state32[2] )), 8);
+ state32[8]  = ADD32(( state32[8] ),( state32[13] ));
+ state32[7]  = ROT32(XOR32(( state32[7] ),( state32[8] )), 7);
+
+
+//round : 8 , i: 14
+ state32[3]  = ADD32(( state32[3] ),( state32[4] ))+XOR32(m[s[8%10][14]], c256[s[8%10][14+1]]);
+ state32[14]  = ROT32(XOR32(( state32[14] ),( state32[3] )),16);
+ state32[9]  = ADD32(( state32[9] ),( state32[14] ));
+ state32[4]  = ROT32(XOR32(( state32[4] ),( state32[9] )),12);
+ state32[3]  = ADD32(( state32[3] ),( state32[4] ))+XOR32(m[s[8ound%10][14+1]], c256[s[8%10][14]]);
+ state32[14]  = ROT32(XOR32(( state32[14] ),( state32[3] )), 8);
+ state32[9]  = ADD32(( state32[9] ),( state32[14] ));
+ state32[4]  = ROT32(XOR32(( state32[4] ),( state32[9] )), 7);
+
+
+//ROUND :::::::::::: 9
+//round : 9 , i: 0
+ state32[0]  = ADD32(( state32[0] ),( state32[4] ))+XOR32(m[s[9%10][0]], c256[s[9%10][0+1]]);
+ state32[12]  = ROT32(XOR32(( state32[12] ),( state32[0] )),16);
+ state32[8]  = ADD32(( state32[8] ),( state32[12] ));
+ state32[4]  = ROT32(XOR32(( state32[4] ),( state32[8] )),12);
+ state32[0]  = ADD32(( state32[0] ),( state32[4] ))+XOR32(m[s[9ound%10][0+1]], c256[s[9%10][0]]);
+ state32[12]  = ROT32(XOR32(( state32[12] ),( state32[0] )), 8);
+ state32[8]  = ADD32(( state32[8] ),( state32[12] ));
+ state32[4]  = ROT32(XOR32(( state32[4] ),( state32[8] )), 7);
+
+
+//round : 9 , i: 2
+ state32[1]  = ADD32(( state32[1] ),( state32[5] ))+XOR32(m[s[9%10][2]], c256[s[9%10][2+1]]);
+ state32[13]  = ROT32(XOR32(( state32[13] ),( state32[1] )),16);
+ state32[9]  = ADD32(( state32[9] ),( state32[13] ));
+ state32[5]  = ROT32(XOR32(( state32[5] ),( state32[9] )),12);
+ state32[1]  = ADD32(( state32[1] ),( state32[5] ))+XOR32(m[s[9ound%10][2+1]], c256[s[9%10][2]]);
+ state32[13]  = ROT32(XOR32(( state32[13] ),( state32[1] )), 8);
+ state32[9]  = ADD32(( state32[9] ),( state32[13] ));
+ state32[5]  = ROT32(XOR32(( state32[5] ),( state32[9] )), 7);
+
+
+//round : 9 , i: 4
+ state32[2]  = ADD32(( state32[2] ),( state32[6] ))+XOR32(m[s[9%10][4]], c256[s[9%10][4+1]]);
+ state32[14]  = ROT32(XOR32(( state32[14] ),( state32[2] )),16);
+ state32[10]  = ADD32(( state32[10] ),( state32[14] ));
+ state32[6]  = ROT32(XOR32(( state32[6] ),( state32[10] )),12);
+ state32[2]  = ADD32(( state32[2] ),( state32[6] ))+XOR32(m[s[9ound%10][4+1]], c256[s[9%10][4]]);
+ state32[14]  = ROT32(XOR32(( state32[14] ),( state32[2] )), 8);
+ state32[10]  = ADD32(( state32[10] ),( state32[14] ));
+ state32[6]  = ROT32(XOR32(( state32[6] ),( state32[10] )), 7);
+
+
+//round : 9 , i: 6
+ state32[3]  = ADD32(( state32[3] ),( state32[7] ))+XOR32(m[s[9%10][6]], c256[s[9%10][6+1]]);
+ state32[15]  = ROT32(XOR32(( state32[15] ),( state32[3] )),16);
+ state32[11]  = ADD32(( state32[11] ),( state32[15] ));
+ state32[7]  = ROT32(XOR32(( state32[7] ),( state32[11] )),12);
+ state32[3]  = ADD32(( state32[3] ),( state32[7] ))+XOR32(m[s[9ound%10][6+1]], c256[s[9%10][6]]);
+ state32[15]  = ROT32(XOR32(( state32[15] ),( state32[3] )), 8);
+ state32[11]  = ADD32(( state32[11] ),( state32[15] ));
+ state32[7]  = ROT32(XOR32(( state32[7] ),( state32[11] )), 7);
+
+
+//round : 9 , i: 8
+ state32[0]  = ADD32(( state32[0] ),( state32[5] ))+XOR32(m[s[9%10][8]], c256[s[9%10][8+1]]);
+ state32[15]  = ROT32(XOR32(( state32[15] ),( state32[0] )),16);
+ state32[10]  = ADD32(( state32[10] ),( state32[15] ));
+ state32[5]  = ROT32(XOR32(( state32[5] ),( state32[10] )),12);
+ state32[0]  = ADD32(( state32[0] ),( state32[5] ))+XOR32(m[s[9ound%10][8+1]], c256[s[9%10][8]]);
+ state32[15]  = ROT32(XOR32(( state32[15] ),( state32[0] )), 8);
+ state32[10]  = ADD32(( state32[10] ),( state32[15] ));
+ state32[5]  = ROT32(XOR32(( state32[5] ),( state32[10] )), 7);
+
+
+//round : 9 , i: 10
+ state32[1]  = ADD32(( state32[1] ),( state32[6] ))+XOR32(m[s[9%10][10]], c256[s[9%10][10+1]]);
+ state32[12]  = ROT32(XOR32(( state32[12] ),( state32[1] )),16);
+ state32[11]  = ADD32(( state32[11] ),( state32[12] ));
+ state32[6]  = ROT32(XOR32(( state32[6] ),( state32[11] )),12);
+ state32[1]  = ADD32(( state32[1] ),( state32[6] ))+XOR32(m[s[9ound%10][10+1]], c256[s[9%10][10]]);
+ state32[12]  = ROT32(XOR32(( state32[12] ),( state32[1] )), 8);
+ state32[11]  = ADD32(( state32[11] ),( state32[12] ));
+ state32[6]  = ROT32(XOR32(( state32[6] ),( state32[11] )), 7);
+
+
+//round : 9 , i: 12
+ state32[2]  = ADD32(( state32[2] ),( state32[7] ))+XOR32(m[s[9%10][12]], c256[s[9%10][12+1]]);
+ state32[13]  = ROT32(XOR32(( state32[13] ),( state32[2] )),16);
+ state32[8]  = ADD32(( state32[8] ),( state32[13] ));
+ state32[7]  = ROT32(XOR32(( state32[7] ),( state32[8] )),12);
+ state32[2]  = ADD32(( state32[2] ),( state32[7] ))+XOR32(m[s[9ound%10][12+1]], c256[s[9%10][12]]);
+ state32[13]  = ROT32(XOR32(( state32[13] ),( state32[2] )), 8);
+ state32[8]  = ADD32(( state32[8] ),( state32[13] ));
+ state32[7]  = ROT32(XOR32(( state32[7] ),( state32[8] )), 7);
+
+
+//round : 9 , i: 14
+ state32[3]  = ADD32(( state32[3] ),( state32[4] ))+XOR32(m[s[9%10][14]], c256[s[9%10][14+1]]);
+ state32[14]  = ROT32(XOR32(( state32[14] ),( state32[3] )),16);
+ state32[9]  = ADD32(( state32[9] ),( state32[14] ));
+ state32[4]  = ROT32(XOR32(( state32[4] ),( state32[9] )),12);
+ state32[3]  = ADD32(( state32[3] ),( state32[4] ))+XOR32(m[s[9ound%10][14+1]], c256[s[9%10][14]]);
+ state32[14]  = ROT32(XOR32(( state32[14] ),( state32[3] )), 8);
+ state32[9]  = ADD32(( state32[9] ),( state32[14] ));
+ state32[4]  = ROT32(XOR32(( state32[4] ),( state32[9] )), 7);
+
+
+//ROUND :::::::::::: 10
+//round : 10 , i: 0
+ state32[0]  = ADD32(( state32[0] ),( state32[4] ))+XOR32(m[s[10%10][0]], c256[s[10%10][0+1]]);
+ state32[12]  = ROT32(XOR32(( state32[12] ),( state32[0] )),16);
+ state32[8]  = ADD32(( state32[8] ),( state32[12] ));
+ state32[4]  = ROT32(XOR32(( state32[4] ),( state32[8] )),12);
+ state32[0]  = ADD32(( state32[0] ),( state32[4] ))+XOR32(m[s[10ound%10][0+1]], c256[s[10%10][0]]);
+ state32[12]  = ROT32(XOR32(( state32[12] ),( state32[0] )), 8);
+ state32[8]  = ADD32(( state32[8] ),( state32[12] ));
+ state32[4]  = ROT32(XOR32(( state32[4] ),( state32[8] )), 7);
+
+
+//round : 10 , i: 2
+ state32[1]  = ADD32(( state32[1] ),( state32[5] ))+XOR32(m[s[10%10][2]], c256[s[10%10][2+1]]);
+ state32[13]  = ROT32(XOR32(( state32[13] ),( state32[1] )),16);
+ state32[9]  = ADD32(( state32[9] ),( state32[13] ));
+ state32[5]  = ROT32(XOR32(( state32[5] ),( state32[9] )),12);
+ state32[1]  = ADD32(( state32[1] ),( state32[5] ))+XOR32(m[s[10ound%10][2+1]], c256[s[10%10][2]]);
+ state32[13]  = ROT32(XOR32(( state32[13] ),( state32[1] )), 8);
+ state32[9]  = ADD32(( state32[9] ),( state32[13] ));
+ state32[5]  = ROT32(XOR32(( state32[5] ),( state32[9] )), 7);
+
+
+//round : 10 , i: 4
+ state32[2]  = ADD32(( state32[2] ),( state32[6] ))+XOR32(m[s[10%10][4]], c256[s[10%10][4+1]]);
+ state32[14]  = ROT32(XOR32(( state32[14] ),( state32[2] )),16);
+ state32[10]  = ADD32(( state32[10] ),( state32[14] ));
+ state32[6]  = ROT32(XOR32(( state32[6] ),( state32[10] )),12);
+ state32[2]  = ADD32(( state32[2] ),( state32[6] ))+XOR32(m[s[10ound%10][4+1]], c256[s[10%10][4]]);
+ state32[14]  = ROT32(XOR32(( state32[14] ),( state32[2] )), 8);
+ state32[10]  = ADD32(( state32[10] ),( state32[14] ));
+ state32[6]  = ROT32(XOR32(( state32[6] ),( state32[10] )), 7);
+
+
+//round : 10 , i: 6
+ state32[3]  = ADD32(( state32[3] ),( state32[7] ))+XOR32(m[s[10%10][6]], c256[s[10%10][6+1]]);
+ state32[15]  = ROT32(XOR32(( state32[15] ),( state32[3] )),16);
+ state32[11]  = ADD32(( state32[11] ),( state32[15] ));
+ state32[7]  = ROT32(XOR32(( state32[7] ),( state32[11] )),12);
+ state32[3]  = ADD32(( state32[3] ),( state32[7] ))+XOR32(m[s[10ound%10][6+1]], c256[s[10%10][6]]);
+ state32[15]  = ROT32(XOR32(( state32[15] ),( state32[3] )), 8);
+ state32[11]  = ADD32(( state32[11] ),( state32[15] ));
+ state32[7]  = ROT32(XOR32(( state32[7] ),( state32[11] )), 7);
+
+
+//round : 10 , i: 8
+ state32[0]  = ADD32(( state32[0] ),( state32[5] ))+XOR32(m[s[10%10][8]], c256[s[10%10][8+1]]);
+ state32[15]  = ROT32(XOR32(( state32[15] ),( state32[0] )),16);
+ state32[10]  = ADD32(( state32[10] ),( state32[15] ));
+ state32[5]  = ROT32(XOR32(( state32[5] ),( state32[10] )),12);
+ state32[0]  = ADD32(( state32[0] ),( state32[5] ))+XOR32(m[s[10ound%10][8+1]], c256[s[10%10][8]]);
+ state32[15]  = ROT32(XOR32(( state32[15] ),( state32[0] )), 8);
+ state32[10]  = ADD32(( state32[10] ),( state32[15] ));
+ state32[5]  = ROT32(XOR32(( state32[5] ),( state32[10] )), 7);
+
+
+//round : 10 , i: 10
+ state32[1]  = ADD32(( state32[1] ),( state32[6] ))+XOR32(m[s[10%10][10]], c256[s[10%10][10+1]]);
+ state32[12]  = ROT32(XOR32(( state32[12] ),( state32[1] )),16);
+ state32[11]  = ADD32(( state32[11] ),( state32[12] ));
+ state32[6]  = ROT32(XOR32(( state32[6] ),( state32[11] )),12);
+ state32[1]  = ADD32(( state32[1] ),( state32[6] ))+XOR32(m[s[10ound%10][10+1]], c256[s[10%10][10]]);
+ state32[12]  = ROT32(XOR32(( state32[12] ),( state32[1] )), 8);
+ state32[11]  = ADD32(( state32[11] ),( state32[12] ));
+ state32[6]  = ROT32(XOR32(( state32[6] ),( state32[11] )), 7);
+
+
+//round : 10 , i: 12
+ state32[2]  = ADD32(( state32[2] ),( state32[7] ))+XOR32(m[s[10%10][12]], c256[s[10%10][12+1]]);
+ state32[13]  = ROT32(XOR32(( state32[13] ),( state32[2] )),16);
+ state32[8]  = ADD32(( state32[8] ),( state32[13] ));
+ state32[7]  = ROT32(XOR32(( state32[7] ),( state32[8] )),12);
+ state32[2]  = ADD32(( state32[2] ),( state32[7] ))+XOR32(m[s[10ound%10][12+1]], c256[s[10%10][12]]);
+ state32[13]  = ROT32(XOR32(( state32[13] ),( state32[2] )), 8);
+ state32[8]  = ADD32(( state32[8] ),( state32[13] ));
+ state32[7]  = ROT32(XOR32(( state32[7] ),( state32[8] )), 7);
+
+
+//round : 10 , i: 14
+ state32[3]  = ADD32(( state32[3] ),( state32[4] ))+XOR32(m[s[10%10][14]], c256[s[10%10][14+1]]);
+ state32[14]  = ROT32(XOR32(( state32[14] ),( state32[3] )),16);
+ state32[9]  = ADD32(( state32[9] ),( state32[14] ));
+ state32[4]  = ROT32(XOR32(( state32[4] ),( state32[9] )),12);
+ state32[3]  = ADD32(( state32[3] ),( state32[4] ))+XOR32(m[s[10ound%10][14+1]], c256[s[10%10][14]]);
+ state32[14]  = ROT32(XOR32(( state32[14] ),( state32[3] )), 8);
+ state32[9]  = ADD32(( state32[9] ),( state32[14] ));
+ state32[4]  = ROT32(XOR32(( state32[4] ),( state32[9] )), 7);
+
+
+//ROUND :::::::::::: 11
+//round : 11 , i: 0
+ state32[0]  = ADD32(( state32[0] ),( state32[4] ))+XOR32(m[s[11%10][0]], c256[s[11%10][0+1]]);
+ state32[12]  = ROT32(XOR32(( state32[12] ),( state32[0] )),16);
+ state32[8]  = ADD32(( state32[8] ),( state32[12] ));
+ state32[4]  = ROT32(XOR32(( state32[4] ),( state32[8] )),12);
+ state32[0]  = ADD32(( state32[0] ),( state32[4] ))+XOR32(m[s[11ound%10][0+1]], c256[s[11%10][0]]);
+ state32[12]  = ROT32(XOR32(( state32[12] ),( state32[0] )), 8);
+ state32[8]  = ADD32(( state32[8] ),( state32[12] ));
+ state32[4]  = ROT32(XOR32(( state32[4] ),( state32[8] )), 7);
+
+
+//round : 11 , i: 2
+ state32[1]  = ADD32(( state32[1] ),( state32[5] ))+XOR32(m[s[11%10][2]], c256[s[11%10][2+1]]);
+ state32[13]  = ROT32(XOR32(( state32[13] ),( state32[1] )),16);
+ state32[9]  = ADD32(( state32[9] ),( state32[13] ));
+ state32[5]  = ROT32(XOR32(( state32[5] ),( state32[9] )),12);
+ state32[1]  = ADD32(( state32[1] ),( state32[5] ))+XOR32(m[s[11ound%10][2+1]], c256[s[11%10][2]]);
+ state32[13]  = ROT32(XOR32(( state32[13] ),( state32[1] )), 8);
+ state32[9]  = ADD32(( state32[9] ),( state32[13] ));
+ state32[5]  = ROT32(XOR32(( state32[5] ),( state32[9] )), 7);
+
+
+//round : 11 , i: 4
+ state32[2]  = ADD32(( state32[2] ),( state32[6] ))+XOR32(m[s[11%10][4]], c256[s[11%10][4+1]]);
+ state32[14]  = ROT32(XOR32(( state32[14] ),( state32[2] )),16);
+ state32[10]  = ADD32(( state32[10] ),( state32[14] ));
+ state32[6]  = ROT32(XOR32(( state32[6] ),( state32[10] )),12);
+ state32[2]  = ADD32(( state32[2] ),( state32[6] ))+XOR32(m[s[11ound%10][4+1]], c256[s[11%10][4]]);
+ state32[14]  = ROT32(XOR32(( state32[14] ),( state32[2] )), 8);
+ state32[10]  = ADD32(( state32[10] ),( state32[14] ));
+ state32[6]  = ROT32(XOR32(( state32[6] ),( state32[10] )), 7);
+
+
+//round : 11 , i: 6
+ state32[3]  = ADD32(( state32[3] ),( state32[7] ))+XOR32(m[s[11%10][6]], c256[s[11%10][6+1]]);
+ state32[15]  = ROT32(XOR32(( state32[15] ),( state32[3] )),16);
+ state32[11]  = ADD32(( state32[11] ),( state32[15] ));
+ state32[7]  = ROT32(XOR32(( state32[7] ),( state32[11] )),12);
+ state32[3]  = ADD32(( state32[3] ),( state32[7] ))+XOR32(m[s[11ound%10][6+1]], c256[s[11%10][6]]);
+ state32[15]  = ROT32(XOR32(( state32[15] ),( state32[3] )), 8);
+ state32[11]  = ADD32(( state32[11] ),( state32[15] ));
+ state32[7]  = ROT32(XOR32(( state32[7] ),( state32[11] )), 7);
+
+
+//round : 11 , i: 8
+ state32[0]  = ADD32(( state32[0] ),( state32[5] ))+XOR32(m[s[11%10][8]], c256[s[11%10][8+1]]);
+ state32[15]  = ROT32(XOR32(( state32[15] ),( state32[0] )),16);
+ state32[10]  = ADD32(( state32[10] ),( state32[15] ));
+ state32[5]  = ROT32(XOR32(( state32[5] ),( state32[10] )),12);
+ state32[0]  = ADD32(( state32[0] ),( state32[5] ))+XOR32(m[s[11ound%10][8+1]], c256[s[11%10][8]]);
+ state32[15]  = ROT32(XOR32(( state32[15] ),( state32[0] )), 8);
+ state32[10]  = ADD32(( state32[10] ),( state32[15] ));
+ state32[5]  = ROT32(XOR32(( state32[5] ),( state32[10] )), 7);
+
+
+//round : 11 , i: 10
+ state32[1]  = ADD32(( state32[1] ),( state32[6] ))+XOR32(m[s[11%10][10]], c256[s[11%10][10+1]]);
+ state32[12]  = ROT32(XOR32(( state32[12] ),( state32[1] )),16);
+ state32[11]  = ADD32(( state32[11] ),( state32[12] ));
+ state32[6]  = ROT32(XOR32(( state32[6] ),( state32[11] )),12);
+ state32[1]  = ADD32(( state32[1] ),( state32[6] ))+XOR32(m[s[11ound%10][10+1]], c256[s[11%10][10]]);
+ state32[12]  = ROT32(XOR32(( state32[12] ),( state32[1] )), 8);
+ state32[11]  = ADD32(( state32[11] ),( state32[12] ));
+ state32[6]  = ROT32(XOR32(( state32[6] ),( state32[11] )), 7);
+
+
+//round : 11 , i: 12
+ state32[2]  = ADD32(( state32[2] ),( state32[7] ))+XOR32(m[s[11%10][12]], c256[s[11%10][12+1]]);
+ state32[13]  = ROT32(XOR32(( state32[13] ),( state32[2] )),16);
+ state32[8]  = ADD32(( state32[8] ),( state32[13] ));
+ state32[7]  = ROT32(XOR32(( state32[7] ),( state32[8] )),12);
+ state32[2]  = ADD32(( state32[2] ),( state32[7] ))+XOR32(m[s[11ound%10][12+1]], c256[s[11%10][12]]);
+ state32[13]  = ROT32(XOR32(( state32[13] ),( state32[2] )), 8);
+ state32[8]  = ADD32(( state32[8] ),( state32[13] ));
+ state32[7]  = ROT32(XOR32(( state32[7] ),( state32[8] )), 7);
+
+
+//round : 11 , i: 14
+ state32[3]  = ADD32(( state32[3] ),( state32[4] ))+XOR32(m[s[11%10][14]], c256[s[11%10][14+1]]);
+ state32[14]  = ROT32(XOR32(( state32[14] ),( state32[3] )),16);
+ state32[9]  = ADD32(( state32[9] ),( state32[14] ));
+ state32[4]  = ROT32(XOR32(( state32[4] ),( state32[9] )),12);
+ state32[3]  = ADD32(( state32[3] ),( state32[4] ))+XOR32(m[s[11ound%10][14+1]], c256[s[11%10][14]]);
+ state32[14]  = ROT32(XOR32(( state32[14] ),( state32[3] )), 8);
+ state32[9]  = ADD32(( state32[9] ),( state32[14] ));
+ state32[4]  = ROT32(XOR32(( state32[4] ),( state32[9] )), 7);
+
+
+//ROUND :::::::::::: 12
+//round : 12 , i: 0
+ state32[0]  = ADD32(( state32[0] ),( state32[4] ))+XOR32(m[s[12%10][0]], c256[s[12%10][0+1]]);
+ state32[12]  = ROT32(XOR32(( state32[12] ),( state32[0] )),16);
+ state32[8]  = ADD32(( state32[8] ),( state32[12] ));
+ state32[4]  = ROT32(XOR32(( state32[4] ),( state32[8] )),12);
+ state32[0]  = ADD32(( state32[0] ),( state32[4] ))+XOR32(m[s[12ound%10][0+1]], c256[s[12%10][0]]);
+ state32[12]  = ROT32(XOR32(( state32[12] ),( state32[0] )), 8);
+ state32[8]  = ADD32(( state32[8] ),( state32[12] ));
+ state32[4]  = ROT32(XOR32(( state32[4] ),( state32[8] )), 7);
+
+
+//round : 12 , i: 2
+ state32[1]  = ADD32(( state32[1] ),( state32[5] ))+XOR32(m[s[12%10][2]], c256[s[12%10][2+1]]);
+ state32[13]  = ROT32(XOR32(( state32[13] ),( state32[1] )),16);
+ state32[9]  = ADD32(( state32[9] ),( state32[13] ));
+ state32[5]  = ROT32(XOR32(( state32[5] ),( state32[9] )),12);
+ state32[1]  = ADD32(( state32[1] ),( state32[5] ))+XOR32(m[s[12ound%10][2+1]], c256[s[12%10][2]]);
+ state32[13]  = ROT32(XOR32(( state32[13] ),( state32[1] )), 8);
+ state32[9]  = ADD32(( state32[9] ),( state32[13] ));
+ state32[5]  = ROT32(XOR32(( state32[5] ),( state32[9] )), 7);
+
+
+//round : 12 , i: 4
+ state32[2]  = ADD32(( state32[2] ),( state32[6] ))+XOR32(m[s[12%10][4]], c256[s[12%10][4+1]]);
+ state32[14]  = ROT32(XOR32(( state32[14] ),( state32[2] )),16);
+ state32[10]  = ADD32(( state32[10] ),( state32[14] ));
+ state32[6]  = ROT32(XOR32(( state32[6] ),( state32[10] )),12);
+ state32[2]  = ADD32(( state32[2] ),( state32[6] ))+XOR32(m[s[12ound%10][4+1]], c256[s[12%10][4]]);
+ state32[14]  = ROT32(XOR32(( state32[14] ),( state32[2] )), 8);
+ state32[10]  = ADD32(( state32[10] ),( state32[14] ));
+ state32[6]  = ROT32(XOR32(( state32[6] ),( state32[10] )), 7);
+
+
+//round : 12 , i: 6
+ state32[3]  = ADD32(( state32[3] ),( state32[7] ))+XOR32(m[s[12%10][6]], c256[s[12%10][6+1]]);
+ state32[15]  = ROT32(XOR32(( state32[15] ),( state32[3] )),16);
+ state32[11]  = ADD32(( state32[11] ),( state32[15] ));
+ state32[7]  = ROT32(XOR32(( state32[7] ),( state32[11] )),12);
+ state32[3]  = ADD32(( state32[3] ),( state32[7] ))+XOR32(m[s[12ound%10][6+1]], c256[s[12%10][6]]);
+ state32[15]  = ROT32(XOR32(( state32[15] ),( state32[3] )), 8);
+ state32[11]  = ADD32(( state32[11] ),( state32[15] ));
+ state32[7]  = ROT32(XOR32(( state32[7] ),( state32[11] )), 7);
+
+
+//round : 12 , i: 8
+ state32[0]  = ADD32(( state32[0] ),( state32[5] ))+XOR32(m[s[12%10][8]], c256[s[12%10][8+1]]);
+ state32[15]  = ROT32(XOR32(( state32[15] ),( state32[0] )),16);
+ state32[10]  = ADD32(( state32[10] ),( state32[15] ));
+ state32[5]  = ROT32(XOR32(( state32[5] ),( state32[10] )),12);
+ state32[0]  = ADD32(( state32[0] ),( state32[5] ))+XOR32(m[s[12ound%10][8+1]], c256[s[12%10][8]]);
+ state32[15]  = ROT32(XOR32(( state32[15] ),( state32[0] )), 8);
+ state32[10]  = ADD32(( state32[10] ),( state32[15] ));
+ state32[5]  = ROT32(XOR32(( state32[5] ),( state32[10] )), 7);
+
+
+//round : 12 , i: 10
+ state32[1]  = ADD32(( state32[1] ),( state32[6] ))+XOR32(m[s[12%10][10]], c256[s[12%10][10+1]]);
+ state32[12]  = ROT32(XOR32(( state32[12] ),( state32[1] )),16);
+ state32[11]  = ADD32(( state32[11] ),( state32[12] ));
+ state32[6]  = ROT32(XOR32(( state32[6] ),( state32[11] )),12);
+ state32[1]  = ADD32(( state32[1] ),( state32[6] ))+XOR32(m[s[12ound%10][10+1]], c256[s[12%10][10]]);
+ state32[12]  = ROT32(XOR32(( state32[12] ),( state32[1] )), 8);
+ state32[11]  = ADD32(( state32[11] ),( state32[12] ));
+ state32[6]  = ROT32(XOR32(( state32[6] ),( state32[11] )), 7);
+
+
+//round : 12 , i: 12
+ state32[2]  = ADD32(( state32[2] ),( state32[7] ))+XOR32(m[s[12%10][12]], c256[s[12%10][12+1]]);
+ state32[13]  = ROT32(XOR32(( state32[13] ),( state32[2] )),16);
+ state32[8]  = ADD32(( state32[8] ),( state32[13] ));
+ state32[7]  = ROT32(XOR32(( state32[7] ),( state32[8] )),12);
+ state32[2]  = ADD32(( state32[2] ),( state32[7] ))+XOR32(m[s[12ound%10][12+1]], c256[s[12%10][12]]);
+ state32[13]  = ROT32(XOR32(( state32[13] ),( state32[2] )), 8);
+ state32[8]  = ADD32(( state32[8] ),( state32[13] ));
+ state32[7]  = ROT32(XOR32(( state32[7] ),( state32[8] )), 7);
+
+
+//round : 12 , i: 14
+ state32[3]  = ADD32(( state32[3] ),( state32[4] ))+XOR32(m[s[12%10][14]], c256[s[12%10][14+1]]);
+ state32[14]  = ROT32(XOR32(( state32[14] ),( state32[3] )),16);
+ state32[9]  = ADD32(( state32[9] ),( state32[14] ));
+ state32[4]  = ROT32(XOR32(( state32[4] ),( state32[9] )),12);
+ state32[3]  = ADD32(( state32[3] ),( state32[4] ))+XOR32(m[s[12ound%10][14+1]], c256[s[12%10][14]]);
+ state32[14]  = ROT32(XOR32(( state32[14] ),( state32[3] )), 8);
+ state32[9]  = ADD32(( state32[9] ),( state32[14] ));
+ state32[4]  = ROT32(XOR32(( state32[4] ),( state32[9] )), 7);
+
+
+//ROUND :::::::::::: 13
+//round : 13 , i: 0
+ state32[0]  = ADD32(( state32[0] ),( state32[4] ))+XOR32(m[s[13%10][0]], c256[s[13%10][0+1]]);
+ state32[12]  = ROT32(XOR32(( state32[12] ),( state32[0] )),16);
+ state32[8]  = ADD32(( state32[8] ),( state32[12] ));
+ state32[4]  = ROT32(XOR32(( state32[4] ),( state32[8] )),12);
+ state32[0]  = ADD32(( state32[0] ),( state32[4] ))+XOR32(m[s[13ound%10][0+1]], c256[s[13%10][0]]);
+ state32[12]  = ROT32(XOR32(( state32[12] ),( state32[0] )), 8);
+ state32[8]  = ADD32(( state32[8] ),( state32[12] ));
+ state32[4]  = ROT32(XOR32(( state32[4] ),( state32[8] )), 7);
+
+
+//round : 13 , i: 2
+ state32[1]  = ADD32(( state32[1] ),( state32[5] ))+XOR32(m[s[13%10][2]], c256[s[13%10][2+1]]);
+ state32[13]  = ROT32(XOR32(( state32[13] ),( state32[1] )),16);
+ state32[9]  = ADD32(( state32[9] ),( state32[13] ));
+ state32[5]  = ROT32(XOR32(( state32[5] ),( state32[9] )),12);
+ state32[1]  = ADD32(( state32[1] ),( state32[5] ))+XOR32(m[s[13ound%10][2+1]], c256[s[13%10][2]]);
+ state32[13]  = ROT32(XOR32(( state32[13] ),( state32[1] )), 8);
+ state32[9]  = ADD32(( state32[9] ),( state32[13] ));
+ state32[5]  = ROT32(XOR32(( state32[5] ),( state32[9] )), 7);
+
+
+//round : 13 , i: 4
+ state32[2]  = ADD32(( state32[2] ),( state32[6] ))+XOR32(m[s[13%10][4]], c256[s[13%10][4+1]]);
+ state32[14]  = ROT32(XOR32(( state32[14] ),( state32[2] )),16);
+ state32[10]  = ADD32(( state32[10] ),( state32[14] ));
+ state32[6]  = ROT32(XOR32(( state32[6] ),( state32[10] )),12);
+ state32[2]  = ADD32(( state32[2] ),( state32[6] ))+XOR32(m[s[13ound%10][4+1]], c256[s[13%10][4]]);
+ state32[14]  = ROT32(XOR32(( state32[14] ),( state32[2] )), 8);
+ state32[10]  = ADD32(( state32[10] ),( state32[14] ));
+ state32[6]  = ROT32(XOR32(( state32[6] ),( state32[10] )), 7);
+
+
+//round : 13 , i: 6
+ state32[3]  = ADD32(( state32[3] ),( state32[7] ))+XOR32(m[s[13%10][6]], c256[s[13%10][6+1]]);
+ state32[15]  = ROT32(XOR32(( state32[15] ),( state32[3] )),16);
+ state32[11]  = ADD32(( state32[11] ),( state32[15] ));
+ state32[7]  = ROT32(XOR32(( state32[7] ),( state32[11] )),12);
+ state32[3]  = ADD32(( state32[3] ),( state32[7] ))+XOR32(m[s[13ound%10][6+1]], c256[s[13%10][6]]);
+ state32[15]  = ROT32(XOR32(( state32[15] ),( state32[3] )), 8);
+ state32[11]  = ADD32(( state32[11] ),( state32[15] ));
+ state32[7]  = ROT32(XOR32(( state32[7] ),( state32[11] )), 7);
+
+
+//round : 13 , i: 8
+ state32[0]  = ADD32(( state32[0] ),( state32[5] ))+XOR32(m[s[13%10][8]], c256[s[13%10][8+1]]);
+ state32[15]  = ROT32(XOR32(( state32[15] ),( state32[0] )),16);
+ state32[10]  = ADD32(( state32[10] ),( state32[15] ));
+ state32[5]  = ROT32(XOR32(( state32[5] ),( state32[10] )),12);
+ state32[0]  = ADD32(( state32[0] ),( state32[5] ))+XOR32(m[s[13ound%10][8+1]], c256[s[13%10][8]]);
+ state32[15]  = ROT32(XOR32(( state32[15] ),( state32[0] )), 8);
+ state32[10]  = ADD32(( state32[10] ),( state32[15] ));
+ state32[5]  = ROT32(XOR32(( state32[5] ),( state32[10] )), 7);
+
+
+//round : 13 , i: 10
+ state32[1]  = ADD32(( state32[1] ),( state32[6] ))+XOR32(m[s[13%10][10]], c256[s[13%10][10+1]]);
+ state32[12]  = ROT32(XOR32(( state32[12] ),( state32[1] )),16);
+ state32[11]  = ADD32(( state32[11] ),( state32[12] ));
+ state32[6]  = ROT32(XOR32(( state32[6] ),( state32[11] )),12);
+ state32[1]  = ADD32(( state32[1] ),( state32[6] ))+XOR32(m[s[13ound%10][10+1]], c256[s[13%10][10]]);
+ state32[12]  = ROT32(XOR32(( state32[12] ),( state32[1] )), 8);
+ state32[11]  = ADD32(( state32[11] ),( state32[12] ));
+ state32[6]  = ROT32(XOR32(( state32[6] ),( state32[11] )), 7);
+
+
+//round : 13 , i: 12
+ state32[2]  = ADD32(( state32[2] ),( state32[7] ))+XOR32(m[s[13%10][12]], c256[s[13%10][12+1]]);
+ state32[13]  = ROT32(XOR32(( state32[13] ),( state32[2] )),16);
+ state32[8]  = ADD32(( state32[8] ),( state32[13] ));
+ state32[7]  = ROT32(XOR32(( state32[7] ),( state32[8] )),12);
+ state32[2]  = ADD32(( state32[2] ),( state32[7] ))+XOR32(m[s[13ound%10][12+1]], c256[s[13%10][12]]);
+ state32[13]  = ROT32(XOR32(( state32[13] ),( state32[2] )), 8);
+ state32[8]  = ADD32(( state32[8] ),( state32[13] ));
+ state32[7]  = ROT32(XOR32(( state32[7] ),( state32[8] )), 7);
+
+
+//round : 13 , i: 14
+ state32[3]  = ADD32(( state32[3] ),( state32[4] ))+XOR32(m[s[13%10][14]], c256[s[13%10][14+1]]);
+ state32[14]  = ROT32(XOR32(( state32[14] ),( state32[3] )),16);
+ state32[9]  = ADD32(( state32[9] ),( state32[14] ));
+ state32[4]  = ROT32(XOR32(( state32[4] ),( state32[9] )),12);
+ state32[3]  = ADD32(( state32[3] ),( state32[4] ))+XOR32(m[s[13ound%10][14+1]], c256[s[13%10][14]]);
+ state32[14]  = ROT32(XOR32(( state32[14] ),( state32[3] )), 8);
+ state32[9]  = ADD32(( state32[9] ),( state32[14] ));
+ state32[4]  = ROT32(XOR32(( state32[4] ),( state32[9] )), 7);
+
+

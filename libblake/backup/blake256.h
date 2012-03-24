@@ -2,7 +2,6 @@
 
 unsigned char *blake256(unsigned char *, unsigned, unsigned char *, unsigned char *);
 
-uint32_t state32[16];
 
 /*
 	initialization vectors 

@@ -4,23 +4,17 @@
 #include "blake256.h"
 #include "blake512.h"
 
+
 void convert_bytes(unsigned char *start, uint32_t len){
 	int i,j; 
 	unsigned char tmp; 
 	//TODO - len not par 
-#define U8TO32_BE(p) \
-  (((u32)((p)[0]) << 24) | \
-   ((u32)((p)[1]) << 16) | \
-   ((u32)((p)[2]) <<  8) | \
-   ((u32)((p)[3])      ))
-
 	for (i=0, j =len-1  ; i < len/2 ; i++, j--) {
 		tmp = start[i]; 
 		start[i] = start[j]; 
 		start[j] = tmp; 
-	}  
+	} 
 }
-
 
 void convertNinja64(unsigned char *s , uint32_t len){
 	int i; 
@@ -61,7 +55,7 @@ void prettyPrinter32(unsigned char * hh, uint32_t len, char *message){
 }
 
 void dumpLen(void * ptr, uint64_t len){
-	convert_bytes((unsigned char *) &len, sizeof(uint64_t)); // 8?????????
+  	convert_bytes((unsigned char *) &len, sizeof(uint64_t)); // 8
 	memcpy(ptr, &len, sizeof(uint64_t)); 
 }
 

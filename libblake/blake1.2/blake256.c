@@ -8,23 +8,14 @@
 #include "blake256.h"
 #include "blake.h"
 
-static const uint32_t c[16] = {
-    0x243F6A88, 0x85A308D3,
-    0x13198A2E, 0x03707344,
-    0xA4093822, 0x299F31D0,
-    0x082EFA98, 0xEC4E6C89,
-    0x452821E6, 0x38D01377,
-    0xBE5466CF, 0x34E90C6C,
-    0xC0AC29B7, 0xC97C50DD,
-    0x3F84D5B5, 0xB5470917 
-};
 
 // Bit-wise operations for 32bits
 #define ROT32(x,n) (((x)<<(32-n))|( (x)>>(n)))
 #define ADD32(x,y) ((uint32_t)((x) + (y)))
 #define XOR32(x,y) ((uint32_t)((x) ^ (y)))
+
 static uint32_t state32[16]; 
-static inline void initH256(uint32_t *h) {
+static inline void initH256(uint32_t *h){
   h[0] = 0x6A09E667UL; 
   h[1] = 0xBB67AE85UL; 
   h[2] = 0x3C6EF372UL; 
@@ -44,24 +35,23 @@ static inline void init256(uint32_t h[8], uint32_t s[4], uint32_t t[2]){
   state32[5] = h[5]; 
   state32[6] = h[6];
   state32[7] = h[7]; 
-  state32[8] = s[0] ^       0x243F6A88; 
+  state32[8] = s[0] ^  0x243F6A88; 
   state32[9] = s[1] ^  0x85A308D3; 
-  state32[10] = s[2] ^      0x13198A2E; 
+  state32[10] = s[2] ^ 0x13198A2E; 
   state32[11] = s[3] ^ 0x03707344; 
   state32[12] = t[0] ^ 0xA4093822; 
   state32[13] = t[0] ^ 0x299F31D0; 
-  state32[14] = t[1] ^     0x082EFA98; 
+  state32[14] = t[1] ^ 0x082EFA98; 
   state32[15] = t[1] ^ 0xEC4E6C89; 
-
 }
 
 static inline void g32(uint32_t *a, uint32_t *b, uint32_t *c, uint32_t *d, uint32_t round, uint32_t i, uint32_t *m){
 	
-	*a = ADD32((*a),(*b))+XOR32(m[sigma[round%10][i]], c[sigma[round%10][i+1]]);
+	*a = ADD32((*a),(*b))+XOR32(m[sigma[round%10][2*i]], c256[sigma[round%10][2*i+1]]);
 	*d = ROT32(XOR32((*d),(*a)),16);
 	*c = ADD32((*c),(*d));
 	*b = ROT32(XOR32((*b),(*c)),12);
-	*a = ADD32((*a),(*b))+XOR32(m[sigma[round%10][i+1]], c[sigma[round%10][i]]);
+	*a = ADD32((*a),(*b))+XOR32(m[sigma[round%10][2*i+1]], c256[sigma[round%10][2*i]]);
 	*d = ROT32(XOR32((*d),(*a)), 8);
 	*c = ADD32((*c),(*d));
 	*b = ROT32(XOR32((*b),(*c)), 7);
@@ -69,20 +59,22 @@ static inline void g32(uint32_t *a, uint32_t *b, uint32_t *c, uint32_t *d, uint3
 
 static inline void rounds256(uint32_t *m){
 	uint32_t round; 
-#include "rounds32.h"; 
-	/* for(round=0;round<14;++round){ */
-	/* 	// column steps */
-	/* 	g32(&state32[0], &state32[4], &state32[8], &state32[12], round, 0, m); */
-	/* 	g32(&state32[1], &state32[5], &state32[9], &state32[13], round, 2, m); */
-	/* 	g32(&state32[2], &state32[6], &state32[10], &state32[14], round, 4, m); */
-	/* 	g32(&state32[3], &state32[7], &state32[11], &state32[15], round, 6, m); */
+	for (round = 0 ; round<16 ; round++)
+		convert_bytes(&m[round], sizeof(uint32_t)); 
+	
+	for(round=0;round<14;++round){
+		// column steps
+		g32(&state32[0], &state32[4], &state32[8], &state32[12], round, 0, m);
+		g32(&state32[1], &state32[5], &state32[9], &state32[13], round, 1, m);
+		g32(&state32[2], &state32[6], &state32[10], &state32[14], round, 2, m);
+		g32(&state32[3], &state32[7], &state32[11], &state32[15], round, 3, m);
 		
-	/* 	// diagonal steps */
-	/* 	g32(&state32[0], &state32[5], &state32[10], &state32[15], round, 8, m); */
-	/* 	g32(&state32[1], &state32[6], &state32[11], &state32[12], round, 10, m); */
-	/* 	g32(&state32[2], &state32[7], &state32[8], &state32[13], round, 12, m); */
-	/* 	g32(&state32[3], &state32[4], &state32[9], &state32[14], round, 14, m); */
-	/* } */
+		// diagonal steps
+		g32(&state32[0], &state32[5], &state32[10], &state32[15], round, 4, m);
+		g32(&state32[1], &state32[6], &state32[11], &state32[12], round, 5, m);
+		g32(&state32[2], &state32[7], &state32[8], &state32[13], round, 6, m);
+		g32(&state32[3], &state32[4], &state32[9], &state32[14], round, 7, m);
+	}
 }
 
 static inline void finit256(uint32_t h[8], uint32_t s[4]){
@@ -105,8 +97,8 @@ static inline void compress(uint32_t *h, uint32_t *m, uint32_t *s, uint32_t * t)
 
 static inline uint64_t pad256(unsigned char *message, uint64_t len, uint32_t *comPadding, unsigned char * padded); 
 unsigned char *blake256(unsigned char *message, unsigned len, unsigned char *s, unsigned char *h){
-        unsigned char   padded[128]; 
-
+    unsigned char   padded[128]; 
+    
 	//Reference data from the algorithm/paper
 	uint32_t i; 
 	//uint32_t *h = malloc(sizeof(uint32_t) * 8);  // hashed value. Final, is updated by compress function;
@@ -114,43 +106,35 @@ unsigned char *blake256(unsigned char *message, unsigned len, unsigned char *s, 
 	uint64_t var = 0;  	
 	uint64_t blocksSemPadding;
 	uint32_t blocksComPadding=0; 
-
+    
 	blocksSemPadding = pad256(message, (uint64_t ) len, &blocksComPadding, padded);
 	//prettyPrinter32(message, (blocksComPadding+blocksSemPadding+1)*64, "msg@pad:\n");
 	
 	// Initialize h with IV 
 	initH256(h);
-	uint64_t bytes_total = (64* blocksSemPadding); 
-	uint64_t round; 
-	uint32_t *type = message; 
-	for (round = 0 ,i=0; round< bytes_total ; round+=4,i++)
-	  type[i] = U8TO32_BE(message + round); //convert_bytes(&m[round], sizeof(uint32_t)); 
-
-	type = padded; 
-	for (round = 0,i=0 ; round< 128 ; round+=4,i++)
-	  type[i] = U8TO32_BE(&padded[round]); //convert_bytes(&m[round], sizeof(uint32_t)); 
-
+    
 	for (i=0; i<blocksSemPadding; i++) {
 		var += 512; 
 		compress(h, message + i*64, s, &var); 
 	}
+	
 	// Last message block
 	if(resto){
 		var += resto; 
 		compress(h, padded, s, &var);
 	}
-
+    
 	// Add block only with padding, if needed
 	if (blocksComPadding == 1){
 		var=0;
 		if (resto == 0 ){ 
-		  compress(h, padded , s, &var); 
+            compress(h, padded , s, &var); 
 		}
 		else{
-		  compress(h, &padded[64] , s, &var); 
+            compress(h, &padded[64] , s, &var); 
 		}
 	}
-
+    
 	return (unsigned char *) h;
 }
 
@@ -160,9 +144,9 @@ static inline uint64_t pad256(unsigned char *message, uint64_t len, uint32_t *co
 	
 	uint64_t nBlocks = (len/64);   // Number of blocks in message.
 	uint64_t resto = len % 64;  // What is left from message to fill. 
-
+    
 	uint64_t num_zeros; // Number of 0x00 bytes to pad message with. 
-
+    
 	unsigned char *begin_of_last_block = message+(len-resto);  // Begin of last block with message
 	memcpy(padded, begin_of_last_block, resto); 
 	begin_of_last_block = padded; 
@@ -196,3 +180,4 @@ static inline uint64_t pad256(unsigned char *message, uint64_t len, uint32_t *co
 	
 	return nBlocks; 
 }
+

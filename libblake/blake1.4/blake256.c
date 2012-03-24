@@ -13,7 +13,7 @@
 #define ROT32(x,n) (((x)<<(32-n))|( (x)>>(n)))
 #define ADD32(x,y) ((uint32_t)((x) + (y)))
 #define XOR32(x,y) ((uint32_t)((x) ^ (y)))
-
+static uint32_t state32[16]; 
 static inline void initH256(uint32_t *h) {
   h[0] = 0x6A09E667UL; 
   h[1] = 0xBB67AE85UL; 
@@ -59,9 +59,8 @@ static inline void g32(uint32_t *a, uint32_t *b, uint32_t *c, uint32_t *d, uint3
 
 static inline void rounds256(uint32_t *m){
 	uint32_t round; 
-	for (round = 0 ; round<16 ; round++)
-		convert_bytes(&m[round], sizeof(uint32_t)); 
-	
+
+
 	for(round=0;round<14;++round){
 		// column steps
 		g32(&state32[0], &state32[4], &state32[8], &state32[12], round, 0, m);
@@ -95,9 +94,10 @@ static inline void compress(uint32_t *h, uint32_t *m, uint32_t *s, uint32_t * t)
 	finit256(h,s);
 }
 
-uint64_t pad256(unsigned char *message, uint64_t len, uint32_t *comPadding); 
+static inline uint64_t pad256(unsigned char *message, uint64_t len, uint32_t *comPadding, unsigned char * padded); 
 unsigned char *blake256(unsigned char *message, unsigned len, unsigned char *s, unsigned char *h){
-	
+        unsigned char   padded[128]; 
+
 	//Reference data from the algorithm/paper
 	uint32_t i; 
 	//uint32_t *h = malloc(sizeof(uint32_t) * 8);  // hashed value. Final, is updated by compress function;
@@ -106,27 +106,40 @@ unsigned char *blake256(unsigned char *message, unsigned len, unsigned char *s, 
 	uint64_t blocksSemPadding;
 	uint32_t blocksComPadding=0; 
 
-	blocksSemPadding = pad256(message, (uint64_t ) len, &blocksComPadding);
+	blocksSemPadding = pad256(message, (uint64_t ) len, &blocksComPadding, padded);
 	//prettyPrinter32(message, (blocksComPadding+blocksSemPadding+1)*64, "msg@pad:\n");
 	
 	// Initialize h with IV 
 	initH256(h);
-	
+	uint64_t bytes_total = (64* blocksSemPadding); 
+	uint64_t round; 
+	uint32_t *type = message; 
+	for (round = 0 ,i=0; round< bytes_total ; round+=4,i++)
+	  type[i] = U8TO32_BE(message + round); //convert_bytes(&m[round], sizeof(uint32_t)); 
+
+	type = padded; 
+	for (round = 0,i=0 ; round< 128 ; round+=4,i++)
+	  type[i] = U8TO32_BE(&padded[round]); //convert_bytes(&m[round], sizeof(uint32_t)); 
+
 	for (i=0; i<blocksSemPadding; i++) {
 		var += 512; 
 		compress(h, message + i*64, s, &var); 
 	}
-	
 	// Last message block
 	if(resto){
 		var += resto; 
-		compress(h, message + i++*64, s, &var);
+		compress(h, padded, s, &var);
 	}
 
 	// Add block only with padding, if needed
 	if (blocksComPadding == 1){
 		var=0;
-		compress(h, message + i*64, s, &var); 
+		if (resto == 0 ){ 
+		  compress(h, padded , s, &var); 
+		}
+		else{
+		  compress(h, &padded[64] , s, &var); 
+		}
 	}
 
 	return (unsigned char *) h;
@@ -134,14 +147,18 @@ unsigned char *blake256(unsigned char *message, unsigned len, unsigned char *s, 
 
 // Pad the message and determine the sizes of each h block. 
 // Returns the number of blocks without padding.
-uint64_t pad256(unsigned char *message, uint64_t len, uint32_t *comPadding){
+static inline uint64_t pad256(unsigned char *message, uint64_t len, uint32_t *comPadding, unsigned char *padded){
 	
 	uint64_t nBlocks = (len/64);   // Number of blocks in message.
 	uint64_t resto = len % 64;  // What is left from message to fill. 
-	uint64_t num_zeros; // Number of 0x00 bytes to pad message with. 
-	unsigned char *begin_of_last_block = message+(len-resto);  // Begin of last block with message
-	unsigned char * ptr_begin_pad = begin_of_last_block + resto; // Begin of padding
 
+	uint64_t num_zeros; // Number of 0x00 bytes to pad message with. 
+
+	unsigned char *begin_of_last_block = message+(len-resto);  // Begin of last block with message
+	memcpy(padded, begin_of_last_block, resto); 
+	begin_of_last_block = padded; 
+	unsigned char * ptr_begin_pad = begin_of_last_block + resto; // Begin of padding
+	
 	
 	if (resto==55){
 		*(begin_of_last_block + resto) = 0x81; 

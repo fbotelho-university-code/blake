@@ -1,9 +1,8 @@
 #include <stdint.h>
 
 unsigned char *blake512(unsigned char *, unsigned, unsigned char *, unsigned char *);
-uint64_t pad512(unsigned char *, uint64_t, uint32_t *); 
 
-uint64_t state64[16];
+
 
 /*
  16 constants

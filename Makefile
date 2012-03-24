@@ -1,10 +1,6 @@
-<<<<<<< HEAD
-CFLAGS = -Wall -finline-functions   # -O3 -ffast-math   -fprefetch-loop-arrays 
 
-
-=======
-CFLAGS = -Wall -Winline -O3 -ffast-math   -fprefetch-loop-arrays  -g
->>>>>>> f573cc5e08f92ec82518423961970a05edd2475c
+#CFLAGS = -Wall -finline-functions   # -O3 -ffast-math   -fprefetch-loop-arrays 
+CFLAGS = -Wall -Winline -g  -finline-functions #-O3 -ffast-math   -fprefetch-loop-arrays  -g
 
 HEADERFILES = libblake/blake256.h libblake/blake512.h  libblake/blake.h
 CFILES = libblake/blake256.c  libblake/blake512.c libblake/blake.c
@@ -20,15 +16,14 @@ $(OBJS): libblake/blake256.h libblake/blake512.h  libblake/blake.h
 test: $(OBJS) correctnesstests/test_file256 correctnesstests/test_file512 correctnesstests/test.c
 	$(CC) -o test $(CFLAGS) correctnesstests/test.c $(OBJS)
 
-clean: $(OBJS)
-	rm -f $(OBJS) blake
+clean: $(OBJS) 
+	rm -f  libblake/*.o  blake *.o  test 
 
 clean-test: $(OBJS)
 	     rm -f $(OBJS) test correctnesstests/test.o
 
 bench: $(OBJS) benchmark/bench.c
 	$(CC) -o bench $(CFLAGS) benchmark/bench.c $(OBJS)
- 	
 
 
 compress: blake.tar.bz2
