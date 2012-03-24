@@ -14,7 +14,6 @@
 #define XOR64(x,y) ((uint64_t)((x) ^ (y)))
 
 static uint64_t state64[16]; 
-
 static inline void initH512(uint64_t *h){
   h[0] = 0x6A09E667F3BCC908ULL; 
   h[1] =  0xBB67AE8584CAA73BULL; 
@@ -58,6 +57,11 @@ static inline void g64(uint64_t *a, uint64_t *b, uint64_t *c, uint64_t *d, uint3
 
 static inline void rounds512(uint64_t *m){
 	uint32_t round; 
+    
+    
+	for (round = 0 ; round<16 ; round++)
+		convert_bytes(&m[round], sizeof(uint64_t)); 
+
 	for(round=0;round<16;++round){
 		// column steps
 		g64(&state64[0], &state64[4], &state64[8], &state64[12], round, 0, m);
@@ -73,6 +77,7 @@ static inline void rounds512(uint64_t *m){
 	}
 	
 }
+
 static inline void finit512(uint64_t h[8], uint64_t s[4]){
 	h[0] = h[0] ^ s[0] ^ state64[0] ^ state64[8];
 	h[1] = h[1] ^ s[1] ^ state64[1] ^ state64[9];
@@ -93,7 +98,7 @@ static inline void compress64(uint64_t *h, uint64_t *m, uint64_t *s, uint64_t * 
 static inline uint64_t pad512(unsigned char *message, uint64_t len, uint32_t *comPadding, unsigned char *padded); 
 unsigned char *blake512(unsigned char *message, unsigned len, unsigned char *s, unsigned char *h){
 	//message[0]=0x00;
-    unsigned char padded[256]; 
+        unsigned char padded[256]; 
 	unsigned char *paddptr = padded; 
 	//Reference data from the algorithm/paper
 	uint32_t i; 
@@ -108,7 +113,15 @@ unsigned char *blake512(unsigned char *message, unsigned len, unsigned char *s, 
 	
 	// Initialize h with IV 
 	initH512(h);
-	
+	uint64_t bytes_total = (128 * blocksSemPadding); 
+	uint64_t round; 
+	uint64_t *type = message; 
+	//	prettyPrinter64(message, bytes_total, "msg@pad:\n");
+	//	prettyPrinter64(padded, 256, "pad@pad:\n");
+
+	//	prettyPrinter64(message, bytes_total, "msg@pad:\n");
+	//	prettyPrinter64(padded, 256, "pad@pad:\n");
+
 	for (i=0; i<blocksSemPadding; i++) {
 		var[0] += 1024;
 		if(var[0]==0){
@@ -137,7 +150,7 @@ unsigned char *blake512(unsigned char *message, unsigned len, unsigned char *s, 
 	return (unsigned char *) h;
 }
 
-uint64_t inline pad512(unsigned char *message, uint64_t len, uint32_t *comPadding, unsigned char *padded){
+static inline uint64_t pad512(unsigned char *message, uint64_t len, uint32_t *comPadding, unsigned char *padded){
 	
 	uint64_t nBlocks = (len/128);   // Number of blocks in message.
 	uint64_t resto = len % 128;  // What is left from message to fill. 
@@ -147,7 +160,7 @@ uint64_t inline pad512(unsigned char *message, uint64_t len, uint32_t *comPaddin
 	memcpy(padded, begin_of_last_block, resto); 
 	begin_of_last_block = padded; 
 	unsigned char * ptr_begin_pad = begin_of_last_block + resto; // Begin of padding
-    
+      
 	if (resto==111){
 		*(begin_of_last_block++ + resto) = 0x81;
 		memset(begin_of_last_block + resto, 0x00, 8); // 64bit t[1

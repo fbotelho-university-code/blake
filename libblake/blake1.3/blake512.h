@@ -2,15 +2,7 @@
 
 unsigned char *blake512(unsigned char *, unsigned, unsigned char *, unsigned char *);
 
-/*
- initialization vectors 
- */
-static const uint64_t IV512[8]={
-	0x6A09E667F3BCC908ULL, 0xBB67AE8584CAA73BULL,
-	0x3C6EF372FE94F82BULL, 0xA54FF53A5F1D36F1ULL,
-	0x510E527FADE682D1ULL, 0x9B05688C2B3E6C1FULL,
-	0x1F83D9ABFB41BD6BULL, 0x5BE0CD19137E2179ULL
-};
+
 
 /*
  16 constants

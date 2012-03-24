@@ -14,6 +14,7 @@
 #define XOR64(x,y) ((uint64_t)((x) ^ (y)))
 
 static uint64_t state64[16]; 
+
 static inline void initH512(uint64_t *h){
   h[0] = 0x6A09E667F3BCC908ULL; 
   h[1] =  0xBB67AE8584CAA73BULL; 
@@ -45,35 +46,36 @@ static inline void init512(uint64_t h[8], uint64_t s[4], uint64_t t[2]){
 }
 
 static inline void g64(uint64_t *a, uint64_t *b, uint64_t *c, uint64_t *d, uint32_t round, uint32_t i, uint64_t m[16]){
-    *a = ADD64((*a),(*b))+XOR64(m[sigma[round%10][i]], c512[sigma[round%10][i+1]]);
+	
+	*a = ADD64((*a),(*b))+XOR64(m[sigma[round%10][2*i]], c512[sigma[round%10][2*i+1]]);
     *d = ROT64(XOR64((*d),(*a)),32);
     *c = ADD64((*c),(*d));
     *b = ROT64(XOR64((*b),(*c)),25);
-    *a = ADD64((*a),(*b))+XOR64(m[sigma[round%10][i+1]], c512[sigma[round%10][i]]);
+    *a = ADD64((*a),(*b))+XOR64(m[sigma[round%10][2*i+1]], c512[sigma[round%10][2*i]]);
     *d = ROT64(XOR64((*d),(*a)),16);
     *c = ADD64((*c),(*d));
     *b = ROT64(XOR64((*b),(*c)),11);
+	
 }
 
 static inline void rounds512(uint64_t *m){
+	
 	uint32_t round; 
-    
-    
 	for (round = 0 ; round<16 ; round++)
 		convert_bytes(&m[round], sizeof(uint64_t)); 
-
+	
 	for(round=0;round<16;++round){
 		// column steps
 		g64(&state64[0], &state64[4], &state64[8], &state64[12], round, 0, m);
-		g64(&state64[1], &state64[5], &state64[9], &state64[13], round, 2, m);
-		g64(&state64[2], &state64[6], &state64[10], &state64[14], round, 4, m);
-		g64(&state64[3], &state64[7], &state64[11], &state64[15], round, 6, m);
+		g64(&state64[1], &state64[5], &state64[9], &state64[13], round, 1, m);
+		g64(&state64[2], &state64[6], &state64[10], &state64[14], round, 2, m);
+		g64(&state64[3], &state64[7], &state64[11], &state64[15], round, 3, m);
 		
 		// diagonal steps
-		g64(&state64[0], &state64[5], &state64[10], &state64[15], round, 8, m);
-		g64(&state64[1], &state64[6], &state64[11], &state64[12], round, 10, m);
-		g64(&state64[2], &state64[7], &state64[8], &state64[13], round, 12, m);
-		g64(&state64[3], &state64[4], &state64[9], &state64[14], round, 14, m);
+		g64(&state64[0], &state64[5], &state64[10], &state64[15], round, 4, m);
+		g64(&state64[1], &state64[6], &state64[11], &state64[12], round, 5, m);
+		g64(&state64[2], &state64[7], &state64[8], &state64[13], round, 6, m);
+		g64(&state64[3], &state64[4], &state64[9], &state64[14], round, 7, m);
 	}
 	
 }
@@ -98,7 +100,7 @@ static inline void compress64(uint64_t *h, uint64_t *m, uint64_t *s, uint64_t * 
 static inline uint64_t pad512(unsigned char *message, uint64_t len, uint32_t *comPadding, unsigned char *padded); 
 unsigned char *blake512(unsigned char *message, unsigned len, unsigned char *s, unsigned char *h){
 	//message[0]=0x00;
-        unsigned char padded[256]; 
+    unsigned char padded[256]; 
 	unsigned char *paddptr = padded; 
 	//Reference data from the algorithm/paper
 	uint32_t i; 
@@ -113,15 +115,7 @@ unsigned char *blake512(unsigned char *message, unsigned len, unsigned char *s, 
 	
 	// Initialize h with IV 
 	initH512(h);
-	uint64_t bytes_total = (128 * blocksSemPadding); 
-	uint64_t round; 
-	uint64_t *type = message; 
-	//	prettyPrinter64(message, bytes_total, "msg@pad:\n");
-	//	prettyPrinter64(padded, 256, "pad@pad:\n");
-
-	//	prettyPrinter64(message, bytes_total, "msg@pad:\n");
-	//	prettyPrinter64(padded, 256, "pad@pad:\n");
-
+	
 	for (i=0; i<blocksSemPadding; i++) {
 		var[0] += 1024;
 		if(var[0]==0){
@@ -150,7 +144,7 @@ unsigned char *blake512(unsigned char *message, unsigned len, unsigned char *s, 
 	return (unsigned char *) h;
 }
 
-static inline uint64_t pad512(unsigned char *message, uint64_t len, uint32_t *comPadding, unsigned char *padded){
+uint64_t inline pad512(unsigned char *message, uint64_t len, uint32_t *comPadding, unsigned char *padded){
 	
 	uint64_t nBlocks = (len/128);   // Number of blocks in message.
 	uint64_t resto = len % 128;  // What is left from message to fill. 
@@ -160,7 +154,7 @@ static inline uint64_t pad512(unsigned char *message, uint64_t len, uint32_t *co
 	memcpy(padded, begin_of_last_block, resto); 
 	begin_of_last_block = padded; 
 	unsigned char * ptr_begin_pad = begin_of_last_block + resto; // Begin of padding
-      
+    
 	if (resto==111){
 		*(begin_of_last_block++ + resto) = 0x81;
 		memset(begin_of_last_block + resto, 0x00, 8); // 64bit t[1

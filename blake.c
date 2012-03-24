@@ -5,7 +5,6 @@
 #include <sys/stat.h>
 #include "libblake/blake.h"
 
-
 /*
 * Get the elapsed time in microseconds.
 * Usage:

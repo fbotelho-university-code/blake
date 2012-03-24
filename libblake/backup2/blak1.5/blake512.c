@@ -12,6 +12,16 @@
 #define ROT64(x,n) (((x)<<(64-n))|( (x)>>(n)))
 #define ADD64(x,y) ((uint64_t)((x) + (y)))
 #define XOR64(x,y) ((uint64_t)((x) ^ (y)))
+static const uint64_t c[16] = {
+	0x243F6A8885A308D3ULL,0x13198A2E03707344ULL,
+	0xA4093822299F31D0ULL,0x082EFA98EC4E6C89ULL,
+	0x452821E638D01377ULL,0xBE5466CF34E90C6CULL,
+	0xC0AC29B7C97C50DDULL,0x3F84D5B5B5470917ULL,
+	0x9216D5D98979FB1BULL,0xD1310BA698DFB5ACULL,
+	0x2FFD72DBD01ADFB7ULL,0xB8E1AFED6A267E96ULL,
+	0xBA7C9045F12C7F99ULL,0x24A19947B3916CF7ULL,
+	0x0801F2E2858EFC16ULL,0x636920D871574E69ULL
+};
 
 static uint64_t state64[16]; 
 static inline void initH512(uint64_t *h){
@@ -45,23 +55,19 @@ static inline void init512(uint64_t h[8], uint64_t s[4], uint64_t t[2]){
 }
 
 static inline void g64(uint64_t *a, uint64_t *b, uint64_t *c, uint64_t *d, uint32_t round, uint32_t i, uint64_t m[16]){
-    *a = ADD64((*a),(*b))+XOR64(m[sigma[round%10][i]], c512[sigma[round%10][i+1]]);
+    *a = ADD64((*a),(*b))+XOR64(m[sigma[round%10][i]], c[sigma[round%10][i+1]]);
     *d = ROT64(XOR64((*d),(*a)),32);
     *c = ADD64((*c),(*d));
     *b = ROT64(XOR64((*b),(*c)),25);
-    *a = ADD64((*a),(*b))+XOR64(m[sigma[round%10][i+1]], c512[sigma[round%10][i]]);
+    *a = ADD64((*a),(*b))+XOR64(m[sigma[round%10][i+1]], c[sigma[round%10][i]]);
     *d = ROT64(XOR64((*d),(*a)),16);
     *c = ADD64((*c),(*d));
     *b = ROT64(XOR64((*b),(*c)),11);
 }
 
 static inline void rounds512(uint64_t *m){
+  /*
 	uint32_t round; 
-    
-    
-	for (round = 0 ; round<16 ; round++)
-		convert_bytes(&m[round], sizeof(uint64_t)); 
-
 	for(round=0;round<16;++round){
 		// column steps
 		g64(&state64[0], &state64[4], &state64[8], &state64[12], round, 0, m);
@@ -75,7 +81,8 @@ static inline void rounds512(uint64_t *m){
 		g64(&state64[2], &state64[7], &state64[8], &state64[13], round, 12, m);
 		g64(&state64[3], &state64[4], &state64[9], &state64[14], round, 14, m);
 	}
-	
+  */
+#include "rounds64.h"; 
 }
 
 static inline void finit512(uint64_t h[8], uint64_t s[4]){
@@ -118,6 +125,13 @@ unsigned char *blake512(unsigned char *message, unsigned len, unsigned char *s, 
 	uint64_t *type = message; 
 	//	prettyPrinter64(message, bytes_total, "msg@pad:\n");
 	//	prettyPrinter64(padded, 256, "pad@pad:\n");
+	for (round =0, i=0 ; round < bytes_total; round += 8, i++){
+	  type[i] = U8TO64_BE(message + round); 
+	}
+	type = padded; 
+	for (round =0, i=0 ; round < 256; round += 8, i++){
+	  type[i] = U8TO64_BE(&padded[round]); 
+	}
 
 	//	prettyPrinter64(message, bytes_total, "msg@pad:\n");
 	//	prettyPrinter64(padded, 256, "pad@pad:\n");

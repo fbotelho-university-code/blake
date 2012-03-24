@@ -14,6 +14,16 @@
 #define ADD32(x,y) ((uint32_t)((x) + (y)))
 #define XOR32(x,y) ((uint32_t)((x) ^ (y)))
 static uint32_t state32[16]; 
+static const uint32_t c[16] = {
+    0x243F6A88, 0x85A308D3,
+    0x13198A2E, 0x03707344,
+    0xa4093822, 0x299F31D0,
+    0x082EFA98, 0xEC4E6C89,
+    0x452821E6, 0x38D01377,
+    0xBE5466CF, 0x34E90C6C,
+    0xC0AC29B7, 0xC97C50DD,
+    0x3F84D5B5, 0xB5470917 
+};
 static inline void initH256(uint32_t *h) {
   h[0] = 0x6A09E667UL; 
   h[1] = 0xBB67AE85UL; 
@@ -47,20 +57,18 @@ static inline void init256(uint32_t h[8], uint32_t s[4], uint32_t t[2]){
 
 static inline void g32(uint32_t *a, uint32_t *b, uint32_t *c, uint32_t *d, uint32_t round, uint32_t i, uint32_t *m){
 	
-	*a = ADD32((*a),(*b))+XOR32(m[sigma[round%10][i]], c256[sigma[round%10][i+1]]);
+	*a = ADD32((*a),(*b))+XOR32(m[sigma[round%10][i]], c[sigma[round%10][i+1]]);
 	*d = ROT32(XOR32((*d),(*a)),16);
 	*c = ADD32((*c),(*d));
 	*b = ROT32(XOR32((*b),(*c)),12);
-	*a = ADD32((*a),(*b))+XOR32(m[sigma[round%10][i+1]], c256[sigma[round%10][i]]);
+	*a = ADD32((*a),(*b))+XOR32(m[sigma[round%10][i+1]], c[sigma[round%10][i]]);
 	*d = ROT32(XOR32((*d),(*a)), 8);
 	*c = ADD32((*c),(*d));
 	*b = ROT32(XOR32((*b),(*c)), 7);
 }
 
 static inline void rounds256(uint32_t *m){
-	uint32_t round; 
-    for (round = 0 ; round<16 ; round++)
-		convert_bytes(&m[round], sizeof(uint32_t)); 
+  /*	uint32_t round; 
 
 
 	for(round=0;round<14;++round){
@@ -76,6 +84,8 @@ static inline void rounds256(uint32_t *m){
 		g32(&state32[2], &state32[7], &state32[8], &state32[13], round, 12, m);
 		g32(&state32[3], &state32[4], &state32[9], &state32[14], round, 14, m);
 	}
+  */
+#include "rounds32.h"; 
 }
 
 static inline void finit256(uint32_t h[8], uint32_t s[4]){
@@ -116,7 +126,13 @@ unsigned char *blake256(unsigned char *message, unsigned len, unsigned char *s, 
 	uint64_t bytes_total = (64* blocksSemPadding); 
 	uint64_t round; 
 	uint32_t *type = message; 
-	
+	for (round = 0 ,i=0; round< bytes_total ; round+=4,i++)
+	  type[i] = U8TO32_BE(message + round); //convert_bytes(&m[round], sizeof(uint32_t)); 
+
+	type = padded; 
+	for (round = 0,i=0 ; round< 128 ; round+=4,i++)
+	  type[i] = U8TO32_BE(&padded[round]); //convert_bytes(&m[round], sizeof(uint32_t)); 
+
 	for (i=0; i<blocksSemPadding; i++) {
 		var += 512; 
 		compress(h, message + i*64, s, &var); 
