@@ -14,7 +14,13 @@
 1.4 convert_bytes 
           256 -> done
 	  512 ->  done
-1.5 direct access to sigma 
-    	    256 
-	    512 
+1.5 Loop unrolling do rounds 
+    	    256 -> done
+	    512 -> done 
+1.6 Direct access to state32 
+	256 -> done 
+´	512 -> done 
+1.7 Macros no init, finit, rounds  & loop unrolling do reverse bytes. e correcções no padding. 
+	256, 512 -> done.
 
+	

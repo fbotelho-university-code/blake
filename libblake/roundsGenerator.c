@@ -3,14 +3,14 @@
 #include <stdlib.h>
 
 char *table[8][4] = {
-  { "[0]", "[4]", "[8]", "[12]"}, 
-  { "[1]", "[5]", "[9]", "[13]"}, 
-  { "[2]", "[6]", "[10]", "[14]"}, 
-  { "[3]", "[7]", "[11]", "[15]"}, 
-  { "[0]", "[5]", "[10]", "[15]"}, 
-  { "[1]", "[6]", "[11]", "[12]"}, 
-  { "[2]", "[7]", "[8]", "[13]"}, 
-  { "[3]", "[4]", "[9]", "[14]"}, 
+  { "0", "4", "8", "12"}, 
+  { "1", "5", "9", "13"}, 
+  { "2", "6", "10", "14"}, 
+  { "3", "7", "11", "15"}, 
+  { "0", "5", "10", "15"}, 
+  { "1", "6", "11", "12"}, 
+  { "2", "7", "8", "13"}, 
+  { "3", "4", "9", "14"}, 
 }; 
 
 const char map[] = "abcd"; 
@@ -53,7 +53,7 @@ void cospeTemplate(int r, int i,const char * type){
      case '*': 
        str++; 
        indexx = getChar(*str); 
-       printf(" %s%s ", state_name, table[i/2][indexx]); 
+       printf(" (*%s%s) ", state_name, table[i/2][indexx]); 
        break; 
      case 'r': 
        printf("%d", r); 
@@ -75,23 +75,26 @@ void cospeTemplate(int r, int i,const char * type){
      return 1; 
    }
    char *type; 
+   int nrounds;
 switch(argv[1][1]){
    case '6': 
-     state_name = "state64";
+     state_name = "v";
      anotherLevelOfIndirection = temp64;
      type = "64";
+     nrounds = 16; 
      break;
    case '3': 
-     state_name = "state32"; 
+     state_name = "v"; 
      anotherLevelOfIndirection = temp; 
      type = "32"; 
+     nrounds = 14; 
      break; 
    default : 
      printf("Usage : %s [-32 | -64]\n", argv[0]); 
      return 1; 
   }
 
-for (rounds = 0 ; rounds < 14 ; rounds++){
+for (rounds = 0 ; rounds < nrounds ; rounds++){
     printf("//ROUND :::::::::::: %d\n", rounds); 
     for (i=0 ; i <= 14 ; i += 2){
       printf("//round : %d , i: %d\n", rounds, i); 
