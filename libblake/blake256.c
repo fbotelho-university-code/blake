@@ -96,6 +96,7 @@ static inline void compress(uint32_t *h, uint32_t *m, uint32_t *s, uint32_t * t)
 }
 
 uint64_t pad256(unsigned char *message, uint64_t len, uint32_t *comPadding); 
+
 unsigned char *blake256(unsigned char *message, unsigned len, unsigned char *s, unsigned char *h){
 	
 	//Reference data from the algorithm/paper
