@@ -3,22 +3,15 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdint.h>
-
+#include "blake.h" 
 // Include local libraries
 #include "blake512.h"
-#include "blake.h" 
-
-static inline void compress64(uint64_t *h, const uint64_t *m, const uint64_t *s, const uint64_t * t); 
-unsigned char *blake512(unsigned char *message, unsigned len, unsigned char *s, unsigned char *h); 
-static inline uint64_t pad512(unsigned char *message, uint64_t len, uint32_t *comPadding, unsigned char *padded);
 
 // Bit-wise operations for 64bits
 #define ROT64(x,n) (((x)<<(64-n))|( (x)>>(n)))
 #define ADD64(x,y) ((uint64_t)((x) + (y)))
 #define XOR64(x,y) ((uint64_t)((x) ^ (y)))
-
-
-static const uint64_t con[16] = {
+static const uint64_t c[16] = {
 	0x243F6A8885A308D3ULL,0x13198A2E03707344ULL,
 	0xA4093822299F31D0ULL,0x082EFA98EC4E6C89ULL,
 	0x452821E638D01377ULL,0xBE5466CF34E90C6CULL,
@@ -28,30 +21,7 @@ static const uint64_t con[16] = {
 	0xBA7C9045F12C7F99ULL,0x24A19947B3916CF7ULL,
 	0x0801F2E2858EFC16ULL,0x636920D871574E69ULL
 };
-//Sima table extended here to avoid rounding values by module 10. 
-static const unsigned char sigma[][16] = {
-    {  0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15 } ,
-    { 14, 10,  4,  8,  9, 15, 13,  6,  1, 12,  0,  2, 11,  7,  5,  3 } ,
-    { 11,  8, 12,  0,  5,  2, 15, 13, 10, 14,  3,  6,  7,  1,  9,  4 } ,
-    {  7,  9,  3,  1, 13, 12, 11, 14,  2,  6,  5, 10,  4,  0, 15,  8 } ,
-    {  9,  0,  5,  7,  2,  4, 10, 15, 14,  1, 11, 12,  6,  8,  3, 13 } ,
-    {  2, 12,  6, 10,  0, 11,  8,  3,  4, 13,  7,  5, 15, 14,  1,  9 } ,
-    { 12,  5,  1, 15, 14, 13,  4, 10,  0,  7,  6,  3,  9,  2,  8, 11 } ,
-    { 13, 11,  7, 14, 12,  1,  3,  9,  5,  0, 15,  4,  8,  6,  2, 10 } ,
-    {  6, 15, 14,  9, 11,  3,  0,  8, 12,  2, 13,  7,  1,  4, 10,  5 } ,
-    { 10,  2,  8,  4,  7,  6,  1,  5, 15, 11,  9, 14,  3, 12, 13 , 0 } ,
-    {  0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15 } ,
-    { 14, 10,  4,  8,  9, 15, 13,  6,  1, 12,  0,  2, 11,  7,  5,  3 } ,
-    { 11,  8, 12,  0,  5,  2, 15, 13, 10, 14,  3,  6,  7,  1,  9,  4 } ,
-    {  7,  9,  3,  1, 13, 12, 11, 14,  2,  6,  5, 10,  4,  0, 15,  8 } ,
-    {  9,  0,  5,  7,  2,  4, 10, 15, 14,  1, 11, 12,  6,  8,  3, 13 } ,
-    {  2, 12,  6, 10,  0, 11,  8,  3,  4, 13,  7,  5, 15, 14,  1,  9 } ,
-    { 12,  5,  1, 15, 14, 13,  4, 10,  0,  7,  6,  3,  9,  2,  8, 11 } ,
-    { 13, 11,  7, 14, 12,  1,  3,  9,  5,  0, 15,  4,  8,  6,  2, 10 } ,
-    {  6, 15, 14,  9, 11,  3,  0,  8, 12,  2, 13,  7,  1,  4, 10,  5 } ,
-    { 10,  2,  8,  4,  7,  6,  1,  5, 15, 11,  9, 14,  3, 12, 13 , 0 } ,
-};
-
+//copy 
 
 static uint64_t state64[16]; 
 // direct pointers to matrix
@@ -71,28 +41,6 @@ static uint64_t *v12 = &state64[12];
 static uint64_t *v13 = &state64[13];
 static uint64_t *v14 = &state64[14];
 static uint64_t *v15 = &state64[15];
-
-#define LE_BLOCK_2_BE(mptr)\
-  {\
-uint64_t *msg_ptr = (uint64_t*)   (mptr);\
-unsigned char *message = (unsigned char *) (mptr);\
-(msg_ptr)[0] = U8TO64_BE((message)); \
-(msg_ptr)[1] = U8TO64_BE( (((message) + 8))); \
-(msg_ptr)[2] = U8TO64_BE( ((message) + 16)); \
-(msg_ptr)[3] = U8TO64_BE( ((message) + 24)); \
-(msg_ptr)[4] = U8TO64_BE( ((message) + 32)); \
-(msg_ptr)[5] = U8TO64_BE( ((message) + 40)); \
-(msg_ptr)[6] = U8TO64_BE( ((message) + 48)); \
-(msg_ptr)[7] = U8TO64_BE( ((message) + 56)); \
-(msg_ptr)[8] = U8TO64_BE( ((message) + 64)); \
-(msg_ptr)[9] = U8TO64_BE( ((message) + 72)); \
-(msg_ptr)[10] = U8TO64_BE( ((message) + 80)); \
-(msg_ptr)[11] = U8TO64_BE( ((message) + 88)); \
-(msg_ptr)[12] = U8TO64_BE( ((message) + 96)); \
-(msg_ptr)[13] = U8TO64_BE( ((message) + 104)); \
-(msg_ptr)[14] = U8TO64_BE( ((message) + 112)); \
-(msg_ptr)[15] = U8TO64_BE( ((message) + 120)); \
-}\
 
 #define INITH512(h)\
   (h)[0] = 0x6A09E667F3BCC908ULL; \
@@ -133,62 +81,66 @@ unsigned char *message = (unsigned char *) (mptr);\
   (h)[6] = (h)[6] ^ (s)[2] ^ (*v6) ^ (*v14); \
   (h)[7] = (h)[7] ^ (s)[3] ^ (*v7) ^ (*v15); 
 
-static inline void compress64(uint64_t *h, const uint64_t *m, const uint64_t *s, const uint64_t * t){
+static inline void compress64(uint64_t *h, uint64_t *m, uint64_t *s, uint64_t * t){
 	INIT512(h, s, t);
 	#include "rounds64.h"
 	FINIT512(h,s);
 }
 
-
+static inline uint64_t pad512(unsigned char *message, uint64_t len, uint32_t *comPadding, unsigned char *padded); 
 unsigned char *blake512(unsigned char *message, unsigned len, unsigned char *s, unsigned char *h){
-       unsigned char padded[256];  // Space for two padding blocks. Maybe only 1 is necessary. 
+	//message[0]=0x00;
+  unsigned char padded[256]; 
 	unsigned char *paddptr = padded; 
+	//Reference data from the algorithm/paper
 	uint32_t i; 
 	uint64_t resto = (len*8) % 1024 ;    
-	uint64_t counter[2] = {0,0};   //Counts the number of bits hashed so far. (i.e., see t in specification) 
+	uint64_t var[2] = { 0, 0 };  	
 	uint64_t blocksSemPadding;
 	uint32_t blocksComPadding=0; 
-	unsigned char *cmsg = (unsigned char *) message; 	
-
-
+	
 	blocksSemPadding = pad512(message, (uint64_t ) len, &blocksComPadding, padded);
 	
 	// Initialize h with IV 
 	INITH512((uint64_t* )h);
 
-	for (i = 0 ; i < blocksSemPadding ; i++, cmsg +=128){
-	 LE_BLOCK_2_BE(cmsg) 
-	}
-	cmsg = padded; 
-	LE_BLOCK_2_BE(cmsg); 
-	if (blocksComPadding){
-	  cmsg += 128; 
-	  LE_BLOCK_2_BE(cmsg); 
+	uint64_t bytes_total = (128 * blocksSemPadding); 
+	uint64_t round; 
+	uint64_t *type = message; 
+
+	for (round =0, i=0 ; round < bytes_total; round += 8, i++){
+	  type[i] = U8TO64_BE(message + round); 
 	}
 
-	for (i=0, cmsg = message; i<blocksSemPadding; i++, cmsg +=128) {
-		counter[0] += 1024;
-		if(counter[0]==0){
-			counter[1]++;
+	type = padded; 
+	/*for (round =0, i=0 ; round < 256; round += 8, i++){
+	  type[i] = U8TO64_BE(&padded[round]); 
+	  }*/
+	#include "padded64.h"
+
+	for (i=0; i<blocksSemPadding; i++) {
+		var[0] += 1024;
+		if(var[0]==0){
+			var[1]++;
 		}
-		compress64((uint64_t *) h, (const uint64_t *) cmsg, (const uint64_t *) s, (const uint64_t *) &counter); 
+		compress64(h, message + i*128, s, &var); 
 	}
 	
 	// Last message block
 	i =0; 
 	if(resto){
-		counter[0] += resto; 
-		if(counter[0]==0){
-			counter[1]++;
+		var[0] += resto; 
+		if(var[0]==0){
+			var[1]++;
 		}
-		compress64((uint64_t *) h, (const uint64_t *) (paddptr + i++*128),(const uint64_t *) s, (const uint64_t *) &counter);
+		compress64(h, paddptr + i++*128, s, &var);
 	}
 	
 	// Add block only with padding, if needed
 	if (blocksComPadding == 1){
-		counter[0]=0;
-		counter[1]=0;
-		compress64((uint64_t* ) h, (const uint64_t *) (paddptr + i*128),(const uint64_t *) s, (const uint64_t *)&counter); 
+		var[0]=0;
+		var[1]=0;
+		compress64(h, paddptr + i*128, s, &var); 
 	}
 	
 	return (unsigned char *) h;

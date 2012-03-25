@@ -10,7 +10,7 @@ int main(int argc, char **argv){
 	
 	int i;
 	
-	unsigned char in[30480];
+	unsigned char in[2048];
 	unsigned char out32[32];
 	unsigned char out64[64];
 	unsigned char *hh;
@@ -29,7 +29,7 @@ int main(int argc, char **argv){
 	}
 	
 	// Tests for BLAKE-256
-	for(i=0; i<20480; i++){
+	for(i=0; i<1024; i++){
 		
 		// Read input
 		fread(in, 1, i+1, fp);
@@ -40,7 +40,7 @@ int main(int argc, char **argv){
 		//prettyPrinter32(out32, 32, "out:\n");
 		
 		// Hash
-		BLAKE(in, i+1, s32, 32, hh);
+		BLAKE(in, i+1,(unsigned char *)  s32, 32, (char *)hh);
 		
 		// Test
 		convertNinja32(hh, 32); 
@@ -60,7 +60,7 @@ int main(int argc, char **argv){
 	}
 	
 	// Tests for BLAKE-512
-	for(i=0; i<20480; i++){
+	for(i=0; i<1024; i++){
 		
 		// Read input
 		fread(in, 1, i+1, fp);
@@ -72,7 +72,7 @@ int main(int argc, char **argv){
 		
 		// Hash
 		//BLAKE(in, i+1, s64, 64, hh);
-		BLAKE(in, i+1, s64, 64, hh);
+		BLAKE(in, i+1, (unsigned char *) s64, 64, (char *) hh);
 		
 		// Test
 		convertNinja64(hh, 64);

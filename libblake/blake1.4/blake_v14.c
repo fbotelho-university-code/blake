@@ -3,7 +3,8 @@
 #include <sys/time.h>
 #include <string.h>
 #include <sys/stat.h>
-#include "libblake/blake.h"
+#include "blake.h"
+
 
 /*
 * Get the elapsed time in microseconds.
@@ -30,8 +31,6 @@ struct timeval begin, end;
 * digest    - (pre-allocated) buffer where the digest should be returned
 */
 void BLAKE(unsigned char *data, unsigned len, unsigned
-	char *salt, unsigned lenDigest, char *digest);
-void BLAKE2(unsigned char *data, unsigned len, unsigned
 	char *salt, unsigned lenDigest, char *digest);
 
 //vai ler a informacao do ficheiro
@@ -67,10 +66,11 @@ unsigned filesize (const char *path){
   return (unsigned) st.st_size; 
 }
 
-int  main(int argc , char **argv){
+void main(int argc , char **argv){
   //data1 = readFile(argv[1], SIZE1);
   unsigned char salt[64]; 
   unsigned char *msg2; 
+  unsigned char digest2[64]; 
   int i; 
 
   for (i = 0 ; i < 64 ; i ++){
@@ -81,39 +81,30 @@ int  main(int argc , char **argv){
   unsigned size;
   unsigned char *msg; 
 
-    if (argc == 4){
+    if (argc == 3){
         size = filesize(argv[1]); 
         msg = readFile(argv[1], size); 
 	msg2 = readFile(argv[1], size); 
-	FILE *fp = fopen(argv[3], "w"); 
-	if (!fp) {
-	  perror("Could not open file"); 
-	  return -1; 
-	}
-	
+
 	//BLAKE2(msg,size, salt, atoi(argv[2]), digest);     
 	getTime(begin); 
-        BLAKE(msg, size, salt, atoi(argv[2]), (char *) digest);
+        BLAKE(msg, size, salt, atoi(argv[2]), digest);
 	getTime(end); 
-	//elapTime(begin,end); 
+	elapTime(begin,end); 
 	printTime(stdout, "", begin,end); 
 	int result =  atoi(argv[2]); 
 	if (result == 32){
 	  convertNinja32(digest, 32); 
-	  fwrite(digest, 1, 32, fp); 
 	  prettyPrinter32(digest, result , "Result: "); 
 	  //prettyPrinter32(digest, result , "Result Deles: "); 
 	}
 	if (result == 64){
-	  convertNinja64(digest, 64);
-	  fwrite(digest, 1, 64, fp);  
+	  convertNinja64(digest, 64); 
 	  prettyPrinter64(digest, result, "Result: "); 
 	  //prettyPrinter64(digest2, result, "Result Deles: "); 
 	}
     }
     else{
-      printf("Usage: %s filePath [32 | 64] fileout\n", argv[0]); 
+      printf("Usage: %s filePath [32 | 64]\n", argv[0]); 
     }
-    return 0; 
 }
-

@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include <string.h> 
+
 #include "blake.h"
 #include "blake256.h"
 #include "blake512.h"
@@ -60,12 +60,13 @@ void dumpLen(void * ptr, uint64_t len){
 }
 
 void BLAKE(unsigned char *data, unsigned len, unsigned char *salt, unsigned lenDigest, char *digest){
+	
 	switch (lenDigest) {
 		case 32:
-		  blake256(data, len, salt, (unsigned char *) digest);
+			blake256(data, len, salt, digest);
 			break;
 		case 64	:
-		  blake512(data, len, salt, (unsigned char *) digest);
+			blake512(data, len, salt, digest);
 			break;
 		default:
 			digest = NULL;

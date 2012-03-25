@@ -24,31 +24,27 @@ char *state_name;
    exit(-1); 
  }
 
-char *temp = "a = ADD32((a),(b))+XOR32(m[s[r][i]], con[s[r][i+1]]);\n" \
-	 "d = ROT32(XOR32((d),(a)),16);\n" \
-	 "c = ADD32((c),(d));\n" \
-	 "b = ROT32(XOR32((b),(c)),12);\n" \
-	 "a = ADD32((a),(b))+XOR32(m[s[r][i+1]], con[s[r][i]]);\n" \
-	 "d = ROT32(XOR32((d),(a)), 8);\n" \
-	 "c = ADD32((c),(d));\n" \
-         "b = ROT32(XOR32((b),(c)), 7);\n";
+char *temp = "*a = ADD32((*a),(*b))+XOR32(m[s[r][i]], c[s[r][i+1]]);\n" \
+	 "*d = ROT32(XOR32((*d),(*a)),16);\n" \
+	 "*c = ADD32((*c),(*d));\n" \
+	 "*b = ROT32(XOR32((*b),(*c)),12);\n" \
+	 "*a = ADD32((*a),(*b))+XOR32(m[s[r][i+1]], c[s[r][i]]);\n" \
+	 "*d = ROT32(XOR32((*d),(*a)), 8);\n" \
+	 "*c = ADD32((*c),(*d));\n" \
+         "*b = ROT32(XOR32((*b),(*c)), 7);\n";
 char *anotherLevelOfIndirection; 
-char *temp64 = "a = ADD64((a),(b))+XOR64(m[s[r][i]], con[s[r][i+1]]); \n\
-    d = ROT64(XOR64((d),(a)),32); \n\
-    c = ADD64((c),(d)); \n\
-    b = ROT64(XOR64((b),(c)),25); \n\
-    a = ADD64((a),(b))+XOR64(m[s[r][i+1]], con[s[r][i]]); \n\
-    d = ROT64(XOR64((d),(a)),16); \n\
-    c = ADD64((c),(d)); \n\
-    b = ROT64(XOR64((b),(c)),11); \n"; 
+char *temp64 = "*a = ADD64((*a),(*b))+XOR64(m[s[r][i]], c[s[r][i+1]]); \n\
+    *d = ROT64(XOR64((*d),(*a)),32); \n\
+    *c = ADD64((*c),(*d)); \n\
+    *b = ROT64(XOR64((*b),(*c)),25); \n\
+    *a = ADD64((*a),(*b))+XOR64(m[s[r][i+1]], c[s[r][i]]); \n\
+    *d = ROT64(XOR64((*d),(*a)),16); \n\
+    *c = ADD64((*c),(*d)); \n\
+    *b = ROT64(XOR64((*b),(*c)),11); \n"; 
 
 void cospeTemplate(int r, int i,const char * type){
    int indexx;
    char *str = anotherLevelOfIndirection; 
-   int j; 
-   for (j = 0 ; j < 4 ; j++){
-     printf ("%c = *%s%s;\n", map[j], "v", table[i/2][j]); 
-   }
    while (*str){
      switch(*str){
      case 's': 
@@ -70,11 +66,7 @@ void cospeTemplate(int r, int i,const char * type){
      }
      str++;
    }
-
-for (j = 0 ; j < 4 ; j++){
-  printf ("*%s%s = %c;\n", "v", table[i/2][j], map[j]); 
-  }
-}
+ }
 
  int main(int argc, char **argv){
    int rounds, i; 
@@ -90,13 +82,11 @@ switch(argv[1][1]){
      anotherLevelOfIndirection = temp64;
      type = "64";
      nrounds = 16; 
-     printf("register uint64_t a, b, c, d;\n"); 
      break;
    case '3': 
      state_name = "v"; 
      anotherLevelOfIndirection = temp; 
      type = "32"; 
-     printf("register uint32_t a, b, c, d;\n"); 
      nrounds = 14; 
      break; 
    default : 

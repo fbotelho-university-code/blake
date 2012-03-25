@@ -68,10 +68,10 @@ int floatcmp(const void* a, const void* b){
 int main(int argc , char **argv){
   unsigned char salt[64]; 
   int i; 
-	unsigned char digest[64]; 
+    char digest[64]; 
 	unsigned size;
 	unsigned char *msg; 
-	float values[1000];
+	float values[500];
 	float median=0;
 	float deviation=0;
 	
@@ -85,8 +85,8 @@ int main(int argc , char **argv){
 	
 	// 10K
 	puts("10K.png");
-	size = filesize("/Users/sa/Documents/M.S.I./TS/blake/imgs/10K.png"); 
-    msg = readFile("/Users/sa/Documents/M.S.I./TS/blake/imgs/10K.png", size); 
+	size = filesize("imgs/10K.png"); 
+    msg = readFile("imgs/10K.png", size); 
 
 	// BLAKE-256
 	puts("--BLAKE-256");
@@ -113,14 +113,14 @@ int main(int argc , char **argv){
 	if(argv[1]){	
 	// BLAKE-512
 	puts("--BLAKE-512");
-	for (i=0; i<1000; i++) {
+	for (i=0; i<500; i++) {
 		getTime(begin);
 		BLAKE(msg, size, salt, 64, digest);
 		getTime(end);
 		values[i] = elapTime(begin, end);
 		//printTime(stdout, "10K.png (512)", begin, end);
 	}
-	qsort(values, 1000, sizeof(float), floatcmp);
+	qsort(values, 500, sizeof(float), floatcmp);
 	
 	// median
 	for(i=0; i<100; i++){
@@ -135,8 +135,8 @@ int main(int argc , char **argv){
 	}
 	// 1MB
 	puts("\n1MB.bmp");
-	size = filesize("/Users/sa/Documents/M.S.I./TS/blake/imgs/1MB.bmp"); 
-    msg = readFile("/Users/sa/Documents/M.S.I./TS/blake/imgs/1MB.bmp", size); 
+	size = filesize("imgs/1MB.bmp"); 
+    msg = readFile("imgs/1MB.bmp", size); 
 	
 	// BLAKE-256
 	puts("--BLAKE-256");
@@ -163,14 +163,14 @@ int main(int argc , char **argv){
 	if(argv[1]){	
 	// BLAKE-512
 	puts("--BLAKE-512");
-	for (i=0; i<1000; i++) {
+	for (i=0; i<500; i++) {
 		getTime(begin);
 		BLAKE(msg, size, salt, 64, digest);
 		getTime(end);
 		values[i] = elapTime(begin, end);
 		//printTime(stdout, "1MB.bmp (512)", begin, end);
 	}
-	qsort(values, 1000, sizeof(float), floatcmp);
+	qsort(values, 500, sizeof(float), floatcmp);
 	
 	// median
 	for(i=0; i<100; i++){
@@ -185,8 +185,8 @@ int main(int argc , char **argv){
 	}
 	// 10MB
 	puts("\n10MB.bmp");
-	size = filesize("/Users/sa/Documents/M.S.I./TS/blake/imgs/10MB.bmp"); 
-    msg = readFile("/Users/sa/Documents/M.S.I./TS/blake/imgs/10MB.bmp", size); 
+	size = filesize("imgs/10MB.bmp"); 
+    msg = readFile("imgs/10MB.bmp", size); 
 	
 	// BLAKE-256
 	puts("--BLAKE-256");
@@ -213,14 +213,14 @@ int main(int argc , char **argv){
 	if(argv[1]){	
 	// BLAKE-512
 	puts("--BLAKE-512");
-	for (i=0; i<1000; i++) {
+	for (i=0; i<500; i++) {
 		getTime(begin);
 		BLAKE(msg, size, salt, 64, digest);
 		getTime(end);
 		values[i] = elapTime(begin, end);
 		//printTime(stdout, "10.bmp (512)", begin, end);
 	}
-	qsort(values, 1000, sizeof(float), floatcmp);
+	qsort(values, 500, sizeof(float), floatcmp);
 	
 	// median
 	for(i=0; i<100; i++){
